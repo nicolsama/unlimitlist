@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/nicolsama/unlimitlist#readme",
   "engines": {
-    "node": "12.5.0",
-    "npm": "6.9.0"
+    "node": "10.13.0",
+    "npm": "6.14.3"
   }
 }
