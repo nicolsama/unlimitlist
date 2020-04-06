@@ -51,13 +51,10 @@ GEM
       io-like (~> 0.3.0)
     arel (9.0.0)
     bcrypt (3.1.13)
-<<<<<<< HEAD
-=======
     better_errors (2.6.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
->>>>>>> master
     bindex (0.8.1)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
@@ -213,11 +210,8 @@ PLATFORMS
 DEPENDENCIES
   annotate
   bcrypt (~> 3.1.7)
-<<<<<<< HEAD
-=======
   better_errors
   binding_of_caller
->>>>>>> master
   bootsnap (>= 1.1.0)
   byebug
   capybara (>= 2.15)
