@@ -1,0 +1,44 @@
+.sessionForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 8%;
+}
+
+.sessionForm .logo {
+    font-size: 22px;
+    font-weight: 600;
+    padding: 10px;
+}
+
+label {
+    font-size: 12px;
+    padding: 10px;
+}
+input, button {
+    border: solid 1px#b1bfca;
+    min-height: 24px;
+    border-radius: 4px;
+    width: 240px;
+    margin-top: 3px;
+}
+
+button {
+    padding: 9px;
+    border-radius: 16px;
+    border-color:#d6cbc7;
+    background-color:#d6cbc7;
+    font-weight: 600;
+}
+
+
+button:hover {
+    background-color: #a59a96;
+}
+
+.errorSpan  {
+    padding: 10px;
+    color: red;
+    font-size: 12px;
+}
