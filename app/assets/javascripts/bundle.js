@@ -249,8 +249,6 @@ var Greeting = /*#__PURE__*/function (_React$Component) {
   _createClass(Greeting, [{
     key: "render",
     value: function render() {
-      debugger;
-
       if (this.props.currentUser) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "LoggedInGreet"
@@ -303,7 +301,6 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(_ref, ownProps) {
   var session = _ref.session,
       users = _ref.entities.users;
-  debugger;
   return {
     currentUser: users[session.id],
     linkPath: ownProps.location.pathname
@@ -342,7 +339,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  debugger;
   return {
     formType: 'Log in',
     errors: state.errors
@@ -470,11 +466,9 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
       var err = "";
 
       if (this.props.errors.session.length) {
-        debugger;
         err = this.props.errors.session;
       }
 
-      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "sessionForm"
@@ -524,7 +518,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  debugger;
   return {
     formType: 'Sign up',
     errors: state.errors
@@ -629,7 +622,6 @@ var sessionErrorsReducer = function sessionErrorsReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ERRORS"]:
-      // debugger;
       return action.errors.responseJSON;
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
@@ -669,7 +661,6 @@ var sessionReducer = function sessionReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      debugger;
       return {
         id: action.user.id
       };
@@ -876,7 +867,6 @@ var signup = function signup(user) {
   });
 };
 var login = function login(user) {
-  debugger;
   return $.ajax({
     url: '/api/session',
     method: 'POST',

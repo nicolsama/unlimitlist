@@ -4,7 +4,6 @@ import SessionForm from './session_form'
 import { login } from '../actions/session_actions';
 
 const msp = (state, ownProps) => {
-    debugger;
     return ( {
     formType: 'Log in',
     errors: state.errors

@@ -26,10 +26,8 @@ class SessionForm extends React.Component {
         let word = this.props.formType === 'Sign up' ? 'for' : 'to';
         let err = "";
         if (this.props.errors.session.length) {
-            debugger;
             err = this.props.errors.session
         }
-        debugger;
         return (<div>
             
             <form onSubmit={this.handleSubmit} className='sessionForm'>

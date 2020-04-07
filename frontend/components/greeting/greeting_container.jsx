@@ -4,7 +4,6 @@ import Greeting from './greeting'
 
 
 const msp = ({ session, entities: { users } }, ownProps) => {
-    debugger;
     return {
         currentUser: users[session.id],
         linkPath: ownProps.location.pathname
