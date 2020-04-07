@@ -5,7 +5,7 @@
 #  id              :bigint           not null, primary key
 #  email           :string           not null
 #  password_digest :string           not null
-#  session_token   :string           not null
+#  session_token   :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -15,7 +15,8 @@ class User < ApplicationRecord
     validates :password, allow_nil: true, length:  {minimum: 7}
     validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
 
-    
+    has_many :nodes
+        
     attr_reader :password
     after_initialize :ensure_session_token
 

@@ -755,13 +755,15 @@ var configureStore = function configureStore() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
-/* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
+/* harmony import */ var _util_node_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util/node_api_util */ "./frontend/util/node_api_util.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
+/* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
  // import { login } from './util/session_api_util'; 
 // ^ TESTING
@@ -783,21 +785,77 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
     delete window.currentUser;
-    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_3__["default"])(preloadedState);
+    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_4__["default"])(preloadedState);
   } else {
-    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_3__["default"])();
+    store = Object(_store_store__WEBPACK_IMPORTED_MODULE_4__["default"])();
   } //TESTING
 
 
+  window.getAllNodes = _util_node_api_util__WEBPACK_IMPORTED_MODULE_1__["getAllNodes"];
+  window.getNode = _util_node_api_util__WEBPACK_IMPORTED_MODULE_1__["getNode"];
+  window.createNode = _util_node_api_util__WEBPACK_IMPORTED_MODULE_1__["createNode"];
+  window.updateNode = _util_node_api_util__WEBPACK_IMPORTED_MODULE_1__["updateNode"];
+  window.deleteNode = _util_node_api_util__WEBPACK_IMPORTED_MODULE_1__["deleteNode"];
   window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["login"];
   window.getState = store.getState;
   window.dispatch = store.dispatch; //TESTING
 
   var root = document.getElementById("root");
-  react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_5__["default"], {
     store: store
   }), root);
 });
+
+/***/ }),
+
+/***/ "./frontend/util/node_api_util.js":
+/*!****************************************!*\
+  !*** ./frontend/util/node_api_util.js ***!
+  \****************************************/
+/*! exports provided: getAllNodes, getNode, updateNode, createNode, deleteNode */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllNodes", function() { return getAllNodes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getNode", function() { return getNode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateNode", function() { return updateNode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNode", function() { return createNode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteNode", function() { return deleteNode; });
+var getAllNodes = function getAllNodes() {
+  return $.ajax({
+    url: "/api/nodes"
+  });
+};
+var getNode = function getNode(NodeId) {
+  return $.ajax({
+    url: "/api/nodes/".concat(NodeId)
+  });
+};
+var updateNode = function updateNode(node) {
+  return $.ajax({
+    url: "/api/nodes/".concat(node.id),
+    method: 'PATCH',
+    data: {
+      node: node
+    }
+  });
+};
+var createNode = function createNode(node) {
+  return $.ajax({
+    url: "/api/nodes/".concat(node.id),
+    method: 'POST',
+    data: {
+      node: node
+    }
+  });
+};
+var deleteNode = function deleteNode(nodeId) {
+  return $.ajax({
+    url: "/api/nodes/".concat(nodeId),
+    method: 'DELETE'
+  });
+};
 
 /***/ }),
 

@@ -1,4 +1,5 @@
 import {signup, login, logout} from './actions/session_actions';
+import {getAllNodes, getNode, createNode, deleteNode, updateNode} from './util/node_api_util';
 // import { login } from './util/session_api_util'; 
 
 // ^ TESTING
@@ -24,6 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //TESTING
+    window.getAllNodes = getAllNodes; 
+    window.getNode = getNode;
+    window.createNode = createNode; 
+    window.updateNode = updateNode; 
+    window.deleteNode = deleteNode;
     window.login = login;
     window.getState = store.getState;
     window.dispatch = store.dispatch;
