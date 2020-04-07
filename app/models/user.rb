@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
     validates :email, :session_token,  null: false, uniqueness: true
     validates :password, allow_nil: true, length:  {minimum: 7}
+    validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
+
     
     attr_reader :password
     after_initialize :ensure_session_token
