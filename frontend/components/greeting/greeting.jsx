@@ -1,37 +1,44 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 class Greeting extends React.Component {
 
     constructor(props) {
         super(props)
-        this.handleLogout = this.handleLogout.bind(this);
     }
-
-    handleLogout() {
-        this.props.logoutCurrentUser();
-    }
-
-
 
     render() {
-
+        debugger;
         if (this.props.currentUser) {
 
             return (
-                <div>
+                <div className='LoggedInGreet'>
                     <button
-                        onClick={this.handleLogout} >
-                        Log Out
-                        </button>
+                        onClick={this.props.logout}>
+                    Log Out!</button>
                     <h3>Welcome, {this.props.currentUser.email}</h3>
                 </div>
              )
         } else {
+
+            let linkValue;
+            let newPath; 
+
+            if (this.props.linkPath == '/api/users') { 
+                linkValue ='Sign In'; 
+                newPath = '/api/session';
+            } else { 
+                linkValue = 'Sign Up';
+                newPath = '/api/users';
+            }
+
             return (
                 <div>
-                    <Link to='/api/session'>Sign In</Link><br />
-                    <Link to='/api/users'>Sign Up</Link>
+                    <Link 
+                        to={newPath} 
+                        className='HeaderButton'>
+                        {linkValue}
+                    </Link>
                 </div>
             )
         }

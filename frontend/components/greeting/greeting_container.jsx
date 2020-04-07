@@ -1,17 +1,19 @@
-
-import React from 'react';
 import { connect } from 'react-redux';
-import { logoutCurrentUser } from '../../actions/session_actions';
-import Greeting from './greeting';
+import { logout } from '../../actions/session_actions';
+import Greeting from './greeting'
 
 
-const msp = (state) => ({
-    currentUser: state.entities.users[state.session.id]
-});
+const msp = ({ session, entities: { users } }, ownProps) => {
+    debugger;
+    return {
+        currentUser: users[session.id],
+        linkPath: ownProps.location.pathname
+    };
+};
 
 
 const mdp = (dispatch) => ({
-    logoutCurrentUser: () => dispatch(logoutCurrentUser())
+    logout: () => dispatch(logout())
 });
 
 

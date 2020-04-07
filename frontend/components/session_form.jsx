@@ -1,0 +1,63 @@
+import React from 'react';
+
+class SessionForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: "",
+            password: "",
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        const user = Object.assign({}, this.state);
+        this.props.processForm(this.state);
+    }
+
+    handleChange(type) {
+        return (e) => {
+            this.setState({ [type]: e.target.value })
+        };
+    }
+
+    render() {
+        let word = this.props.formType === 'Sign up' ? 'for' : 'to';
+        let err = "";
+        if (this.props.errors.session.length) {
+            debugger;
+            err = this.props.errors.session
+        }
+        debugger;
+        return (<div>
+            
+            <form onSubmit={this.handleSubmit} className='sessionForm'>
+                <h3>{this.props.formType} {word} Unlimitlist</h3>
+                <label>Email<br />
+                    <input
+                        type='text'
+                        value={this.state.email}
+                        onChange={this.handleChange('email')}
+                        className="sessionElement">
+                    </input>
+                </label><br />
+                <label>Password<br />
+                    <input
+                        type='password'
+                        value={this.state.password}
+                        onChange={this.handleChange('password')}
+                        className="sessionElement">
+                    </input>
+                </label>
+                <button 
+                    type='submit' 
+                    className="sessionElement">
+                    {this.props.formType}
+                </button>
+                <span className="errorSpan">{err}</span>
+            </form>
+        </div>)
+    }
+}
+export default SessionForm; 
