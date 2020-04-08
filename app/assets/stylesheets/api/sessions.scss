@@ -16,7 +16,8 @@ label {
     font-size: 12px;
     padding: 10px;
 }
-input, button {
+input,
+.sessionButton {
     border: solid 1px#b1bfca;
     min-height: 24px;
     border-radius: 4px;
@@ -24,7 +25,7 @@ input, button {
     margin-top: 3px;
 }
 
-button {
+.sessionButton {
     padding: 9px;
     border-radius: 16px;
     border-color:#d6cbc7;
@@ -33,7 +34,7 @@ button {
 }
 
 
-button:hover {
+.sessionButton:hover {
     background-color: #a59a96;
 }
 

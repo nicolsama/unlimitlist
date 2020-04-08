@@ -1,0 +1,20 @@
+.NodeListDiv {
+    width: 80%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.NodeListDiv h3{
+    font-weight: 900;
+    font-size: 22px;
+}
+
+.NodeListUl input {
+    border: none;
+}
+
+.NodeListUl input:focus {
+    outline: none;
+}
+

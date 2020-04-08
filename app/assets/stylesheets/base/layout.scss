@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,400;0,600;1,500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,500&display=swap');
+
 html {
     font-family: 'Work Sans',
     sans-serif;
@@ -13,16 +14,19 @@ body {
 
 a { color: rgb(26, 25, 25)}
 
-* {
-    padding: 0;
-    margin: 0;
-    font-weight: 400;
+
+.logoContainer {
+    font-size: 22px;
+    font-weight: 800px;
+    color: rgb(26, 25, 25);
+    display: flex;
+    justify-content: left;
+    align-items: center;
 }
 
-.logo {
-    font-size: 20px;
-    font-weight: 800px;
-    color: #b1bfca;
+.logoImg{
+    height: 50px;
+    padding-right: 6px;
 }
 
 h3 { 
@@ -32,15 +36,16 @@ h3 {
     }
 
 header {
-    padding: 15px;
+    padding: 20px;
     display: flex; 
     justify-content: space-between;
 }
 
 .HeaderButton {
+    border: none;
     background-color:#e3f2fd;
     border-radius: 16px;
-    font-size: 10px; 
+    font-size: 11px; 
     font-weight: 700;
     text-decoration: none;
     padding: 10px 15px 10px 15px;
@@ -49,3 +54,5 @@ header {
 .HeaderButton:hover {
         background-color: #b1bfca;
 }
+
+

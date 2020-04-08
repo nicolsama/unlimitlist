@@ -11,11 +11,11 @@ class Greeting extends React.Component {
         if (this.props.currentUser) {
 
             return (
-                <div className='LoggedInGreet'>
+                <div>
                     <button
+                        className='HeaderButton'
                         onClick={this.props.logout}>
-                    Log Out!</button>
-                    <h3>Welcome, {this.props.currentUser.email}</h3>
+                    Log Out</button>
                 </div>
              )
         } else {

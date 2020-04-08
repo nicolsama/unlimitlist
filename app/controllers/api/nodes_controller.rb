@@ -11,9 +11,14 @@ class Api::NodesController < ApplicationController
     def create
         @node = Node.new(node_params)
         @node.user_id = current_user.id
+        @node.ord = Node.last.ord + 1
+        debugger
+        # debugger
         if @node.save
+            # debugger
             render :show
         else 
+            # debugger
             render json: @node.errors.full_messages
         end
     end
@@ -21,16 +26,16 @@ class Api::NodesController < ApplicationController
     def update
         @node = Node.find_by(id: params[:id])
         if @node && @node.update(node_params)
-            debugger
+
             render :show 
         else 
-            debugger
+            # debugger
             render json: @node.errors.full_messages
         end
     end
 
     def destroy
-        
+        Node.delete(params[:id])
     end
 
     private

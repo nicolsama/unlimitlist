@@ -10,10 +10,20 @@ User.destroy_all
 Node.destroy_all
 
 test_user = User.create!(email: "nicolsama@gmail.com", password: "password123")
-test_user2 = User.create!(email: "keith@gmail.com", password: "password123")
+test_user2 = User.create!(email: "tasha@gmail.com", password: "password123")
 
 
-test_node = Node.create!(user_id: test_user.id, body: "art supplies to #buy", parent_node_id: nil, ord: 1)
-test_node2 = Node.create!(user_id: test_user.id, body: "art supplies again", parent_node_id: nil, ord: 2)
-test_node3 = Node.create!(user_id: test_user.id, body: "fooood", parent_node_id: nil, ord: 3)
-test_node4 = Node.create!(user_id: test_user.id, body: "milk", parent_node_id: nil, ord: 4)
+# test_node = Node.create!(user_id: test_user.id, body: "art supplies to #buy", parent_node_id: nil, ord: 1)
+# test_node2 = Node.create!(user_id: test_user.id, body: "art supplies again", parent_node_id: nil, ord: 2)
+# test_node3 = Node.create!(user_id: test_user.id, body: "fooood", parent_node_id: nil, ord: 3)
+# test_node4 = Node.create!(user_id: test_user.id, body: "milk", parent_node_id: nil, ord: 4)
+
+
+test_node = Node.create!(user_id: test_user2.id, body: "textbooks", parent_node_id: nil, ord: 1)
+test_node2 = Node.create!(user_id: test_user2.id, body: "groceries", parent_node_id: nil, ord: 2)
+test_node3 = Node.create!(user_id: test_user2.id, body: "fooood", parent_node_id: test_node.id, ord: 3)
+test_node4 = Node.create!(user_id: test_user2.id, body: "milk", parent_node_id: test_node.id ord: 4)
+
+
+
+

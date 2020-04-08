@@ -12,15 +12,34 @@ const Auth = ({ component: Component, path, loggedIn, exact }) => (
     />
 );
 
+const Node = ({ component: Component, path, loggedIn, exact }) => (
+    <Route
+        path={path}
+        exact={exact}
+        render={props =>
+            loggedIn ? <Component {...props} /> : <Redirect to="/" />
+        }
+    />
+);
+
+
 const mapStateToProps = state => {
     return { loggedIn: Boolean(state.session.id) };
 };
 
-const AuthRoute = withRouter(
+export const AuthRoute = withRouter(
     connect(
         mapStateToProps,
         null
     )(Auth)
 );
 
-export default AuthRoute;
+export const NodeRoute = withRouter(
+    connect(
+        mapStateToProps,
+        null
+    )(Node)
+);
+
+
+
