@@ -31,16 +31,20 @@ class NodeList extends React.Component {
         }
     }
 
+
     render() {
+        if (!this.props.nodes) return null; 
+        let rootNodes = this.props.nodes.filter(node => node.parent_node_id === null);
         return(
             <div className="NodeListDiv">
-                <h3>This is the Title</h3>
                 <ul className="NodeListUl">
                     {
-                    this.props.nodes.map(node => (
+                    rootNodes.map(node => (
                         <NodeListItem
                             key={node.id}
                             node={node}
+                            nodes={this.props.nodes}
+                            childNodes={node.child_node_ids}
                             fetchNode={this.props.fetchNode}
                             updateNode={this.props.updateNode}
                         />))

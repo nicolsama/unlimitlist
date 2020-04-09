@@ -26,16 +26,28 @@ class NodeListItem extends React.Component {
     }
 
     render() {
-    return(
-        <li className="NodeListItem">
-            <input type='text'
-            value={this.state.body}
-            onChange={this.update('body')}
-            onKeyPress={(e) => this.handleKeyPress(e)}
-            className="existingNode"
-            />
-            {/* <NodeListContainer nodes={this.props.node.childNodes} />             */}
-        </li>)
+        debugger;
+
+        let sublist = "";
+        if (this.props.childNodes) {
+            sublist = (<NodeListContainer state={this.props.childNodes} />)
+        } 
+
+        debugger;
+        return (
+            <>
+            <li className="NodeListItem">
+                <input type='text'
+                value={this.state.body}
+                onChange={this.update('body')}
+                onKeyPress={(e) => this.handleKeyPress(e)}
+                className="existingNode"
+                />
+            </li> 
+                <div>
+                    {sublist}
+                </div>
+            </>);
     }
 
 }

@@ -4,7 +4,9 @@ import { fetchAllNodes, fetchNode, createNode, updateNode, deleteNode } from '..
 
 const mapStateToProps = (state = {}) => {
     // debugger;
-    return ({nodes: Object.values(state.entities.nodes)})
+    return ({
+        nodes: Object.values(state.entities.nodes)
+    })
 }; 
 
 const mapDispatchToProps = (dispatch) => ({

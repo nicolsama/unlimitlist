@@ -15,12 +15,16 @@ class Node < ApplicationRecord
 
     belongs_to :user
 
-    # has_many :children
-    # has_many :shares
+    has_many :children,  
+        foreign_key: :parent_node_id, 
+        class_name: :Node, 
+        inverse_of: :parent_node
 
-    # belongs_to :parent_node
-    # has_many :children ????
-    #       through :children
-    #       source: 
+    belongs_to :parent_node,
+        foreign_key: :parent_node_id, 
+        class_name: :Node, 
+        inverse_of: :children,
+        optional: true
+
 
 end

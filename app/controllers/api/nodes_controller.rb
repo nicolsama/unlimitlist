@@ -12,7 +12,7 @@ class Api::NodesController < ApplicationController
         @node = Node.new(node_params)
         @node.user_id = current_user.id
         @node.ord = Node.last.ord + 1
-        debugger
+        # debugger
         # debugger
         if @node.save
             # debugger

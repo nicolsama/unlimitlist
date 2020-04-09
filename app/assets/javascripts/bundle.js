@@ -530,7 +530,17 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      debugger;
+      var sublist = "";
+
+      if (this.props.childNodes) {
+        sublist = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nodes_list_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          state: this.props.childNodes
+        });
+      }
+
+      debugger;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "NodeListItem"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -540,7 +550,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           return _this3.handleKeyPress(e);
         },
         className: "existingNode"
-      }));
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, sublist));
     }
   }]);
 
@@ -645,14 +655,20 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      if (!this.props.nodes) return null;
+      var rootNodes = this.props.nodes.filter(function (node) {
+        return node.parent_node_id === null;
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "NodeListDiv"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "This is the Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "NodeListUl"
-      }, this.props.nodes.map(function (node) {
+      }, rootNodes.map(function (node) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: node.id,
           node: node,
+          nodes: _this3.props.nodes,
+          childNodes: node.child_node_ids,
           fetchNode: _this3.props.fetchNode,
           updateNode: _this3.props.updateNode
         });
