@@ -26,5 +26,12 @@ class Node < ApplicationRecord
         inverse_of: :children,
         optional: true
 
+    # has_many :ancestors ,
+    #     through: :children,
+    #     source: :children
+
+    def root?
+        self.parent_node_id == nil
+    end
 
 end

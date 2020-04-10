@@ -1,7 +1,8 @@
 class Api::NodesController < ApplicationController
 
     def index
-        @nodes = current_user.nodes
+        # debugger
+        @nodes = current_user.nodes.includes(:children)
     end
 
     def show
@@ -11,8 +12,7 @@ class Api::NodesController < ApplicationController
     def create
         @node = Node.new(node_params)
         @node.user_id = current_user.id
-        @node.ord = Node.last.ord + 1
-        # debugger
+        @node.ord = Node.maximum(:ord) + 1
         # debugger
         if @node.save
             # debugger
@@ -40,7 +40,7 @@ class Api::NodesController < ApplicationController
 
     private
     def node_params
-        params.require(:node).permit(:body, :completed)
+        params.require(:node).permit(:body, :completed, :ord)
     end
 
 end

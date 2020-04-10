@@ -251,8 +251,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./greeting/greeting_container */ "./frontend/components/greeting/greeting_container.jsx");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _login_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./login_form_container */ "./frontend/components/login_form_container.jsx");
-/* harmony import */ var _signup_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./signup_form_container */ "./frontend/components/signup_form_container.jsx");
+/* harmony import */ var _sessions_login_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sessions/login_form_container */ "./frontend/components/sessions/login_form_container.jsx");
+/* harmony import */ var _sessions_signup_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sessions/signup_form_container */ "./frontend/components/sessions/signup_form_container.jsx");
 /* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
 /* harmony import */ var _nodes_nodes_list_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./nodes/nodes_list_container */ "./frontend/components/nodes/nodes_list_container.jsx");
 
@@ -277,10 +277,10 @@ var App = function App() {
     component: _nodes_nodes_list_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
     path: "/api/session",
-    component: _login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _sessions_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
     path: "/api/users",
-    component: _signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _sessions_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"]
   }));
 };
 
@@ -408,44 +408,6 @@ var mdp = function mdp(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/login_form_container.jsx":
-/*!******************************************************!*\
-  !*** ./frontend/components/login_form_container.jsx ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _session_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./session_form */ "./frontend/components/session_form.jsx");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
-
-
-
-
-
-var msp = function msp(state, ownProps) {
-  return {
-    formType: 'Log in',
-    errors: state.errors
-  };
-};
-
-var mdp = function mdp(dispatch, ownProps) {
-  return {
-    processForm: function processForm(user) {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["login"])(user));
-    }
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_session_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
-
-/***/ }),
-
 /***/ "./frontend/components/nodes/node_list_item.jsx":
 /*!******************************************************!*\
   !*** ./frontend/components/nodes/node_list_item.jsx ***!
@@ -498,12 +460,14 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, NodeListItem);
 
     _this = _super.call(this, props);
-    _this.state = {
-      id: _this.props.node.id,
-      body: _this.props.node.body,
-      ord: _this.props.node.ord,
-      completed: _this.props.node.completed
-    };
+    debugger;
+    _this.state = _this.props.node; // this.state = {
+    //     id: this.props.node.id,
+    //     body: this.props.node.body,
+    //     completed: this.props.node.completed,
+    //     ord: this.props.node.ord,
+    // }
+
     _this.handleKeyPress = _this.handleKeyPress.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -511,8 +475,9 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   _createClass(NodeListItem, [{
     key: "handleKeyPress",
     value: function handleKeyPress(e) {
-      if (e.key === 'Enter' && this.state.id) {
-        // debugger; 
+      debugger;
+
+      if (this.state.id && e.key === 'Enter') {
         this.props.updateNode(this.state);
       }
     }
@@ -531,26 +496,56 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       debugger;
-      var sublist = "";
-
-      if (this.props.childNodes) {
-        sublist = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nodes_list_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          state: this.props.childNodes
+      var allNodes = this.props.nodes;
+      var nestedNodes = this.props.node.child_ids.map(function (id) {
+        var node = allNodes[id];
+        debugger;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, {
+          key: id,
+          node: node,
+          nodes: _this3.props.nodes,
+          fetchNode: _this3.props.fetchNode,
+          updateNode: _this3.props.updateNode,
+          type: "child"
         });
-      }
-
-      debugger;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "NodeListItem"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        value: this.state.body,
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+        height: "20",
+        width: "16",
+        transform: "rotate(-90)"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("polygon", {
+        points: "0,0 3.5,7 7,0",
+        fill: "gray"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+        height: "8",
+        width: "16"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("circle", {
+        cx: "3",
+        cy: "3",
+        r: "3",
+        fill: "gray"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("circle", {
+        cx: "3",
+        cy: "3",
+        r: "3",
+        fill: "gray"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "class": "editable",
+        contentEditable: "true",
         onChange: this.update('body'),
         onKeyPress: function onKeyPress(e) {
           return _this3.handleKeyPress(e);
         },
         className: "existingNode"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, sublist));
+      }, this.state.body)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "sublist"
+      }, nestedNodes));
     }
   }]);
 
@@ -615,7 +610,6 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       body: "",
-      ord: null,
       completed: false
     };
     _this.handleKeyPress = _this.handleKeyPress.bind(_assertThisInitialized(_this));
@@ -639,13 +633,11 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleKeyPress",
     value: function handleKeyPress(e) {
-      if (e.key === 'Enter' && this.state.id === undefined) {
-        // debugger; 
+      if (!this.state.id && e.key === 'Enter') {
+        debugger;
         this.props.createNode(this.state);
-        var oldOrd = this.state.ord;
         this.setState({
           body: "",
-          ord: oldOrd + 1,
           completed: false
         });
       }
@@ -655,32 +647,35 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      if (!this.props.nodes) return null;
-      var rootNodes = this.props.nodes.filter(function (node) {
-        return node.parent_node_id === null;
-      });
+      debugger;
+      if (!Object.values(this.props.nodes).length) return null;
+      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "NodeListDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "NodeListUl"
-      }, rootNodes.map(function (node) {
+      }, Object.values(this.props.nodes).map(function (node) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: node.id,
           node: node,
           nodes: _this3.props.nodes,
-          childNodes: node.child_node_ids,
           fetchNode: _this3.props.fetchNode,
           updateNode: _this3.props.updateNode
         });
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        className: "newNodeInput",
-        value: this.state.body,
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "+",
+        id: "addNode"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "newNodeLi"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "class": "editable",
+        contentEditable: "true",
         onChange: this.update('body'),
         onKeyPress: function onKeyPress(e) {
           return _this3.handleKeyPress(e);
         }
-      }))));
+      }, this.state.body))));
     }
   }]);
 
@@ -707,11 +702,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+var mapStateToProps = function mapStateToProps(state) {
+  // = {}
   // debugger;
   return {
-    nodes: Object.values(state.entities.nodes)
+    nodes: state.entities.nodes
   };
 };
 
@@ -769,10 +764,48 @@ var Root = function Root(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/session_form.jsx":
-/*!**********************************************!*\
-  !*** ./frontend/components/session_form.jsx ***!
-  \**********************************************/
+/***/ "./frontend/components/sessions/login_form_container.jsx":
+/*!***************************************************************!*\
+  !*** ./frontend/components/sessions/login_form_container.jsx ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _session_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./session_form */ "./frontend/components/sessions/session_form.jsx");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
+
+
+
+
+var msp = function msp(state, ownProps) {
+  return {
+    formType: 'Log in',
+    errors: state.errors
+  };
+};
+
+var mdp = function mdp(dispatch, ownProps) {
+  return {
+    processForm: function processForm(user) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["login"])(user));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_session_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/sessions/session_form.jsx":
+/*!*******************************************************!*\
+  !*** ./frontend/components/sessions/session_form.jsx ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -878,10 +911,10 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./frontend/components/signup_form_container.jsx":
-/*!*******************************************************!*\
-  !*** ./frontend/components/signup_form_container.jsx ***!
-  \*******************************************************/
+/***/ "./frontend/components/sessions/signup_form_container.jsx":
+/*!****************************************************************!*\
+  !*** ./frontend/components/sessions/signup_form_container.jsx ***!
+  \****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -890,8 +923,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _session_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./session_form */ "./frontend/components/session_form.jsx");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _session_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./session_form */ "./frontend/components/sessions/session_form.jsx");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 
 
 
@@ -969,19 +1002,21 @@ var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/node_actions */ "./frontend/actions/node_actions.js");
+/* harmony import */ var _selectors_nodes_selector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../selectors/nodes_selector */ "./frontend/selectors/nodes_selector.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  Object.freeze(state); // debugger;
+  Object.freeze(state);
+  debugger;
 
   switch (action.type) {
     case _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NODES"]:
-      return Object.assign({}, action.nodes.sort(function (a, b) {
-        return a.ord - b.ord;
-      }));
+      debugger;
+      return Object(_selectors_nodes_selector__WEBPACK_IMPORTED_MODULE_1__["selectAllNodes"])(state, action);
 
     case _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NODE"]:
       return Object.assign({}, state, _defineProperty({}, action.node.id, action.node));
@@ -1125,6 +1160,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state;
   }
 });
+
+/***/ }),
+
+/***/ "./frontend/selectors/nodes_selector.js":
+/*!**********************************************!*\
+  !*** ./frontend/selectors/nodes_selector.js ***!
+  \**********************************************/
+/*! exports provided: selectAllNodes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectAllNodes", function() { return selectAllNodes; });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var selectAllNodes = function selectAllNodes() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  var newState;
+  action.nodes.forEach(function (node) {
+    var id = node.id,
+        body = node.body,
+        completed = node.completed,
+        ord = node.ord,
+        child_ids = node.child_ids;
+
+    var newNode = _defineProperty({}, id, {
+      id: id,
+      body: body,
+      completed: completed,
+      ord: ord,
+      child_ids: child_ids
+    });
+
+    newState = Object.assign({}, newState, newNode);
+  });
+  return newState;
+};
 
 /***/ }),
 

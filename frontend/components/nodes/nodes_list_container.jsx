@@ -2,10 +2,12 @@ import { connect } from 'react-redux';
 import NodeList from './nodes_list'; 
 import { fetchAllNodes, fetchNode, createNode, updateNode, deleteNode } from '../../actions/node_actions';
 
-const mapStateToProps = (state = {}) => {
+
+
+const mapStateToProps = (state) => { // = {}
     // debugger;
     return ({
-        nodes: Object.values(state.entities.nodes)
+        nodes: state.entities.nodes,
     })
 }; 
 

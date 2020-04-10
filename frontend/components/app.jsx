@@ -1,8 +1,8 @@
 import React from 'react';
 import GreetingContainer from "./greeting/greeting_container";
 import { Route, HashRouter, withRouter} from 'react-router-dom';
-import LoginFormContainer from './login_form_container';
-import SignupFormContainer from './signup_form_container';
+import LoginFormContainer from './sessions/login_form_container';
+import SignupFormContainer from './sessions/signup_form_container';
 import {AuthRoute, NodeRoute} from '../util/route_util';
 import NodeListContainer from './nodes/nodes_list_container';
 

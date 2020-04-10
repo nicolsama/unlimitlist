@@ -4,19 +4,21 @@ import NodeListContainer from './nodes_list_container';
 
 class NodeListItem extends React.Component {
     constructor(props) {
-        super(props)
-        this.state = {
-            id: this.props.node.id,
-            body: this.props.node.body,
-            ord: this.props.node.ord,
-            completed: this.props.node.completed,
-        }
+        super(props);
+        debugger; 
+        this.state = this.props.node;
+        // this.state = {
+        //     id: this.props.node.id,
+        //     body: this.props.node.body,
+        //     completed: this.props.node.completed,
+        //     ord: this.props.node.ord,
+        // }
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     handleKeyPress(e) {
-        if (e.key === 'Enter' && (this.state.id)) {
-            // debugger; 
+        debugger; 
+        if ((this.state.id) && e.key === 'Enter') {
             this.props.updateNode(this.state);
         }
     }
@@ -26,28 +28,51 @@ class NodeListItem extends React.Component {
     }
 
     render() {
-        debugger;
+        debugger; 
+        const allNodes = this.props.nodes;
 
-        let sublist = "";
-        if (this.props.childNodes) {
-            sublist = (<NodeListContainer state={this.props.childNodes} />)
-        } 
+        const nestedNodes = (this.props.node.child_ids).map( id => { 
+            const node = allNodes[id];
+            debugger; 
+            return (<NodeListItem
+                key={id}
+                node={node}
+                nodes={this.props.nodes}
+                fetchNode={this.props.fetchNode}
+                updateNode={this.props.updateNode}
+                type="child" />)
+            
+        });
 
-        debugger;
         return (
             <>
-            <li className="NodeListItem">
-                <input type='text'
-                value={this.state.body}
-                onChange={this.update('body')}
-                onKeyPress={(e) => this.handleKeyPress(e)}
-                className="existingNode"
-                />
-            </li> 
-                <div>
-                    {sublist}
+            <div className="NodeListItem">
+                <a href='#'>
+                        <svg height="20" width="16" transform='rotate(-90)'>
+                            <polygon points="0,0 3.5,7 7,0" fill="gray" />
+                    </svg>
+                </a>
+                <a href='#'>
+                    <svg height="8" width="16">
+                        <circle cx="3" cy="3" r="3" fill="gray" />
+                        <circle cx="3" cy="3" r="3" fill="gray" />
+                    </svg>
+                </a>
+
+                <span
+                    class='editable' 
+                    contentEditable="true"
+                    onChange={this.update('body')}
+                    onKeyPress={(e) => this.handleKeyPress(e)}
+                    className="existingNode">
+                    {this.state.body}
+                </span>
+            </div>
+                <div className='sublist'>
+                    {nestedNodes}
                 </div>
-            </>);
+            </>
+        );
     }
 
 }

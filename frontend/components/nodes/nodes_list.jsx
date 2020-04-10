@@ -7,10 +7,8 @@ class NodeList extends React.Component {
         super(props);
         this.state = {
             body: "", 
-            ord: null, 
             completed: false,
         }
-
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
@@ -23,38 +21,46 @@ class NodeList extends React.Component {
     }
 
     handleKeyPress(e) {
-        if (e.key === 'Enter' && (this.state.id === undefined)) {
-            // debugger; 
+        if ((!this.state.id) && e.key === 'Enter') {
+            debugger; 
             this.props.createNode(this.state);
-            let oldOrd = this.state.ord; 
-            this.setState({body: "", ord: oldOrd + 1, completed: false})
+            this.setState({body: "", completed: false});
         }
     }
 
-
     render() {
-        if (!this.props.nodes) return null; 
-        let rootNodes = this.props.nodes.filter(node => node.parent_node_id === null);
-        return(
+        debugger;
+
+        if (!Object.values(this.props.nodes).length) return null; 
+
+        debugger;
+
+        return (
             <div className="NodeListDiv">
                 <ul className="NodeListUl">
-                    {
-                    rootNodes.map(node => (
+                    {Object.values(this.props.nodes).map(node => (
                         <NodeListItem
                             key={node.id}
                             node={node}
                             nodes={this.props.nodes}
-                            childNodes={node.child_node_ids}
                             fetchNode={this.props.fetchNode}
                             updateNode={this.props.updateNode}
                         />))
                     }
-                    <li>
-                        <input type="text"
-                        className='newNodeInput'
-                        value={this.state.body}
+                    <input 
+                        type='submit' 
+                        value='+' 
+                        id="addNode"
+                    />
+
+                    <li className='newNodeLi'>
+                        <span
+                        class='editable'
+                        contentEditable="true"
                         onChange={this.update('body')}
-                        onKeyPress={(e) => this.handleKeyPress(e)}/>
+                        onKeyPress={(e) => this.handleKeyPress(e)}>
+                        {this.state.body}
+                        </span>
                     </li>
                 </ul>
             </div>

@@ -9,7 +9,6 @@ const _initialState = Object.freeze({
     id: null
 });
 
-
 const sessionReducer = (state = _initialState, action) => {
     Object.freeze(state);
     switch (action.type) {
