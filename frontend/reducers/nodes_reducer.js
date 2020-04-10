@@ -14,7 +14,9 @@ export default (state = {}, action) => {
             // debugger; 
             return selectAllNodes(state, action);
         case RECEIVE_NODE: 
-            return Object.assign({}, state, {[action.node.id]: action.node})
+            let newState = Object.assign({}, state);
+            newState.allNodes[action.node.id] = action.node || action.node
+            return Object.assign({}, newState);
         case REMOVE_NODE:
             let nextState = Object.assign({}, state); 
             delete nextState[action.nodeId];

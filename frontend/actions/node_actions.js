@@ -36,7 +36,7 @@ export const createNode = node => dispatch => (
 ); 
 
 export const updateNode = node => dispatch => (
-    NodeApiUtil.createNode(node)
+    NodeApiUtil.updateNode(node)
         .then(node => dispatch(receiveNode(node)))
 ); 
 

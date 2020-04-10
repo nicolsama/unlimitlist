@@ -154,7 +154,7 @@ var createNode = function createNode(node) {
 };
 var updateNode = function updateNode(node) {
   return function (dispatch) {
-    return _util_node_api_util__WEBPACK_IMPORTED_MODULE_0__["createNode"](node).then(function (node) {
+    return _util_node_api_util__WEBPACK_IMPORTED_MODULE_0__["updateNode"](node).then(function (node) {
       return dispatch(receiveNode(node));
     });
   };
@@ -489,11 +489,23 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     debugger; // this.state = this.props.node;
 
+    var _this$props$node = _this.props.node,
+        id = _this$props$node.id,
+        body = _this$props$node.body,
+        completed = _this$props$node.completed,
+        ord = _this$props$node.ord,
+        child_ids = _this$props$node.child_ids,
+        parent_node_id = _this$props$node.parent_node_id;
     _this.state = {
-      id: _this.props.node.id,
-      body: _this.props.node.body,
-      completed: _this.props.node.completed,
-      ord: _this.props.node.ord
+      node: {
+        id: id,
+        body: body,
+        completed: completed,
+        ord: ord,
+        child_ids: child_ids,
+        parent_node_id: parent_node_id
+      },
+      allNodes: _this.props.allNodes
     };
     _this.handleKeyPress = _this.handleKeyPress.bind(_assertThisInitialized(_this));
     _this.updateNode = _this.updateNode.bind(_assertThisInitialized(_this));
@@ -503,20 +515,37 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   _createClass(NodeListItem, [{
     key: "updateNode",
     value: function updateNode() {
-      this.props.updateNode(this.state);
+      this.props.updateNode(this.state.node);
     }
   }, {
     key: "handleKeyPress",
     value: function handleKeyPress(e) {
       debugger;
 
-      if (this.state.id && e.key === 'Enter') {
+      if (this.state.node.id && e.key === 'Enter') {
         debugger;
         this.setState({
-          body: e.currentTarget.textContent
+          node: {
+            body: e.currentTarget.textContent
+          }
         }, this.updateNode);
+        debugger;
+        var newNode = {
+          id: null,
+          body: " ",
+          completed: false,
+          ord: null,
+          parent_node_id: this.state.node.parent_node_id
+        };
+        this.props.createNode(newNode);
       }
-    }
+    } // handleEnter(e) => {
+    //     // Custom set cursor on zero text position in input text field
+    //     event.target.selectionStart = 0
+    //     event.target.selectionEnd = 0
+    //     this.setState({ value: event.target.value })
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -533,6 +562,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           allNodes: _this2.props.allNodes,
           fetchNode: _this2.props.fetchNode,
           updateNode: _this2.props.updateNode,
+          createNode: _this2.props.createNode,
           type: "child"
         });
       });
@@ -559,7 +589,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           return _this2.handleKeyPress(e);
         },
         className: "existingNode"
-      }, this.state.body)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.node.body)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sublist"
       }, nestedNodes));
     }
@@ -586,8 +616,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _node_list_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_list_item */ "./frontend/components/nodes/node_list_item.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -625,10 +653,9 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      body: "",
-      completed: false
+      allNodes: _this.props.allNodes,
+      parentNodeIds: _this.props.parentNodeIds
     };
-    _this.handleKeyPress = _this.handleKeyPress.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -638,46 +665,24 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
       this.props.fetchAllNodes();
     }
   }, {
-    key: "update",
-    value: function update(field) {
-      var _this2 = this;
-
-      return function (e) {
-        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
-      };
-    }
-  }, {
-    key: "handleKeyPress",
-    value: function handleKeyPress(e) {
-      debugger;
-
-      if (!this.state.id && e.key === 'Enter') {
-        debugger;
-        this.props.createNode(this.state);
-        this.setState({
-          body: "",
-          completed: false
-        });
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       debugger;
       if (!this.props.parentNodeIds) return null;
       debugger;
       var nodeLis = this.props.parentNodeIds.map(function (id) {
         debugger;
-        var node = _this3.props.allNodes[id];
+        var node = _this2.props.allNodes[id];
         debugger;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: node.id,
           node: node,
-          allNodes: _this3.props.allNodes,
-          fetchNode: _this3.props.fetchNode,
-          updateNode: _this3.props.updateNode
+          allNodes: _this2.props.allNodes,
+          fetchNode: _this2.props.fetchNode,
+          updateNode: _this2.props.updateNode,
+          createNode: _this2.props.createNode
         });
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -688,16 +693,7 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
         type: "submit",
         value: "+",
         id: "addNode"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "newNodeLi"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        "class": "editable",
-        contentEditable: "true",
-        onChange: this.update('body'),
-        onKeyPress: function onKeyPress(e) {
-          return _this3.handleKeyPress(e);
-        }
-      }, this.state.body))));
+      })));
     }
   }]);
 
@@ -1025,8 +1021,6 @@ var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/node_actions */ "./frontend/actions/node_actions.js");
 /* harmony import */ var _selectors_nodes_selector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../selectors/nodes_selector */ "./frontend/selectors/nodes_selector.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
@@ -1040,7 +1034,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return Object(_selectors_nodes_selector__WEBPACK_IMPORTED_MODULE_1__["selectAllNodes"])(state, action);
 
     case _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NODE"]:
-      return Object.assign({}, state, _defineProperty({}, action.node.id, action.node));
+      var newState = Object.assign({}, state);
+      newState.allNodes[action.node.id] = action.node || action.node;
+      return Object.assign({}, newState);
 
     case _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_NODE"]:
       var nextState = Object.assign({}, state);
@@ -1206,6 +1202,7 @@ var selectAllNodes = function selectAllNodes() {
         body = node.body,
         completed = node.completed,
         ord = node.ord,
+        parent_node_id = node.parent_node_id,
         child_ids = node.child_ids;
 
     var newNode = _defineProperty({}, id, {
@@ -1213,6 +1210,7 @@ var selectAllNodes = function selectAllNodes() {
       body: body,
       completed: completed,
       ord: ord,
+      parent_node_id: parent_node_id,
       child_ids: child_ids
     });
 
@@ -1221,6 +1219,9 @@ var selectAllNodes = function selectAllNodes() {
   var parentNodeIds = [];
   action.parentNodeIds.forEach(function (item) {
     return parentNodeIds.push(item.id);
+  });
+  parentNodeIds = parentNodeIds.sort(function (a, b) {
+    return allNodes[a].ord - allNodes[b].ord;
   }); // debugger;
 
   return Object.assign({}, state, {

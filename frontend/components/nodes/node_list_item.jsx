@@ -2,16 +2,23 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import NodeListContainer from './nodes_list_container';
 
+
 class NodeListItem extends React.Component {
     constructor(props) {
         super(props);
         debugger; 
         // this.state = this.props.node;
+        const { id, body, completed, ord, child_ids, parent_node_id } = this.props.node; 
         this.state = {
-            id: this.props.node.id,
-            body: this.props.node.body,
-            completed: this.props.node.completed,
-            ord: this.props.node.ord,
+            node: {            
+                id: id,
+                body: body,
+                completed: completed,
+                ord: ord,
+                child_ids: child_ids,
+                parent_node_id: parent_node_id
+            }, 
+            allNodes: this.props.allNodes,
         }
 
         this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -19,17 +26,36 @@ class NodeListItem extends React.Component {
     }
 
     updateNode() {
-        this.props.updateNode(this.state)
+        this.props.updateNode(this.state.node)
     }
+
 
     handleKeyPress(e) {
         debugger;
-        if ((this.state.id) && e.key === 'Enter') {
+        if ((this.state.node.id) && e.key === 'Enter') {
             debugger;
-            this.setState({ body: e.currentTarget.textContent }, this.updateNode);
-            
+            this.setState({ node: {body: e.currentTarget.textContent} }, this.updateNode);
+
+            debugger;
+            const newNode = {
+                id: null,
+                body: " ",
+                completed: false,
+                ord: null,
+                parent_node_id: this.state.node.parent_node_id,
+            }
+
+            this.props.createNode(newNode);
         }
     }
+
+    // handleEnter(e) => {
+    //     // Custom set cursor on zero text position in input text field
+    //     event.target.selectionStart = 0
+    //     event.target.selectionEnd = 0
+
+    //     this.setState({ value: event.target.value })
+    // }
 
     render() {
         debugger; 
@@ -44,6 +70,7 @@ class NodeListItem extends React.Component {
                 allNodes={this.props.allNodes}
                 fetchNode={this.props.fetchNode}
                 updateNode={this.props.updateNode}
+                createNode={this.props.createNode}
                 type="child" />)
             
         });
@@ -70,7 +97,7 @@ class NodeListItem extends React.Component {
                     contentEditable="true"
                     onKeyPress={(e) => this.handleKeyPress(e)}
                     className="existingNode">
-                    {this.state.body}
+                    {this.state.node.body}
                 </span>
             </div>
                 <div className='sublist'>

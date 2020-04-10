@@ -24,6 +24,7 @@ class Api::NodesController < ApplicationController
     end
 
     def update
+        # debugger; 
         @node = Node.find_by(id: params[:id])
         if @node && @node.update(node_params)
 
@@ -40,7 +41,7 @@ class Api::NodesController < ApplicationController
 
     private
     def node_params
-        params.require(:node).permit(:body, :completed, :ord)
+        params.require(:node).permit(:body, :completed, :ord, :parent_node_id)
     end
 
 end

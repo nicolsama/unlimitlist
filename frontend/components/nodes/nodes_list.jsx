@@ -6,27 +6,13 @@ class NodeList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            body: "", 
-            completed: false,
+            allNodes: this.props.allNodes, 
+            parentNodeIds: this.props.parentNodeIds,
         }
-        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     componentDidMount() {
         this.props.fetchAllNodes();
-    }
-
-    update(field) {
-        return e => this.setState({ [field]: e.currentTarget.value})
-    }
-
-    handleKeyPress(e) {
-        debugger;
-        if ((!this.state.id) && e.key === 'Enter') {
-            debugger; 
-            this.props.createNode(this.state);
-            this.setState({body: "", completed: false});
-        }
     }
 
     render() {
@@ -44,6 +30,7 @@ class NodeList extends React.Component {
                     allNodes={this.props.allNodes}
                     fetchNode={this.props.fetchNode}
                     updateNode={this.props.updateNode}
+                    createNode={this.props.createNode}
                 />)
             })
 
@@ -56,16 +43,6 @@ class NodeList extends React.Component {
                         value='+' 
                         id="addNode"
                     />
-
-                    <li className='newNodeLi'>
-                        <span
-                        class='editable'
-                        contentEditable="true"
-                        onChange={this.update('body')}
-                        onKeyPress={(e) => this.handleKeyPress(e)}>
-                        {this.state.body}
-                        </span>
-                    </li>
                 </ul>
             </div>
         )
