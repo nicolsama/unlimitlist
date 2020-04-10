@@ -8,10 +8,10 @@ import {
 
 export default (state = {}, action) => {
     Object.freeze(state)
-    debugger;
+    // debugger;
     switch (action.type) {
         case RECEIVE_NODES: 
-            debugger; 
+            // debugger; 
             return selectAllNodes(state, action);
         case RECEIVE_NODE: 
             return Object.assign({}, state, {[action.node.id]: action.node})

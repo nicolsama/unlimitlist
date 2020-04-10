@@ -6,7 +6,8 @@ export const REMOVE_NODE = 'REMOVE_NODE';
 
 const receiveNodes = (nodes) => ({
     type: RECEIVE_NODES, 
-    nodes
+    nodes: nodes.allNodes,
+    parentNodeIds: nodes.parentNodeIds
 });
 
 const receiveNode = (node) => ({

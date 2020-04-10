@@ -6,30 +6,34 @@ class NodeListItem extends React.Component {
     constructor(props) {
         super(props);
         debugger; 
-        this.state = this.props.node;
-        // this.state = {
-        //     id: this.props.node.id,
-        //     body: this.props.node.body,
-        //     completed: this.props.node.completed,
-        //     ord: this.props.node.ord,
-        // }
+        // this.state = this.props.node;
+        this.state = {
+            id: this.props.node.id,
+            body: this.props.node.body,
+            completed: this.props.node.completed,
+            ord: this.props.node.ord,
+        }
+
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.updateNode = this.updateNode.bind(this);
+    }
+
+    updateNode() {
+        this.props.updateNode(this.state)
     }
 
     handleKeyPress(e) {
-        debugger; 
+        debugger;
         if ((this.state.id) && e.key === 'Enter') {
-            this.props.updateNode(this.state);
+            debugger;
+            this.setState({ body: e.currentTarget.textContent }, this.updateNode);
+            
         }
-    }
-
-    update(field) {
-        return e => this.setState({ [field]: e.currentTarget.value })
     }
 
     render() {
         debugger; 
-        const allNodes = this.props.nodes;
+        const allNodes = this.props.allNodes;
 
         const nestedNodes = (this.props.node.child_ids).map( id => { 
             const node = allNodes[id];
@@ -37,7 +41,7 @@ class NodeListItem extends React.Component {
             return (<NodeListItem
                 key={id}
                 node={node}
-                nodes={this.props.nodes}
+                allNodes={this.props.allNodes}
                 fetchNode={this.props.fetchNode}
                 updateNode={this.props.updateNode}
                 type="child" />)
@@ -64,7 +68,6 @@ class NodeListItem extends React.Component {
                 <span
                     class='editable' 
                     contentEditable="true"
-                    onChange={this.update('body')}
                     onKeyPress={(e) => this.handleKeyPress(e)}
                     className="existingNode">
                     {this.state.body}

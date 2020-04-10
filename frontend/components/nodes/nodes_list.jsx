@@ -21,6 +21,7 @@ class NodeList extends React.Component {
     }
 
     handleKeyPress(e) {
+        debugger;
         if ((!this.state.id) && e.key === 'Enter') {
             debugger; 
             this.props.createNode(this.state);
@@ -30,23 +31,26 @@ class NodeList extends React.Component {
 
     render() {
         debugger;
+        if (!this.props.parentNodeIds) return null; 
 
-        if (!Object.values(this.props.nodes).length) return null; 
-
-        debugger;
+        debugger; 
+            const nodeLis = this.props.parentNodeIds.map(id => {
+                debugger
+                let node = this.props.allNodes[id];
+                debugger;
+                return (<NodeListItem
+                    key={node.id}
+                    node={node}
+                    allNodes={this.props.allNodes}
+                    fetchNode={this.props.fetchNode}
+                    updateNode={this.props.updateNode}
+                />)
+            })
 
         return (
             <div className="NodeListDiv">
                 <ul className="NodeListUl">
-                    {Object.values(this.props.nodes).map(node => (
-                        <NodeListItem
-                            key={node.id}
-                            node={node}
-                            nodes={this.props.nodes}
-                            fetchNode={this.props.fetchNode}
-                            updateNode={this.props.updateNode}
-                        />))
-                    }
+                    {nodeLis}
                     <input 
                         type='submit' 
                         value='+' 

@@ -1,11 +1,10 @@
 export const selectAllNodes = (state = {}, action) => {
-
-    let newState;
-
+    // debugger;
+    let allNodes = {};
     action.nodes.forEach( node => {
         const { id, body, completed, ord , child_ids} = node; 
 
-        const newNode = {
+        let newNode = {
             [id]: {
                 id: id, 
                 body: body, 
@@ -15,8 +14,13 @@ export const selectAllNodes = (state = {}, action) => {
             
             }
         }
-        newState = Object.assign({}, newState, newNode);
-    })
+        allNodes = Object.assign({}, allNodes, newNode);
+    });
 
-    return newState;
+    let parentNodeIds = [];
+        action.parentNodeIds.forEach( item => parentNodeIds.push(item.id)); 
+
+    // debugger;
+    return Object.assign({}, state, {allNodes}, { parentNodeIds});
+    //return newState;
 };

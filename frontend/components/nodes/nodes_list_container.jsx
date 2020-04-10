@@ -4,10 +4,11 @@ import { fetchAllNodes, fetchNode, createNode, updateNode, deleteNode } from '..
 
 
 
-const mapStateToProps = (state) => { // = {}
-    // debugger;
+const mapStateToProps = (state) => { 
+    debugger;
     return ({
-        nodes: state.entities.nodes,
+        allNodes: state.entities.nodes.allNodes,
+        parentNodeIds: state.entities.nodes.parentNodeIds,
     })
 }; 
 

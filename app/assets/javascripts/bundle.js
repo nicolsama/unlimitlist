@@ -112,7 +112,8 @@ var REMOVE_NODE = 'REMOVE_NODE';
 var receiveNodes = function receiveNodes(nodes) {
   return {
     type: RECEIVE_NODES,
-    nodes: nodes
+    nodes: nodes.allNodes,
+    parentNodeIds: nodes.parentNodeIds
   };
 };
 
@@ -451,8 +452,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nodes_list_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./nodes_list_container */ "./frontend/components/nodes/nodes_list_container.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -488,52 +487,52 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, NodeListItem);
 
     _this = _super.call(this, props);
-    debugger;
-    _this.state = _this.props.node; // this.state = {
-    //     id: this.props.node.id,
-    //     body: this.props.node.body,
-    //     completed: this.props.node.completed,
-    //     ord: this.props.node.ord,
-    // }
+    debugger; // this.state = this.props.node;
 
+    _this.state = {
+      id: _this.props.node.id,
+      body: _this.props.node.body,
+      completed: _this.props.node.completed,
+      ord: _this.props.node.ord
+    };
     _this.handleKeyPress = _this.handleKeyPress.bind(_assertThisInitialized(_this));
+    _this.updateNode = _this.updateNode.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(NodeListItem, [{
+    key: "updateNode",
+    value: function updateNode() {
+      this.props.updateNode(this.state);
+    }
+  }, {
     key: "handleKeyPress",
     value: function handleKeyPress(e) {
       debugger;
 
       if (this.state.id && e.key === 'Enter') {
-        this.props.updateNode(this.state);
+        debugger;
+        this.setState({
+          body: e.currentTarget.textContent
+        }, this.updateNode);
       }
-    }
-  }, {
-    key: "update",
-    value: function update(field) {
-      var _this2 = this;
-
-      return function (e) {
-        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
-      };
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       debugger;
-      var allNodes = this.props.nodes;
+      var allNodes = this.props.allNodes;
       var nestedNodes = this.props.node.child_ids.map(function (id) {
         var node = allNodes[id];
         debugger;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, {
           key: id,
           node: node,
-          nodes: _this3.props.nodes,
-          fetchNode: _this3.props.fetchNode,
-          updateNode: _this3.props.updateNode,
+          allNodes: _this2.props.allNodes,
+          fetchNode: _this2.props.fetchNode,
+          updateNode: _this2.props.updateNode,
           type: "child"
         });
       });
@@ -556,9 +555,8 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         "class": "editable",
         contentEditable: "true",
-        onChange: this.update('body'),
         onKeyPress: function onKeyPress(e) {
-          return _this3.handleKeyPress(e);
+          return _this2.handleKeyPress(e);
         },
         className: "existingNode"
       }, this.state.body)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -651,6 +649,8 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleKeyPress",
     value: function handleKeyPress(e) {
+      debugger;
+
       if (!this.state.id && e.key === 'Enter') {
         debugger;
         this.props.createNode(this.state);
@@ -666,21 +666,25 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       debugger;
-      if (!Object.values(this.props.nodes).length) return null;
+      if (!this.props.parentNodeIds) return null;
       debugger;
+      var nodeLis = this.props.parentNodeIds.map(function (id) {
+        debugger;
+        var node = _this3.props.allNodes[id];
+        debugger;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          key: node.id,
+          node: node,
+          allNodes: _this3.props.allNodes,
+          fetchNode: _this3.props.fetchNode,
+          updateNode: _this3.props.updateNode
+        });
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "NodeListDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "NodeListUl"
-      }, Object.values(this.props.nodes).map(function (node) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          key: node.id,
-          node: node,
-          nodes: _this3.props.nodes,
-          fetchNode: _this3.props.fetchNode,
-          updateNode: _this3.props.updateNode
-        });
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, nodeLis, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "+",
         id: "addNode"
@@ -721,10 +725,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
-  // = {}
-  // debugger;
+  debugger;
   return {
-    nodes: state.entities.nodes
+    allNodes: state.entities.nodes.allNodes,
+    parentNodeIds: state.entities.nodes.parentNodeIds
   };
 };
 
@@ -1028,12 +1032,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  Object.freeze(state);
-  debugger;
+  Object.freeze(state); // debugger;
 
   switch (action.type) {
     case _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NODES"]:
-      debugger;
+      // debugger; 
       return Object(_selectors_nodes_selector__WEBPACK_IMPORTED_MODULE_1__["selectAllNodes"])(state, action);
 
     case _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NODE"]:
@@ -1196,7 +1199,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var selectAllNodes = function selectAllNodes() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  var newState;
+  // debugger;
+  var allNodes = {};
   action.nodes.forEach(function (node) {
     var id = node.id,
         body = node.body,
@@ -1212,9 +1216,18 @@ var selectAllNodes = function selectAllNodes() {
       child_ids: child_ids
     });
 
-    newState = Object.assign({}, newState, newNode);
+    allNodes = Object.assign({}, allNodes, newNode);
   });
-  return newState;
+  var parentNodeIds = [];
+  action.parentNodeIds.forEach(function (item) {
+    return parentNodeIds.push(item.id);
+  }); // debugger;
+
+  return Object.assign({}, state, {
+    allNodes: allNodes
+  }, {
+    parentNodeIds: parentNodeIds
+  }); //return newState;
 };
 
 /***/ }),
