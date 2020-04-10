@@ -5,19 +5,14 @@ import LoginFormContainer from './sessions/login_form_container';
 import SignupFormContainer from './sessions/signup_form_container';
 import {AuthRoute, NodeRoute} from '../util/route_util';
 import NodeListContainer from './nodes/nodes_list_container';
-
+import Logo from './logo/logo';
 const App = () => (
     <div>
         <header>
-            <span className='logoContainer'>
-                <img 
-                    src="assets/unlimitlist-logo copy.png" 
-                    className="logoImg" /> 
-                    UnlimitList
-                </span>
+            <AuthRoute path="/" component={Logo}/>
             <Route path="/" component={GreetingContainer} /> 
-        </header>
-        
+            {/* Search Bar component as Node Route */}
+        </header> 
         <NodeRoute path="/" component={NodeListContainer} />
         <AuthRoute path="/api/session" component={LoginFormContainer} />
         <AuthRoute path="/api/users" component={SignupFormContainer} />

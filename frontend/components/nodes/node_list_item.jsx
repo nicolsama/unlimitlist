@@ -47,18 +47,20 @@ class NodeListItem extends React.Component {
         return (
             <>
             <div className="NodeListItem">
-                <a href='#'>
-                        <svg height="20" width="16" transform='rotate(-90)'>
-                            <polygon points="0,0 3.5,7 7,0" fill="gray" />
-                    </svg>
-                </a>
-                <a href='#'>
-                    <svg height="8" width="16">
-                        <circle cx="3" cy="3" r="3" fill="gray" />
-                        <circle cx="3" cy="3" r="3" fill="gray" />
-                    </svg>
-                </a>
-
+                <div className="svgContainer">
+                        <a href='#'>
+                            <svg >
+                                <path d="M13.75 9.56879C14.0833 9.76124 14.0833 10.2424 13.75 10.4348L8.5 13.4659C8.16667 13.6584 7.75 13.4178 7.75 13.0329L7.75 6.97072C7.75 6.58582 8.16667 6.34525 8.5 6.5377L13.75 9.56879Z"
+                                />
+                            </svg>
+                        
+                        </a>
+                        <a href='#'>
+                            <svg  transform='rotate(-90)'>
+                                <circle cx="9" cy="9" r="3.5" />
+                            </svg>
+                        </a>
+                    </div>
                 <span
                     class='editable' 
                     contentEditable="true"
