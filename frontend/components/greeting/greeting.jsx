@@ -45,12 +45,12 @@ class Greeting extends React.Component {
             let linkValue;
             let newPath; 
 
-            if (this.props.linkPath == '/api/users') { 
-                linkValue ='Sign In'; 
-                newPath = '/api/session';
+            if (this.props.linkPath == '/api/signup') { 
+                linkValue ='Log In'; 
+                newPath = '/api/login';
             } else { 
                 linkValue = 'Sign Up';
-                newPath = '/api/users';
+                newPath = '/api/signup';
             }
 
             return (

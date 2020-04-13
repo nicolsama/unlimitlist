@@ -13,13 +13,13 @@ const App = () => (
             <Route path="/" component={GreetingContainer} /> 
         </header> 
 
-        <Switch>
-            <NodeRoute forceRefresh={true} path="/nodes/:id" component={NodeListContainer} />
-            <NodeRoute path="/" component={NodeListContainer} />
-        </Switch>
+
+        <NodeRoute exact path="/nodes" component={NodeListContainer} />
+        {/* <NodeRoute path="/nodes/:id" component={NodeListContainer} /> */}
+
         
-        <AuthRoute path="/api/session" component={LoginFormContainer} />
-        <AuthRoute path="/api/users" component={SignupFormContainer} />
+        <AuthRoute path="/api/login" component={LoginFormContainer} />
+        <AuthRoute path="/api/signup" component={SignupFormContainer} />
 
     </div>
 );

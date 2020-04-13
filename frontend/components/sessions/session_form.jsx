@@ -32,20 +32,21 @@ class SessionForm extends React.Component {
             
             <form onSubmit={this.handleSubmit} className='sessionForm'>
                 <h3>{this.props.formType} {word} Unlimitlist</h3>
-                <label>Email<br />
+
                     <input
                         type='text'
                         value={this.state.email}
-                        onChange={this.handleChange('email')}>
+                        onChange={this.handleChange('email')}
+                        placeholder='email'>
                     </input>
-                </label><br />
-                <label>Password<br />
+                <br />
                     <input
                         type='password'
                         value={this.state.password}
-                        onChange={this.handleChange('password')}>
+                        onChange={this.handleChange('password')}
+                        placeholder='password'>
                     </input>
-                </label>
+
                 <button 
                     type='submit' 
                     className="sessionButton">
