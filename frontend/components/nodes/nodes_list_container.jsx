@@ -9,6 +9,7 @@ const mapStateToProps = (state) => {
     return ({
         allNodes: state.entities.nodes.allNodes,
         parentNodeIds: state.entities.nodes.parentNodeIds,
+        lastCreated: state.entities.nodes.lastCreated,
     })
 }; 
 

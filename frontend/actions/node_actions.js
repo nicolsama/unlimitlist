@@ -7,7 +7,8 @@ export const REMOVE_NODE = 'REMOVE_NODE';
 const receiveNodes = (nodes) => ({
     type: RECEIVE_NODES, 
     nodes: nodes.allNodes,
-    parentNodeIds: nodes.parentNodeIds
+    parentNodeIds: nodes.parentNodeIds, 
+    lastCreated: nodes.last_created,
 });
 
 const receiveNode = (node) => ({
@@ -32,7 +33,7 @@ export const fetchNode = nodeId => dispatch => (
 
 export const createNode = node => dispatch => (
     NodeApiUtil.createNode(node)
-        .then(node => dispatch(receiveNode(node)))
+        .then(nodes => dispatch(receiveNodes(nodes)))
 ); 
 
 export const updateNode = node => dispatch => (

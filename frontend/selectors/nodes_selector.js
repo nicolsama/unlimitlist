@@ -30,6 +30,8 @@ export const selectAllNodes = (state = {}, action) => {
         parentNodeIds = parentNodeIds.sort((a,b) => allNodes[a].ord - allNodes[b].ord)
 
     // debugger;
-    return Object.assign({}, state, {allNodes}, { parentNodeIds});
+    let lastCreated = action.lastCreated;
+    // debugger; 
+    return Object.assign({}, state, {allNodes}, {parentNodeIds}, {lastCreated: lastCreated});
     //return newState;
 };

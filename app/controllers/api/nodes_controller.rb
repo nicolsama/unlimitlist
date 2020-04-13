@@ -6,7 +6,8 @@ class Api::NodesController < ApplicationController
     end
 
     def show
-        @node = Node.find_by(id: params[:id])
+        @nodes = Node.find_by(id: params[:id]).descendants.map { |id| Node.find_by(id: id)}
+        render :index
     end
     
     def create
@@ -16,7 +17,8 @@ class Api::NodesController < ApplicationController
         # debugger
         if @node.save
             # debugger
-            render :show
+            @nodes = current_user.nodes.includes(:children)
+            render :index
         else 
             # debugger
             render json: @node.errors.full_messages
@@ -27,8 +29,9 @@ class Api::NodesController < ApplicationController
         # debugger; 
         @node = Node.find_by(id: params[:id])
         if @node && @node.update(node_params)
-
-            render :show 
+            
+            @nodes = current_user.nodes.includes(:children)
+            render :index
         else 
             # debugger
             render json: @node.errors.full_messages
@@ -37,6 +40,8 @@ class Api::NodesController < ApplicationController
 
     def destroy
         Node.delete(params[:id])
+        @nodes = current_user.nodes.includes(:children)
+        render :index
     end
 
     private

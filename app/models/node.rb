@@ -26,12 +26,30 @@ class Node < ApplicationRecord
         inverse_of: :children,
         optional: true
 
-    # has_many :ancestors ,
-    #     through: :children,
-    #     source: :children
+    def descendants
+        descendants_arr = []
+        self.children.each do |child|
+            descendants_arr << child.id
+            descendants_arr.push(*child.descendants)
+        end
+        descendants_arr
+    end
+
+    def ancestors
+        ancestors_arr = []
+        parent = self.parent_node
+            ancestors_arr << parent.id
+            ancestors_arr.push(*parent.ancestors) if parent.parent_node_id
+        ancestors_arr
+    end
+
 
     def root?
         self.parent_node_id == nil
+    end
+
+    def self.last_created(nodes_array)
+        nodes_array.sort_by{ |node| node[:created_at] }.last[:id]
     end
 
 end

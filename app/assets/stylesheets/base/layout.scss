@@ -41,12 +41,45 @@ h3 {
     }
 
 header {
-    padding: 20px;
     display: flex; 
     justify-content: space-between;
+    height: 50px;
+
 }
 
-.HeaderButton {
+.navBar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: rgb(203, 206, 208) 1px solid;
+}
+
+.navBarLeft {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.navBarLeft path {
+    fill:none;
+    border: 1px solid rgb(203, 206, 208);
+    opacity: .5;
+}
+
+.navBarLeft circle {
+    fill: none;
+    stroke: grey;
+}
+
+.menu-icon {
+    margin-left: 20px;
+    height: 16px;
+}
+
+
+.headerButton {
+    display: inline-block;
     border: none;
     background-color:#e3f2fd;
     border-radius: 16px;
@@ -56,8 +89,35 @@ header {
     padding: 10px 15px 10px 15px;
 }
 
-.HeaderButton:hover {
+.headerButton:hover {
         background-color: #b1bfca;
 }
+
+.searchBar,
+.gearIcon,
+.menu-icon {
+    padding: 8px 8px 6px 8px;
+    border-radius: 22px;
+    border: 1px solid rgb(220, 224, 226);
+    margin-right: 10px;
+}
+
+
+.menu-icon {
+    padding: 10px 8px 10px 8px;
+    border-radius: 24px;
+    border: 1px solid rgb(220, 224, 226);
+    margin-right: 10px;
+}
+
+.searchBar:hover,
+.gearIcon:hover,
+.menu-icon:hover {
+    background-color: rgb(220, 224, 226);
+}
+
+
+
+
 
 

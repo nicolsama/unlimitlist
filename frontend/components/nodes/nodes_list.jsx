@@ -7,12 +7,25 @@ class NodeList extends React.Component {
         super(props);
         this.state = {
             allNodes: this.props.allNodes, 
-            parentNodeIds: this.props.parentNodeIds,
+            parentNodeIds: this.props.parentNodeIds, 
         }
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
         this.props.fetchAllNodes();
+    }
+
+    handleClick() {
+        const newNode = {
+            id: null,
+            body: "",
+            completed: false,
+            ord: null,
+            parent_node_id: null,
+        }
+
+        this.props.createNode(newNode);
     }
 
     render() {
@@ -31,6 +44,8 @@ class NodeList extends React.Component {
                     fetchNode={this.props.fetchNode}
                     updateNode={this.props.updateNode}
                     createNode={this.props.createNode}
+                    deleteNode={this.props.deleteNode}
+                    lastCreated={this.props.lastCreated}
                 />)
             })
 
@@ -42,6 +57,7 @@ class NodeList extends React.Component {
                         type='submit' 
                         value='+' 
                         id="addNode"
+                        onClick={this.handleClick}
                     />
                 </ul>
             </div>

@@ -1,53 +1,66 @@
 .NodeListDiv {
-    display: flex;    
-    width: 80%;
-    margin: 0 auto;
-    box-sizing: border-box;
-    padding: 10px;
+    padding-top: 80px; 
+    width:70%;
+    margin: 0 auto; 
 }
 
-
-.NodeListItem {
-    display: flex;
-    font-size: 16px;
-    align-items: flex-start;
+.editable {
+    width: 100%;
 }
-
-.sublist {
-    margin-left: 30px;
-}
-
-span:focus{
+.editable:focus {
     outline: none;
-}
-
-.newNodeLi {
-    display: none;
 }
 
 #addNode {
     color:rgb(42, 49, 53);
+    border-color: none;;
     border-radius: 20px;
     width: 25px;
-    float:left;
+    margin-left: 22px;
 }
+
 #addNode:hover {
     background-color: lightgray;
 }
 
-svg { height: 19px; width: 20px;}
+svg { 
+    height: 19px; 
+    width: 20px;
+
+    }
+
+.svgContainer {
+        padding: 3px; 
+        height: 19px;
+        width: 100%;
+        display: flex;
+    }
 
 path {
     fill: rgb(203, 206, 208);
-    display: block;
 }
 
 circle {
     fill: rgb(42, 49, 53);
 }
 
-.svgContainer {
-    display: flex; 
-    align-items: center; 
-    justify-content: left;
+.bullet {
+        height: 20px;
+        border-radius: 28px;
+        padding: 1.5px 0 0 1.5px;
+        margin-right: 8px;
+    }
+
+.bullet:hover {
+    background-color: rgb(203, 206, 208);
+}
+
+
+.sublist {
+    margin-left: 33px;
+    list-style: none;
+    display: block;
+    border-left: rgb(203, 206, 208) 1px solid;
+    padding-left: 10px;
+
 }
