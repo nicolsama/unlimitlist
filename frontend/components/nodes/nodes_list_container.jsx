@@ -5,14 +5,14 @@ import { fetchAllNodes, fetchNode, createNode, updateNode, deleteNode } from '..
 
 
 const mapStateToProps = (state, ownProps) => { 
-    debugger;
-    let topNode = (ownProps.match.params.id) ? ownProps.match.params.id : null;
-    debugger;
+
+    let currentNodeId = ownProps.match.params.id;
+
     return ({
-        topNode: topNode,
         allNodes: state.entities.nodes.allNodes,
         parentNodeIds: state.entities.nodes.parentNodeIds,
         lastCreated: state.entities.nodes.lastCreated,
+        currentNodeId
     })
 }; 
 

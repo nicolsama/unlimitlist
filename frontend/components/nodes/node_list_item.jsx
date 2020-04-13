@@ -34,9 +34,10 @@ class NodeListItem extends React.Component {
     // }
 
     handleKeyDown(e) {
-        debugger;
+    
+        // debugger;
         if ((this.state.id) && e.key === 'Enter') {
-            // debugger;
+            e.preventDefault();
             this.setState({ body: e.currentTarget.textContent }, this.updateNode);
 
             // debugger;
@@ -49,8 +50,9 @@ class NodeListItem extends React.Component {
             }
 
             this.props.createNode(newNode);
-        } else if (e.keyCode === 8) {
-            debugger; 
+        } else if (e.keyCode === 8 && (e.currentTarget.innerHTML.length === 0)) {
+      
+            // debugger; 
             this.props.deleteNode(this.state.id);
         }
     }
@@ -61,12 +63,12 @@ class NodeListItem extends React.Component {
     }
 
     render() {
-        debugger; 
+        // debugger; 
         const allNodes = this.props.allNodes;
-        debugger; 
+        // debugger; 
         const nestedNodes = (this.props.node.child_ids).map( id => { 
             const node = allNodes[id];
-            debugger; 
+            // debugger; 
             return (<NodeListItem
                 key={id}
                 node={node}
@@ -94,13 +96,13 @@ class NodeListItem extends React.Component {
                             </svg>
                         </a>
 
-                        <a href='#'>
+                        <Link to={`/nodes/${this.state.id}`}>
                             <div>
                                 <svg className="bullet">
                                     <circle cx="9" cy="9" r="3.5" />
                                 </svg>
                             </div>
-                        </a>
+                        </Link>
 
                         <div
                             class='editable'

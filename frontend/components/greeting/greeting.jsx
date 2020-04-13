@@ -11,6 +11,8 @@ class Greeting extends React.Component {
         if (this.props.currentUser) {
 
             return (
+                <>     
+
                 <div className='navBar'>
                     <svg className="menu-icon" viewBox="0 0 448 512" >
                         <path fill="grey" d="M442 114H6a6 6 0 0 1-6-6V84a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm0 160H6a6 6 0 0 1-6-6v-24a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm0 160H6a6 6 0 0 1-6-6v-24a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6z"
@@ -33,12 +35,14 @@ class Greeting extends React.Component {
                             </svg>
                         </div> 
 
-                        <button
+
+                        {/* <button
                             className='headerButton'
                             onClick={this.props.logout}>
-                        Log Out</button>
+                        Log Out</button> */}
                     </div>
                 </div>
+                </>
              )
         } else {
 

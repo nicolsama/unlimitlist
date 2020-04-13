@@ -16,9 +16,12 @@ const Node = ({ component: Component, path, loggedIn, exact }) => (
     <Route
         path={path}
         exact={exact}
-        render={props =>
-            loggedIn ? <Component {...props} /> : <Redirect to="/" />
-        }
+        // render={props => {
+        //     return (loggedIn ? <Component {...props} /> : <Redirect to="/" />)
+        // }}
+        render={props => {
+            return (<Component {...props} />)
+        }}
     />
 );
 

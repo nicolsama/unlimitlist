@@ -15,9 +15,10 @@ export default (state = {}, action) => {
             return selectAllNodes(state, action);
         case RECEIVE_NODE: 
             let newState = Object.assign({}, state);
+            // debugger; 
             newState.allNodes[action.node.id] = action.node || action.node
-            // also check if action.node is a root node and create parent node array slice of state
-            return Object.assign({}, newState);
+            // debugger; 
+            return Object.assign({}, newState );
         case REMOVE_NODE:
             let nextState = Object.assign({}, state); 
             delete nextState[action.nodeId];

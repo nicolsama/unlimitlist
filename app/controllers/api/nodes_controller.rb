@@ -1,13 +1,15 @@
 class Api::NodesController < ApplicationController
 
     def index
-        # debugger
+        @node = Node.first
         @nodes = current_user.nodes.includes(:children)
+        render :index
     end
 
     def show
-        @nodes = Node.find_by(id: params[:id]).descendants.map { |id| Node.find_by(id: id)}
-        render :index
+        @node = Node.find_by(id: params[:id])
+        @nodes = @node.descendants.map {|id| Node.find_by(id: id)}
+        render :show
     end
     
     def create

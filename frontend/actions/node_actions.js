@@ -28,7 +28,7 @@ export const fetchAllNodes = () => dispatch => (
 
 export const fetchNode = nodeId => dispatch => (
     NodeApiUtil.fetchNode(nodeId)
-        .then(node => dispatch(receiveNode(node)))
+        .then(nodes => dispatch(receiveNodes(nodes)))
 );
 
 export const createNode = node => dispatch => (
@@ -43,6 +43,6 @@ export const updateNode = node => dispatch => (
 
 export const deleteNode = nodeId => dispatch => (
     NodeApiUtil.deleteNode(nodeId)
-        .then(() => dispatch(removeNode(nodeId)))
+        .then((nodes) => dispatch(receiveNodes(nodes)))
 );
 

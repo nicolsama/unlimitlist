@@ -1,6 +1,7 @@
 .NodeListDiv {
     padding-top: 80px; 
     width:70%;
+    height: 100%;
     margin: 0 auto; 
 }
 
@@ -63,4 +64,9 @@ circle {
     border-left: rgb(203, 206, 208) 1px solid;
     padding-left: 10px;
 
+}
+
+.focusTitle {
+    font-weight: 900;
+    font-size: 24px;
 }
