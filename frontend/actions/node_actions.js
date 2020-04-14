@@ -4,12 +4,16 @@ export const RECEIVE_NODES = 'RECEIVE_NODES';
 export const RECEIVE_NODE = 'RECEIVE_NODE';
 export const REMOVE_NODE = 'REMOVE_NODE';
 
-const receiveNodes = (nodes) => ({
+const receiveNodes = (nodes) => {
+    
+return (    
+{
     type: RECEIVE_NODES, 
     nodes: nodes.allNodes,
     parentNodeIds: nodes.parentNodeIds, 
     lastCreated: nodes.last_created,
-});
+    // pagesPath: nodes.path
+    })};
 
 const receiveNode = (node) => ({
     type: RECEIVE_NODE,
@@ -38,7 +42,7 @@ export const createNode = node => dispatch => (
 
 export const updateNode = node => dispatch => (
     NodeApiUtil.updateNode(node)
-        .then(node => dispatch(receiveNode(node)))
+        .then(nodes => dispatch(receiveNodes(nodes)))
 ); 
 
 export const deleteNode = nodeId => dispatch => (

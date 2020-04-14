@@ -31,7 +31,18 @@ export const selectAllNodes = (state = {}, action) => {
 
     // debugger;
     let lastCreated = action.lastCreated;
+
     // debugger; 
-    return Object.assign({}, state, {allNodes}, {parentNodeIds}, {lastCreated: lastCreated});
+    // let pagesPath = [];
+    //     action.pagesPath.forEach(id => pagesPath.push(id));
+
+    // debugger; 
+    return Object.assign({}, state, {
+        allNodes
+    }, {
+        parentNodeIds
+    }, {
+        lastCreated: lastCreated
+    });
     //return newState;
 };

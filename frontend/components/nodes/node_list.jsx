@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
 import NodeListItem from './node_list_item';
 
 class NodeList extends React.Component {
@@ -18,16 +17,23 @@ class NodeList extends React.Component {
         }
     }
 
-    handleClick() {
-        const newNode = {
-            id: null,
-            body: "",
-            completed: false,
-            ord: null,
-            parent_node_id: null,
-        }
+    // MOVED TO NODE_LIST_ADD
+    
+    handleClick(e) {
 
-        this.props.createNode(newNode);
+            let body = (this.props.currentNodeId) ? e.currentTarget.value : "";
+            let parent_node_id = (this.props.currentNodeId) ? this.props.currentNodeId : null; 
+
+            const newNode = {
+                id: null,
+                body: body,
+                completed: false,
+                ord: null,
+                parent_node_id: parent_node_id,
+            }
+            
+            this.props.createNode(newNode);
+    
     }
 
     render() {
@@ -40,6 +46,7 @@ class NodeList extends React.Component {
                 return (<NodeListItem
                     key={node.id}
                     node={node}
+                    // props={...props}
                     allNodes={this.props.allNodes}
                     fetchNode={this.props.fetchNode}
                     updateNode={this.props.updateNode}
@@ -49,21 +56,18 @@ class NodeList extends React.Component {
                 />)
             })
 
-        
-
         return (<>
 
             <div className="NodeListDiv">
                 <ul className="NodeListUl">
                 <h2 className="focusTitle"> {this.props.allNodes[this.props.currentNodeId] ? this.props.allNodes[this.props.currentNodeId].body : ""} </h2>
                     {nodeLis}
-                    <input 
-                        type='submit' 
-                        value='+' 
-                        id="addNode"
-                        onClick={this.handleClick}
-                    />
                 </ul>
+                <button
+                    id="addNode"
+                    onClick={this.handleClick}>
+                +
+                </button>
             </div>
         </>
         )

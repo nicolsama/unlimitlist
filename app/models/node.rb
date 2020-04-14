@@ -37,9 +37,10 @@ class Node < ApplicationRecord
 
     def ancestors
         ancestors_arr = []
-        parent = self.parent_node
-            ancestors_arr << parent.id
-            ancestors_arr.push(*parent.ancestors) if parent.parent_node_id
+        if self.parent_node_id
+                ancestors_arr << self.parent_node_id 
+                ancestors_arr.push(*parent.ancestors)
+        end
         ancestors_arr
     end
 

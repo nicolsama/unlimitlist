@@ -6,8 +6,10 @@ import SignupFormContainer from './sessions/signup_form_container';
 import {AuthRoute, NodeRoute} from '../util/route_util';
 import NodeListContainer from './nodes/nodes_list_container';
 import NodeListFocusContainer from './nodes/node_list_focus_container';
-import Logo from './logo/logo';
+import Logo from './logo';
 import Nav from './navs/nav_main';
+import Splash from './sessions/splash';
+
 const App = () => (
     <div>
         <header>
@@ -16,12 +18,12 @@ const App = () => (
             <NodeRoute path="/" component={Nav} />
         </header> 
 
+
         <NodeRoute exact path="/" component={NodeListContainer} />
         <NodeRoute path="/nodes/:id" component={NodeListFocusContainer} />
-
-        
         <AuthRoute path="/api/login" component={LoginFormContainer} />
         <AuthRoute path="/api/signup" component={SignupFormContainer} />
+        <AuthRoute exact path="/" component={Splash} />
 
     </div>
 );

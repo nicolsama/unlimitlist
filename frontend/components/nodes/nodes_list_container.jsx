@@ -1,18 +1,13 @@
 import { connect } from 'react-redux';
-import NodeList from './nodes_list'; 
+import NodeList from './node_list'; 
 import { fetchAllNodes, fetchNode, createNode, updateNode, deleteNode } from '../../actions/node_actions';
 
-
-
 const mapStateToProps = (state, ownProps) => { 
-
-    let currentNodeId = ownProps.match.params.id;
-
+    debugger; 
     return ({
         allNodes: state.entities.nodes.allNodes,
         parentNodeIds: state.entities.nodes.parentNodeIds,
         lastCreated: state.entities.nodes.lastCreated,
-        currentNodeId
     })
 }; 
 

@@ -12,7 +12,7 @@
 class User < ApplicationRecord
 
     validates :email, :session_token,  null: false, uniqueness: true
-    validates :password, allow_nil: true, length:  {minimum: 7}
+    validates :password, allow_nil: true, length:  {minimum: 6}
     validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
 
     has_many :nodes

@@ -3,19 +3,14 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-top: 8%;
+    margin-top: 18%;
 }
 
 .sessionForm .logo {
     font-size: 22px;
-    font-weight: 600;
     padding: 10px;
 }
 
-label {
-    font-size: 13px;
-    padding: 10px;
-}
 input,
 .sessionButton {
     border: solid 1px#b1bfca;
@@ -25,21 +20,84 @@ input,
     margin-top: 3px;
 }
 
+input:focus {
+    outline: none;
+    border:#536dfe 1px solid;
+    box-shadow: none;
+}
+
 .sessionButton {
-    padding: 9px;
+    color:white;
+    margin-top: 20px;    
+    padding: 7px;
+    width: 250px;
     border-radius: 16px;
-    border-color:#d6cbc7;
-    background-color:#d6cbc7;
-    font-weight: 600;
+    background-color:#536dfe;
+    font-weight: 500;
+    border-color:#536dfe;
 }
 
 
 .sessionButton:hover {
-    background-color: #a59a96;
+    border-color: #8f9bff;
+    background-color:#8f9bff;
 }
 
 .errorSpan  {
     padding: 10px;
     color: red;
     font-size: 12px;
+}
+
+.splashContainer {
+    width: 70%;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+.splashContainer h2 {
+    font-size: 36px;
+    margin-top: 30%;
+    text-align: center;
+}
+
+.splashContainer p{
+    font-size: 22px;
+    margin-top: 10px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.splashContainer span{
+    font-weight: 900;
+}
+
+.splashForm {
+    margin: 30px auto;
+    font-size: 13px;
+    width: 375px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.splashForm button {
+        font-size: 13px;
+        color:white;
+        padding: 8px;
+        width: 85px;
+        border-radius: 16px;
+        background-color:#536dfe;
+        border-color:#536dfe;
+}
+
+.splashForm button:hover {
+    border-color: #8f9bff;
+    background-color: #8f9bff;
+}
+
+#splashSignIn{
+    font-size: 13px;
+    color: grey; 
+    font-weight: 500;
 }
