@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import NodeListItem from './node_list_item';
-import SideBar from '../sidebar';
 
 class NodeList extends React.Component {
     constructor(props) {
@@ -14,15 +13,8 @@ class NodeList extends React.Component {
     }
 
     componentDidMount() {
-        // debugger; 
-        if (Boolean(this.props.currentNodeId)) {
-            // debugger;
-            // this.props.fetchNode(this.props.currentNodeId);
- 
-        } else {
-            // debugger; 
+        if (!Boolean(this.props.currentNodeId)) {
             this.props.fetchAllNodes();
-            // this.props.fetchNode(this.props.currentNodeId);
         }
     }
 
@@ -39,14 +31,12 @@ class NodeList extends React.Component {
     }
 
     render() {
-        // debugger;
         if (!this.props.parentNodeIds) return null; 
-
-        // debugger; 
+ 
             const nodeLis = this.props.parentNodeIds.map(id => {
-                // debugger
+
                 let node = this.props.allNodes[id];
-                // debugger;
+    
                 return (<NodeListItem
                     key={node.id}
                     node={node}
@@ -60,9 +50,9 @@ class NodeList extends React.Component {
             })
 
         
-            // debugger; 
+
         return (<>
-            <SideBar />
+
             <div className="NodeListDiv">
                 <ul className="NodeListUl">
                 <h2 className="focusTitle"> {this.props.allNodes[this.props.currentNodeId] ? this.props.allNodes[this.props.currentNodeId].body : ""} </h2>

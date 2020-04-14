@@ -7,12 +7,13 @@ import {AuthRoute, NodeRoute} from '../util/route_util';
 import NodeListContainer from './nodes/nodes_list_container';
 import NodeListFocusContainer from './nodes/node_list_focus_container';
 import Logo from './logo/logo';
-import SideBar from './sidebar';
+import Nav from './navs/nav_main';
 const App = () => (
     <div>
         <header>
             <AuthRoute path="/" component={Logo}/>
             <Route path="/" component={GreetingContainer} /> 
+            <NodeRoute path="/" component={Nav} />
         </header> 
 
         <NodeRoute exact path="/" component={NodeListContainer} />
