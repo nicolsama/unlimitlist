@@ -8,11 +8,14 @@ html {
 }
 
 body {
-    background-color:#fffefa;
+    background-color: #FFFFFF;
+    font-size: 13px ;
 }
 
 input {
-    background-color: #fffefa;
+    background-color: #FFFFFF;
+    font-size: 13px;
+
 }
 
 a {
@@ -20,8 +23,8 @@ a {
 }
 
 .logoContainer {
-    font-size: 30px;
-    font-weight: 800px;
+    font-size: 24px;
+    font-weight: 900px;
     color:rgb(42, 49, 53);
     display: flex;
     justify-content: left;
@@ -29,13 +32,13 @@ a {
 }
 
 .logoImg{
-    height: 50px;
-    padding-right: 6px;
+    height: 30px;
+    padding: 8px;
 }
 
 h3 { 
     font-size: 30px;
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 15px;
     }
 
@@ -43,7 +46,9 @@ header {
     display: flex; 
     justify-content: space-between;
     height: 50px;
+    box-sizing: border-box;
 }
+
 
 .navBar {
     width: 100%;
@@ -79,16 +84,16 @@ header {
 .headerButton {
     display: inline-block;
     border: none;
-    background-color:#e3f2fd;
-    border-radius: 16px;
-    font-size: 13px; 
-    font-weight: 700;
+    background-color:#eeeeee;
+    border-radius: 22px;
     text-decoration: none;
     padding: 10px 15px 10px 15px;
+    margin-right: 8px;
+    margin-top:8px;
 }
 
 .headerButton:hover {
-        background-color: #b1bfca;
+        background-color: #bcbcbc;
 }
 
 .searchBar,
@@ -116,7 +121,6 @@ header {
 
 
 .settingsNav {
-    font-size: 13px;
     position: absolute;
     width: 175px;
     top: 48px;
@@ -152,11 +156,10 @@ header {
 .sidebar-docked {
         display: block;
         position: relative;
-        font-size: 13px;
         width: 325px;
         left: 0px;
         top:0;
-        height: 1200%;
+        height: 1500%;
         background-color: #fffefa;
         border: 1px solid rgb(203, 206, 208);
         border-radius: 6px;
@@ -167,7 +170,6 @@ header {
 .sidebar-expanded {
     display: block;
     position: absolute;
-    font-size: 13px;
     width: 225px;
     left: 0px;
     top: 56px;

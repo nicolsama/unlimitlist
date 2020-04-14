@@ -35,7 +35,7 @@ class Api::NodesController < ApplicationController
             @nodes = current_user.nodes.includes(:children)
             render :index
         else 
-            # debugger
+            debugger
             render json: @node.errors.full_messages
         end
     end

@@ -40,7 +40,6 @@ class NodeListItem extends React.Component {
         if ((this.state.id) && e.key === 'Enter') {
             e.preventDefault();
             this.setState({ body: e.currentTarget.textContent }, this.updateNode);
-
     
             const newNode = {
                 id: null,
@@ -65,13 +64,20 @@ class NodeListItem extends React.Component {
 
     render() { 
         const allNodes = this.props.allNodes; 
-        const nestedNodes = (this.props.node.child_ids).map( id => { 
+        debugger
+        const nestedNodes = (this.state.child_ids).map( id => { 
             const node = allNodes[id];
  
             return (<NodeListItem
                 key={id}
                 node={node}
-                {...this.props}
+                // props={...props}
+                allNodes={this.props.allNodes}
+                fetchNode={this.props.fetchNode}
+                updateNode={this.props.updateNode}
+                createNode={this.props.createNode}
+                deleteNode={this.props.deleteNode}
+                lastCreated={this.props.lastCreated}
                 type="child" />)
         });
 

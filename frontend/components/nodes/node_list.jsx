@@ -8,7 +8,7 @@ class NodeList extends React.Component {
             allNodes: this.props.allNodes, 
             parentNodeIds: this.props.parentNodeIds, 
         }
-        // this.handleClick = this.handleClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -19,22 +19,23 @@ class NodeList extends React.Component {
 
     // MOVED TO NODE_LIST_ADD
     
-    // handleClick(e) {
-        // debugger; // when i try to replace these value I get a recursive component creating
-        // let body = (this.props.currentNodeId) ? e.currentTarget.value : "";
-        // let parent_node_id = (this.props.currentNodeId) ? this.props.currentNodeId : null; 
-    //     const newNode = {
-    //         id: null,
-    //         body: "",
-    //         completed: false,
-    //         ord: null,
-    //         parent_node_id: null,
-    //     }
+    handleClick(e) {
 
-    //     this.props.createNode(newNode);
-    // }
+            let body = (this.props.currentNodeId) ? e.currentTarget.value : "";
+            let parent_node_id = (this.props.currentNodeId) ? this.props.currentNodeId : null; 
 
+            const newNode = {
+                id: null,
+                body: body,
+                completed: false,
+                ord: null,
+                parent_node_id: parent_node_id,
+            }
+            
+            this.props.createNode(newNode);
     
+    }
+
     render() {
         if (!this.props.parentNodeIds) return null; 
  
@@ -45,6 +46,7 @@ class NodeList extends React.Component {
                 return (<NodeListItem
                     key={node.id}
                     node={node}
+                    // props={...props}
                     allNodes={this.props.allNodes}
                     fetchNode={this.props.fetchNode}
                     updateNode={this.props.updateNode}
@@ -54,8 +56,6 @@ class NodeList extends React.Component {
                 />)
             })
 
-        
-
         return (<>
 
             <div className="NodeListDiv">
@@ -63,12 +63,11 @@ class NodeList extends React.Component {
                 <h2 className="focusTitle"> {this.props.allNodes[this.props.currentNodeId] ? this.props.allNodes[this.props.currentNodeId].body : ""} </h2>
                     {nodeLis}
                 </ul>
-                {/* <input
-                    type='submit'
-                    value='+'
+                <button
                     id="addNode"
-                    onClick={(e) => this.handleClick}
-                /> */}
+                    onClick={this.handleClick}>
+                +
+                </button>
             </div>
         </>
         )

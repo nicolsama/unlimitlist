@@ -114,7 +114,8 @@ var receiveNodes = function receiveNodes(nodes) {
     type: RECEIVE_NODES,
     nodes: nodes.allNodes,
     parentNodeIds: nodes.parentNodeIds,
-    lastCreated: nodes.last_created
+    lastCreated: nodes.last_created // pagesPath: nodes.path
+
   };
 };
 
@@ -155,8 +156,8 @@ var createNode = function createNode(node) {
 };
 var updateNode = function updateNode(node) {
   return function (dispatch) {
-    return _util_node_api_util__WEBPACK_IMPORTED_MODULE_0__["updateNode"](node).then(function (node) {
-      return dispatch(receiveNode(node));
+    return _util_node_api_util__WEBPACK_IMPORTED_MODULE_0__["updateNode"](node).then(function (nodes) {
+      return dispatch(receiveNodes(nodes));
     });
   };
 };
@@ -258,9 +259,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
 /* harmony import */ var _nodes_nodes_list_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./nodes/nodes_list_container */ "./frontend/components/nodes/nodes_list_container.jsx");
 /* harmony import */ var _nodes_node_list_focus_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./nodes/node_list_focus_container */ "./frontend/components/nodes/node_list_focus_container.jsx");
-/* harmony import */ var _nodes_node_list_add__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./nodes/node_list_add */ "./frontend/components/nodes/node_list_add.jsx");
-/* harmony import */ var _logo__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./logo */ "./frontend/components/logo.jsx");
-/* harmony import */ var _navs_nav_main__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./navs/nav_main */ "./frontend/components/navs/nav_main.jsx");
+/* harmony import */ var _logo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./logo */ "./frontend/components/logo.jsx");
+/* harmony import */ var _navs_nav_main__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./navs/nav_main */ "./frontend/components/navs/nav_main.jsx");
+/* harmony import */ var _sessions_splash__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./sessions/splash */ "./frontend/components/sessions/splash.jsx");
 
 
 
@@ -276,21 +277,17 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
     path: "/",
-    component: _logo__WEBPACK_IMPORTED_MODULE_9__["default"]
+    component: _logo__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     path: "/",
     component: _greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["NodeRoute"], {
     path: "/",
-    component: _navs_nav_main__WEBPACK_IMPORTED_MODULE_10__["default"]
+    component: _navs_nav_main__WEBPACK_IMPORTED_MODULE_9__["default"]
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["NodeRoute"], {
     exact: true,
     path: "/",
     component: _nodes_nodes_list_container__WEBPACK_IMPORTED_MODULE_6__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["NodeRoute"], {
-    exact: true,
-    path: "/",
-    component: _nodes_node_list_add__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["NodeRoute"], {
     path: "/nodes/:id",
     component: _nodes_node_list_focus_container__WEBPACK_IMPORTED_MODULE_7__["default"]
@@ -300,6 +297,10 @@ var App = function App() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
     path: "/api/signup",
     component: _sessions_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
+    exact: true,
+    path: "/",
+    component: _sessions_splash__WEBPACK_IMPORTED_MODULE_10__["default"]
   }));
 };
 
@@ -443,7 +444,7 @@ var Logo = function Logo(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "logoContainer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: "assets/unlimitlist-logo copy.png",
+    src: "assets/logo3.png",
     className: "logoImg"
   }), "UnlimitList");
 };
@@ -717,8 +718,8 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       allNodes: _this.props.allNodes,
       parentNodeIds: _this.props.parentNodeIds
-    }; // this.handleClick = this.handleClick.bind(this);
-
+    };
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -729,20 +730,21 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
         this.props.fetchAllNodes();
       }
     } // MOVED TO NODE_LIST_ADD
-    // handleClick(e) {
-    // debugger; // when i try to replace these value I get a recursive component creating
-    // let body = (this.props.currentNodeId) ? e.currentTarget.value : "";
-    // let parent_node_id = (this.props.currentNodeId) ? this.props.currentNodeId : null; 
-    //     const newNode = {
-    //         id: null,
-    //         body: "",
-    //         completed: false,
-    //         ord: null,
-    //         parent_node_id: null,
-    //     }
-    //     this.props.createNode(newNode);
-    // }
 
+  }, {
+    key: "handleClick",
+    value: function handleClick(e) {
+      var body = this.props.currentNodeId ? e.currentTarget.value : "";
+      var parent_node_id = this.props.currentNodeId ? this.props.currentNodeId : null;
+      var newNode = {
+        id: null,
+        body: body,
+        completed: false,
+        ord: null,
+        parent_node_id: parent_node_id
+      };
+      this.props.createNode(newNode);
+    }
   }, {
     key: "render",
     value: function render() {
@@ -753,7 +755,8 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
         var node = _this2.props.allNodes[id];
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: node.id,
-          node: node,
+          node: node // props={...props}
+          ,
           allNodes: _this2.props.allNodes,
           fetchNode: _this2.props.fetchNode,
           updateNode: _this2.props.updateNode,
@@ -768,7 +771,10 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
         className: "NodeListUl"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "focusTitle"
-      }, " ", this.props.allNodes[this.props.currentNodeId] ? this.props.allNodes[this.props.currentNodeId].body : "", " "), nodeLis)));
+      }, " ", this.props.allNodes[this.props.currentNodeId] ? this.props.allNodes[this.props.currentNodeId].body : "", " "), nodeLis), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "addNode",
+        onClick: this.handleClick
+      }, "+")));
     }
   }]);
 
@@ -776,95 +782,6 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (NodeList);
-
-/***/ }),
-
-/***/ "./frontend/components/nodes/node_list_add.jsx":
-/*!*****************************************************!*\
-  !*** ./frontend/components/nodes/node_list_add.jsx ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-var NodeListAdd = /*#__PURE__*/function (_React$Component) {
-  _inherits(NodeListAdd, _React$Component);
-
-  var _super = _createSuper(NodeListAdd);
-
-  function NodeListAdd(props) {
-    var _this;
-
-    _classCallCheck(this, NodeListAdd);
-
-    _this = _super.call(this, props);
-    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(NodeListAdd, [{
-    key: "handleClick",
-    value: function handleClick(e) {
-      // debugger; // when i try to replace these value in NODE LIST  get a recursive component creating
-      // SO creating another component
-      // let body = (this.props.currentNodeId) ? e.currentTarget.value : "";
-      // let parent_node_id = (this.props.currentNodeId) ? this.props.currentNodeId : null; 
-      var newNode = {
-        id: null,
-        body: "",
-        completed: false,
-        ord: null,
-        parent_node_id: null
-      };
-      this.props.createNode(newNode);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        value: "+",
-        id: "addNode",
-        onClick: function onClick(e) {
-          return _this2.handleClick;
-        }
-      });
-    }
-  }]);
-
-  return NodeListAdd;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (NodeListAdd);
 
 /***/ }),
 
@@ -1002,8 +919,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nodes_list_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./nodes_list_container */ "./frontend/components/nodes/nodes_list_container.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1114,14 +1029,21 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       var allNodes = this.props.allNodes;
-      var nestedNodes = this.props.node.child_ids.map(function (id) {
+      debugger;
+      var nestedNodes = this.state.child_ids.map(function (id) {
         var node = allNodes[id];
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, _extends({
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, {
           key: id,
-          node: node
-        }, _this2.props, {
+          node: node // props={...props}
+          ,
+          allNodes: _this2.props.allNodes,
+          fetchNode: _this2.props.fetchNode,
+          updateNode: _this2.props.updateNode,
+          createNode: _this2.props.createNode,
+          deleteNode: _this2.props.deleteNode,
+          lastCreated: _this2.props.lastCreated,
           type: "child"
-        }));
+        });
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "NodeListItem"
@@ -1180,6 +1102,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
+  debugger;
   return {
     allNodes: state.entities.nodes.allNodes,
     parentNodeIds: state.entities.nodes.parentNodeIds,
@@ -1425,6 +1348,42 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_session_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/sessions/splash.jsx":
+/*!*************************************************!*\
+  !*** ./frontend/components/sessions/splash.jsx ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+
+
+var Splash = function Splash() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "splashContainer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Overwhelmed?"), " We can help!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Unlimitlist offers a simpler way to stay organized. If you have a crazy job or an ambitious project, we will be your trusty sidekick."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "splashForm"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    placeholder: "Enter your email"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Sign Up")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "splashForm"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    id: "splashSignIn"
+  }, "Already have an account?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "api/login"
+  }, "Sign In")));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Splash);
 
 /***/ }),
 
@@ -1688,6 +1647,9 @@ var selectAllNodes = function selectAllNodes() {
   }); // debugger;
 
   var lastCreated = action.lastCreated; // debugger; 
+  // let pagesPath = [];
+  //     action.pagesPath.forEach(id => pagesPath.push(id));
+  // debugger; 
 
   return Object.assign({}, state, {
     allNodes: allNodes
