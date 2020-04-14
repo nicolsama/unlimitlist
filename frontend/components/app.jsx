@@ -6,7 +6,8 @@ import SignupFormContainer from './sessions/signup_form_container';
 import {AuthRoute, NodeRoute} from '../util/route_util';
 import NodeListContainer from './nodes/nodes_list_container';
 import NodeListFocusContainer from './nodes/node_list_focus_container';
-import Logo from './logo/logo';
+import NodeListAdd from './nodes/node_list_add'
+import Logo from './logo';
 import Nav from './navs/nav_main';
 const App = () => (
     <div>
@@ -16,10 +17,10 @@ const App = () => (
             <NodeRoute path="/" component={Nav} />
         </header> 
 
-        <NodeRoute exact path="/" component={NodeListContainer} />
-        <NodeRoute path="/nodes/:id" component={NodeListFocusContainer} />
 
-        
+        <NodeRoute exact path="/" component={NodeListContainer} />
+        <NodeRoute exact path="/" component={NodeListAdd} />
+        <NodeRoute path="/nodes/:id" component={NodeListFocusContainer} />
         <AuthRoute path="/api/login" component={LoginFormContainer} />
         <AuthRoute path="/api/signup" component={SignupFormContainer} />
 

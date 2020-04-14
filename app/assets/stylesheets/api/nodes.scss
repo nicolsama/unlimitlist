@@ -1,15 +1,23 @@
 .NodeListDiv {
+    left: 0; 
+    top: 0;
     padding-top: 80px; 
-    width:70%;
+    max-width: 345px;
     height: 100%;
     margin: 0 auto; 
 }
 
+
 .editable {
-    width: 100%;
+    background-color: lightgrey;
+    width: inherit;
+   
+
 }
+
 .editable:focus {
     outline: none;
+
 }
 
 #addNode {
@@ -32,7 +40,7 @@ svg {
 
 .svgContainer {
         padding: 3px; 
-        height: 19px;
+        min-height: 19px;
         width: 100%;
         display: flex;
     }

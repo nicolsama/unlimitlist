@@ -12,6 +12,7 @@ class NodeListItem extends React.Component {
         this.updateNode = this.updateNode.bind(this);
         this.showChildren = this.showChildren.bind(this);
         this.textInput = React.createRef();
+        this.lastCreated = React.createRef();
         this.handleBlur = this.handleBlur.bind(this);
         // this.handleFocus = this.handleFocus.bind(this);
     }
@@ -34,13 +35,13 @@ class NodeListItem extends React.Component {
     // }
 
     handleKeyDown(e) {
-    
-        // debugger;
+        debugger;
+
         if ((this.state.id) && e.key === 'Enter') {
             e.preventDefault();
             this.setState({ body: e.currentTarget.textContent }, this.updateNode);
 
-            // debugger;
+    
             const newNode = {
                 id: null,
                 body: "",
@@ -51,8 +52,8 @@ class NodeListItem extends React.Component {
 
             this.props.createNode(newNode);
         } else if (e.keyCode === 8 && (e.currentTarget.innerHTML.length === 0)) {
-      
-            // debugger; 
+
+            debugger; 
             this.props.deleteNode(this.state.id);
         }
     }
@@ -62,24 +63,16 @@ class NodeListItem extends React.Component {
         this.setState({ show_children: !show_children });
     }
 
-    render() {
-        // debugger; 
-        const allNodes = this.props.allNodes;
-        // debugger; 
+    render() { 
+        const allNodes = this.props.allNodes; 
         const nestedNodes = (this.props.node.child_ids).map( id => { 
             const node = allNodes[id];
-            // debugger; 
+ 
             return (<NodeListItem
                 key={id}
                 node={node}
-                allNodes={this.props.allNodes}
-                fetchNode={this.props.fetchNode}
-                updateNode={this.props.updateNode}
-                createNode={this.props.createNode}
-                deleteNode={this.props.deleteNode}
-                lastCreated={this.props.lastCreated}
+                {...this.props}
                 type="child" />)
-            
         });
 
 
@@ -107,13 +100,12 @@ class NodeListItem extends React.Component {
                         <div
                             class='editable'
                             contentEditable="true"
-                            onKeyDown={(e) => this.handleKeyDown(e)}
-                            // onFocus={this.handleFocus}
+                            onKeyDown={(e) => this.handleKeyDown(e)}                            
                             ref={this.textInput}
                             onBlur={this.handleBlur}
                             >
         
-                                {this.state.body}
+                            {this.state.body}
                     
                         </div>
                     </div>

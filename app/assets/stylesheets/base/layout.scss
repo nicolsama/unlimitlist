@@ -43,7 +43,6 @@ header {
     display: flex; 
     justify-content: space-between;
     height: 50px;
-
 }
 
 .navBar {
@@ -145,25 +144,55 @@ header {
     color: grey;
 }
 
-// .sideBar {
-//         font-size: 13px;
-//         position: absolute;
-//         width: 0px;
-//         left: 0;
-//         top: 56px;
-//         height: 87%;
-//         background-color: #fffefa;
-//         border: 1px solid rgb(203, 206, 208);
-//         border-radius: 6px;
-//         filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
-//         box-sizing: border-box;
-        
+.sidebar-   {
+    display: none;
+
+}
+
+.sidebar-docked {
+        display: block;
+        position: relative;
+        font-size: 13px;
+        width: 325px;
+        left: 0px;
+        top:0;
+        height: 1200%;
+        background-color: #fffefa;
+        border: 1px solid rgb(203, 206, 208);
+        border-radius: 6px;
+        filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
+        box-sizing: border-box;
+}
+
+.sidebar-expanded {
+    display: block;
+    position: absolute;
+    font-size: 13px;
+    width: 225px;
+    left: 0px;
+    top: 56px;
+    height: 87%;
+    background-color: #fffefa;
+    border: 1px solid rgb(203, 206, 208);
+    border-radius: 6px;
+    filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
+    box-sizing: border-box;
+}
+
+// .example-enter {
+//     opacity: 0.01;
 // }
 
-// .menu-icon:hover .sideBar{
-//     width: 225px;
-//     transition: .5s ease;
+// .example-enter.example-enter-active {
+//     opacity: 1;
+//     transition: opacity 500ms ease-in;
 // }
 
+// .example-leave {
+//     opacity: 1;
+// }
 
-
+// .example-leave.example-leave-active {
+//     opacity: 0.01;
+//     transition: opacity 300ms ease-in;
+// }

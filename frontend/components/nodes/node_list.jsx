@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
 import NodeListItem from './node_list_item';
 
 class NodeList extends React.Component {
@@ -9,7 +8,7 @@ class NodeList extends React.Component {
             allNodes: this.props.allNodes, 
             parentNodeIds: this.props.parentNodeIds, 
         }
-        this.handleClick = this.handleClick.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -18,18 +17,24 @@ class NodeList extends React.Component {
         }
     }
 
-    handleClick() {
-        const newNode = {
-            id: null,
-            body: "",
-            completed: false,
-            ord: null,
-            parent_node_id: null,
-        }
+    // MOVED TO NODE_LIST_ADD
+    
+    // handleClick(e) {
+        // debugger; // when i try to replace these value I get a recursive component creating
+        // let body = (this.props.currentNodeId) ? e.currentTarget.value : "";
+        // let parent_node_id = (this.props.currentNodeId) ? this.props.currentNodeId : null; 
+    //     const newNode = {
+    //         id: null,
+    //         body: "",
+    //         completed: false,
+    //         ord: null,
+    //         parent_node_id: null,
+    //     }
 
-        this.props.createNode(newNode);
-    }
+    //     this.props.createNode(newNode);
+    // }
 
+    
     render() {
         if (!this.props.parentNodeIds) return null; 
  
@@ -57,13 +62,13 @@ class NodeList extends React.Component {
                 <ul className="NodeListUl">
                 <h2 className="focusTitle"> {this.props.allNodes[this.props.currentNodeId] ? this.props.allNodes[this.props.currentNodeId].body : ""} </h2>
                     {nodeLis}
-                    <input 
-                        type='submit' 
-                        value='+' 
-                        id="addNode"
-                        onClick={this.handleClick}
-                    />
                 </ul>
+                {/* <input
+                    type='submit'
+                    value='+'
+                    id="addNode"
+                    onClick={(e) => this.handleClick}
+                /> */}
             </div>
         </>
         )
