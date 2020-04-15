@@ -86,6 +86,17 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./app/assets/images/logo.jpg":
+/*!************************************!*\
+  !*** ./app/assets/images/logo.jpg ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module parse failed: Unexpected character '�' (1:0)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n(Source code omitted for this binary file)");
+
+/***/ }),
+
 /***/ "./frontend/actions/node_actions.js":
 /*!******************************************!*\
   !*** ./frontend/actions/node_actions.js ***!
@@ -439,7 +450,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-!(function webpackMissingModule() { var e = new Error("Cannot find module './app/assets/images/logo3'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _app_assets_images_logo_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../app/assets/images/logo.jpg */ "./app/assets/images/logo.jpg");
+/* harmony import */ var _app_assets_images_logo_jpg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_app_assets_images_logo_jpg__WEBPACK_IMPORTED_MODULE_2__);
 
 
  // gives image path
@@ -451,7 +463,7 @@ var Logo = function Logo(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "logoContainer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: !(function webpackMissingModule() { var e = new Error("Cannot find module './app/assets/images/logo3'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()),
+    src: _app_assets_images_logo_jpg__WEBPACK_IMPORTED_MODULE_2___default.a,
     alt: "logo"
   }), "UnlimitList"));
 };
