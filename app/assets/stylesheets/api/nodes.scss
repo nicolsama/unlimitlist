@@ -24,7 +24,7 @@
     border-radius: 20px;
     width: 25px;
     height: 25px;
-    margin-left: 22px;
+    margin-left: 53px;
 }
 
 #addNode:hover {
@@ -83,17 +83,40 @@ circle {
     background-color: rgb(203, 206, 208);
 }
 
-
 .sublist {
-    margin-left: 33px;
+    margin-left: 66px;
     list-style: none;
     display: block;
     border-left: rgb(203, 206, 208) 1px solid;
-    padding-left: 10px;
-
 }
 
 .focusTitle {
     font-weight: 900;
     font-size: 24px;
+}
+
+.tooltipDiv {
+    position: relative;
+}
+
+#tooltip li {
+    line-height: 1.5;
+}
+
+.tt-list {
+    border-top: lightgrey 1px solid;
+    padding: 10px;
+}
+
+.tt-wrapper {
+    position: absolute;
+    background-color: #fffefa;
+    border: 1px solid rgb(203, 206, 208);
+    border-radius: 6px;
+    filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
+    box-sizing: border-box;
+    width: 145px;
+    height: 300px;
+    margin-left: -30px;
+    margin-top: 25px;
 }

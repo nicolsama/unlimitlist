@@ -16,26 +16,28 @@ class Api::NodesController < ApplicationController
         @node = Node.new(node_params)
         @node.user_id = current_user.id
         @node.ord = Node.maximum(:ord) + 1
-        # debugger
         if @node.save
-            # debugger
+
             @nodes = current_user.nodes.includes(:children)
             render :index
         else 
-            # debugger
+
             render json: @node.errors.full_messages
         end
     end
 
+    def insert 
+
+    end
+
     def update
-        # debugger; 
         @node = Node.find_by(id: params[:id])
         if @node && @node.update(node_params)
             
             @nodes = current_user.nodes.includes(:children)
             render :index
         else 
-            debugger
+            # debugger
             render json: @node.errors.full_messages
         end
     end

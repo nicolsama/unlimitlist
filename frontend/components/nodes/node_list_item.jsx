@@ -1,19 +1,23 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import NodeListContainer from './nodes_list_container';
+import Tooltip from '../navs/tooltip'; 
 
 
 class NodeListItem extends React.Component {
     constructor(props) {
         super(props);
         const { id, body, completed, ord, child_ids, parent_node_id } = this.props.node; 
-        this.state = this.props.node; 
+        this.state = Object.assign({}, 
+            this.props.node, 
+            {show_tooltip: false})
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.updateNode = this.updateNode.bind(this);
         this.showChildren = this.showChildren.bind(this);
         this.textInput = React.createRef();
         this.lastCreated = React.createRef();
         this.handleBlur = this.handleBlur.bind(this);
+        this.showTooltip = this.showTooltip.bind(this);
         // this.handleFocus = this.handleFocus.bind(this);
     }
 
@@ -22,7 +26,6 @@ class NodeListItem extends React.Component {
     }
 
     updateNode() {
-        // debugger;
         this.props.updateNode(this.state)
     }
 
@@ -35,7 +38,7 @@ class NodeListItem extends React.Component {
     // }
 
     handleKeyDown(e) {
-        debugger;
+        // debugger;
 
         if ((this.state.id) && e.key === 'Enter') {
             e.preventDefault();
@@ -52,7 +55,7 @@ class NodeListItem extends React.Component {
             this.props.createNode(newNode);
         } else if (e.keyCode === 8 && (e.currentTarget.innerHTML.length === 0)) {
 
-            debugger; 
+            // debugger; 
             this.props.deleteNode(this.state.id);
         }
     }
@@ -60,6 +63,12 @@ class NodeListItem extends React.Component {
     showChildren() {
         const show_children = this.state.show_children; 
         this.setState({ show_children: !show_children });
+    }
+
+    showTooltip() {
+        // debugger; 
+        const show_tooltip = this.state.show_tooltip;
+        this.setState({ show_tooltip: !show_tooltip });
     }
 
     render() { 
@@ -71,7 +80,6 @@ class NodeListItem extends React.Component {
             return (<NodeListItem
                 key={id}
                 node={node}
-                // props={...props}
                 allNodes={this.props.allNodes}
                 fetchNode={this.props.fetchNode}
                 updateNode={this.props.updateNode}
@@ -81,19 +89,32 @@ class NodeListItem extends React.Component {
                 type="child" />)
         });
 
+        const tooltip = (<div>
+            <div className="tooltip-arrow" />
+            <div className="tooltip-label"><Tooltip 
+                    node={this.state}
+                    className="tooltipDiv"
+                    />
+                </div>
+        </div>);
+
+        // debugger;
 
         return (
             <>
             <li className="NodeListItem">
                 <div className="svgContainer">
-                        <a href="#">
+
+                        <a href="#" onClick={this.showTooltip}>
                             <svg viewBox="0 0 24 24" className="tooltipCircles">
                                 <circle cx="6" cy="12" r="2" className="ttcircle"></circle>
                                 <circle cx="12" cy="12" r="2" className="ttcircle"></circle>
                                 <circle cx="18" cy="12" r="2" className="ttcircle"></circle>
                             </svg>
-
                         </a>
+
+                            { this.state.show_tooltip ? tooltip : null }
+
                         <a href='#' onClick={this.showChildren}>
                             <svg transform={this.state.show_children && this.state.child_ids.length ? "rotate(90)" : ""}>
                             { (this.state.child_ids.length) ? 

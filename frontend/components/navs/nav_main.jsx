@@ -1,6 +1,7 @@
 import React from 'react'; 
 import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
+import Sidebar from './sidebar';
 // import { CSSTransitionGroup } from 'react-transition-group';
 // import ReactCSSTransitionGroup from 'react-transition-group';
 // import { NodeRoute } from '../../util/route_util';
@@ -34,6 +35,7 @@ class Nav extends React.Component {
     }
 
     render() {    
+        // debugger; 
         let sidebarClass; 
         if (this.state.sidebarExpanded && this.state.sidebarDocked) {
             sidebarClass = "docked"
@@ -50,13 +52,11 @@ class Nav extends React.Component {
             return (
             <>
             <div className={`sidebar-${sidebarClass}`}>
-                <svg viewBox="0 0 448 512" className='sidebarArrow'>
-                    <path d="M231.536 475.535l7.071-7.07c4.686-4.686 4.686-12.284 0-16.971L60.113 273H436c6.627 0 12-5.373 12-12v-10c0-6.627-5.373-12-12-12H60.113L238.607 60.506c4.686-4.686 4.686-12.284 0-16.971l-7.071-7.07c-4.686-4.686-12.284-4.686-16.97 0L3.515 247.515c-4.686 4.686-4.686 12.284 0 16.971l211.051 211.05c4.686 4.686 12.284 4.686 16.97-.001z"></path>
-                </svg>
-                <ul className="dd-list">
-                    <li className="dd-list-item">HOME</li>
-                </ul>
-            </div>
+                <Sidebar 
+                    allNodes={this.props.allNodes}
+                    parentNodeIds={this.props.parentNodeIds}
+                />
+            </div>  
             <div className='navBar'>
                         <svg
                             onMouseEnter={() => this.handleMenuHover(true)}
@@ -95,7 +95,9 @@ class Nav extends React.Component {
                     </div>
                 </div>
                         
-                { this.state.settingsExpanded ? (<div className="dd-wrapper settingsNav">
+                { this.state.settingsExpanded ? (
+                
+                <div className="dd-wrapper settingsNav">
 
                     <ul className="dd-list">
                         <li className="dd-list-item">Undo</li>
@@ -126,10 +128,14 @@ class Nav extends React.Component {
     }
 }
 
-const msp = ({ session, entities: { users } }, ownProps) => {
+const msp = ({ session, entities: { users, nodes } }, ownProps) => {
+    // debugger;
     return {
         currentUser: users[session.id],
-        linkPath: ownProps.location.pathname
+        linkPath: ownProps.location.pathname,
+        allNodes: nodes.allNodes,
+        parentNodeIds: nodes.parentNodeIds,
+        lastCreated: nodes.lastCreated
     };
 };
 

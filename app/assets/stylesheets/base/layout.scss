@@ -161,7 +161,7 @@ header {
 .sidebar-docked {
         display: block;
         position: relative;
-        width: 325px;
+        width: 425px;
         left: 0px;
         top:0;
         height: 1500%;
@@ -195,6 +195,23 @@ header {
 }
 
 
+.SidebarUl li { padding: 5px; }
+.sidebarItem:hover {
+    background-color: rgb(232, 235, 237);
+}
+
+.SidebarItem { 
+    display: flex;
+    align-items: center;
+}
+
+
+
+.sidebarSublist {
+    margin-left: 30px;
+    list-style: none;
+    display: block;
+}
 // .example-enter {
 //     opacity: 0.01;
 // }

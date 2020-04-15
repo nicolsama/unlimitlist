@@ -4,6 +4,7 @@ json.allNodes do
     json.array! @nodes do |node|
             json.partial! "api/nodes/node.json.jbuilder", node: node
             json.set! :show_children, false
+            json.set! :show_tooltip, false
     end
 end
 
