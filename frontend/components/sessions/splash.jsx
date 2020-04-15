@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { login } from '../../actions/session_actions';
-import fetchAllNodes from '../../actions/node_actions';
 
 
 class Splash extends React.Component {
@@ -21,9 +20,6 @@ class Splash extends React.Component {
         this.props.demoLogin(user)
     }
 
-    componentWillUnmount() {
-        this.props.fetchAllNodes();
-    }
 
     render() { 
 
