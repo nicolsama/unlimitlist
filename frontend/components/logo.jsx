@@ -5,7 +5,8 @@ import { Link, NavLink } from 'react-router-dom';
 const Logo = (props) => {
     return (<NavLink to="/" id='logolink'>
         <span className='logoContainer'>
-            <img src="/logo" alt="logo" />
+            {/* <img src="/logo" alt="logo" /> */}
+            <img src={require('/logo.jpg')} />
             UnlimitList
         </span>
         </NavLink>

@@ -449,8 +449,7 @@ var Logo = function Logo(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "logoContainer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: "/logo",
-    alt: "logo"
+    src: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module '/logo.jpg'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()))
   }), "UnlimitList"));
 };
 
