@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logoimg from '../../app/assets/images/logo.jpg' // gives image path
+// import logoimg from '../../app/assets/images/logo.jpg' // gives image path
 
 const Logo = (props) => {
     return (<NavLink to="/" id='logolink'>
         <span className='logoContainer'>
-            <img src="/logo" alt="logo" />
+            {/* <img src={logoimg} alt="logo" /> */}
+            {/* <img src={require('/logo.jpg')} /> */}
             UnlimitList
         </span>
         </NavLink>
