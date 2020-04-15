@@ -27,11 +27,13 @@ class NodeListItem extends React.Component {
 
     updateNode() {
         this.props.updateNode(this.state)
+            // .then(() => this.props.history.push(`nodes/${this.state.id}`));
     }
 
     
     handleBlur(e) {
-        this.setState({ body: e.currentTarget.textContent }, this.updateNode);
+        this.setState({ body: e.currentTarget.textContent }, this.updateNode)
+            // .then(() => this.props.history.push(`/${this.state.id}`));
     }
 
     // handleFocus(e) {
@@ -49,12 +51,12 @@ class NodeListItem extends React.Component {
                 body: "",
                 completed: false,
                 ord: null,
-                parent_node_id: this.state.parent_node_id,
+                parent_node_id: this.props.node.parent_node_id,
+                ord_bookmark: this.props.node.ord,
             }
 
             this.props.createNode(newNode);
         } else if (e.keyCode === 8 && (e.currentTarget.innerHTML.length === 0)) {
-
             // debugger; 
             this.props.deleteNode(this.state.id);
         }
@@ -62,7 +64,8 @@ class NodeListItem extends React.Component {
 
     showChildren() {
         const show_children = this.state.show_children; 
-        this.setState({ show_children: !show_children });
+        this.setState({ show_children: !show_children })
+            // .then(() => this.props.history.push(`nodes/${this.state.id}`));
     }
 
     showTooltip() {
@@ -73,8 +76,9 @@ class NodeListItem extends React.Component {
 
     render() { 
         const allNodes = this.props.allNodes; 
-        debugger
-        const nestedNodes = (this.state.child_ids).map( id => { 
+        const childNodeIds = this.props.node.child_ids.sort((a,b) => ( allNodes[a].ord - allNodes[b].ord) );
+            debugger
+        const nestedNodes = childNodeIds.map( id => { 
             const node = allNodes[id];
  
             return (<NodeListItem

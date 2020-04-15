@@ -44,6 +44,13 @@ class Node < ApplicationRecord
         ancestors_arr
     end
 
+    def sibling_nodes
+        if self.parent_node 
+            self.parent_node.children.where.not(id: self.id)
+        else 
+            Node.all.select { |node| (node.parent_node_id == self.parent_node_id) && (node.id != self.id) }
+        end
+    end
 
     def root?
         self.parent_node_id == nil
@@ -51,6 +58,10 @@ class Node < ApplicationRecord
 
     def self.last_created(nodes_array)
         nodes_array.sort_by{ |node| node[:created_at] }.last[:id]
+    end
+
+    def self.last_updated(nodes_array)
+        nodes_array.sort_by{ |node| node[:updated_at] }.last[:id]
     end
 
 end

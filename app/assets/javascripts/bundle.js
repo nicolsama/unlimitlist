@@ -1038,18 +1038,21 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       if (!this.props.parentNodeIds) return null;
-      var nodeLis = this.props.parentNodeIds.map(function (id) {
+      var parentNodeIds = this.props.parentNodeIds.sort(function (a, b) {
+        return allNodes[a].ord - allNodes[b].ord;
+      });
+      var nodeLis = parentNodeIds.map(function (id) {
         var node = _this2.props.allNodes[id];
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: node.id,
-          node: node // props={...props}
-          ,
+          node: node,
           allNodes: _this2.props.allNodes,
           fetchNode: _this2.props.fetchNode,
           updateNode: _this2.props.updateNode,
           createNode: _this2.props.createNode,
           deleteNode: _this2.props.deleteNode,
-          lastCreated: _this2.props.lastCreated
+          lastCreated: _this2.props.lastCreated,
+          fetchAllNodes: _this2.props.fetchAllNodes
         });
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1272,14 +1275,14 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updateNode",
     value: function updateNode() {
-      this.props.updateNode(this.state);
+      this.props.updateNode(this.state); // .then(() => this.props.history.push(`nodes/${this.state.id}`));
     }
   }, {
     key: "handleBlur",
     value: function handleBlur(e) {
       this.setState({
         body: e.currentTarget.textContent
-      }, this.updateNode);
+      }, this.updateNode); // .then(() => this.props.history.push(`/${this.state.id}`));
     } // handleFocus(e) {
     // }
 
@@ -1297,7 +1300,8 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           body: "",
           completed: false,
           ord: null,
-          parent_node_id: this.state.parent_node_id
+          parent_node_id: this.props.node.parent_node_id,
+          ord_bookmark: this.props.node.ord
         };
         this.props.createNode(newNode);
       } else if (e.keyCode === 8 && e.currentTarget.innerHTML.length === 0) {
@@ -1311,7 +1315,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       var show_children = this.state.show_children;
       this.setState({
         show_children: !show_children
-      });
+      }); // .then(() => this.props.history.push(`nodes/${this.state.id}`));
     }
   }, {
     key: "showTooltip",
@@ -1328,8 +1332,11 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       var allNodes = this.props.allNodes;
+      var childNodeIds = this.props.node.child_ids.sort(function (a, b) {
+        return allNodes[a].ord - allNodes[b].ord;
+      });
       debugger;
-      var nestedNodes = this.state.child_ids.map(function (id) {
+      var nestedNodes = childNodeIds.map(function (id) {
         var node = allNodes[id];
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, {
           key: id,
@@ -1430,7 +1437,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  // debugger; 
+  debugger;
   return {
     allNodes: state.entities.nodes.allNodes,
     parentNodeIds: state.entities.nodes.parentNodeIds,

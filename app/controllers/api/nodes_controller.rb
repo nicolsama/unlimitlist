@@ -2,7 +2,7 @@ class Api::NodesController < ApplicationController
 
     def index
         @node = Node.first
-        @nodes = current_user.nodes.includes(:children)
+        @nodes = current_user.nodes
         render :index
     end
 
@@ -15,10 +15,27 @@ class Api::NodesController < ApplicationController
     def create
         @node = Node.new(node_params)
         @node.user_id = current_user.id
-        @node.ord = Node.maximum(:ord) + 1
+        @node.ord = Node.maximum(:ord)
+        #   debugger
         if @node.save
+            siblings = @node.sibling_nodes
+            younger_siblings = siblings.select { |node| node.ord > params[:node][:ord_bookmark].to_i }
+            younger_siblings_ords = younger_siblings.map { |node| node.ord }
+            old_ords = younger_siblings_ords.concat([@node.id]).sort
+            new_ords = old_ords.rotate(1) 
+            mapping = {}
 
-            @nodes = current_user.nodes.includes(:children)
+            old_ords.each_with_index do |ord, i| 
+                mapping[ord] = new_ords[i] 
+            end
+            # debugger
+            younger_siblings.each  do |node|
+                node.ord = mapping[node.ord]
+                node.save
+            end
+            # debugger
+            @nodes = current_user.nodes
+            # debugger
             render :index
         else 
 
@@ -27,7 +44,6 @@ class Api::NodesController < ApplicationController
     end
 
     def insert 
-
     end
 
     def update
@@ -44,7 +60,7 @@ class Api::NodesController < ApplicationController
 
     def destroy
         Node.delete(params[:id])
-        @nodes = current_user.nodes.includes(:children)
+        @nodes = current_user.nodes
         render :index
     end
 
