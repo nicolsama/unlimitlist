@@ -86,7 +86,14 @@ class NodeListItem extends React.Component {
             <>
             <li className="NodeListItem">
                 <div className="svgContainer">
+                        <a href="#">
+                            <svg viewBox="0 0 24 24" className="tooltipCircles">
+                                <circle cx="6" cy="12" r="2" className="ttcircle"></circle>
+                                <circle cx="12" cy="12" r="2" className="ttcircle"></circle>
+                                <circle cx="18" cy="12" r="2" className="ttcircle"></circle>
+                            </svg>
 
+                        </a>
                         <a href='#' onClick={this.showChildren}>
                             <svg transform={this.state.show_children && this.state.child_ids.length ? "rotate(90)" : ""}>
                             { (this.state.child_ids.length) ? 

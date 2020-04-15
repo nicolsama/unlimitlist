@@ -31,10 +31,15 @@ a {
     align-items: center;
 }
 
+#logolink, #demoLogin {
+    text-decoration: none;
+}
+
 .logoImg{
     height: 30px;
     padding: 8px;
 }
+
 
 h3 { 
     font-size: 30px;
@@ -165,6 +170,7 @@ header {
         border-radius: 6px;
         filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
         box-sizing: border-box;
+        z-index: 5;
 }
 
 .sidebar-expanded {
@@ -179,7 +185,15 @@ header {
     border-radius: 6px;
     filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
     box-sizing: border-box;
+    z-index: 5;
 }
+
+
+.sidebarArrow {
+    float: right;
+    transform: rotate(135deg);
+}
+
 
 // .example-enter {
 //     opacity: 0.01;

@@ -12,12 +12,8 @@ class NodeList extends React.Component {
     }
 
     componentDidMount() {
-        if (!Boolean(this.props.currentNodeId)) {
             this.props.fetchAllNodes();
-        }
     }
-
-    // MOVED TO NODE_LIST_ADD
     
     handleClick(e) {
 

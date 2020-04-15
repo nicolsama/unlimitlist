@@ -3,6 +3,11 @@ import {
 } from '../actions/node_actions';
 
 import {
+    LOGOUT_CURRENT_USER,
+    RECEIVE_CURRENT_USER
+} from '../actions/session_actions';
+
+import {
     selectAllNodes
 } from '../selectors/nodes_selector';
 
@@ -23,6 +28,9 @@ export default (state = {}, action) => {
             let nextState = Object.assign({}, state); 
             delete nextState[action.nodeId];
             return nextState;
+        case LOGOUT_CURRENT_USER:
+            return {};
+            
         default:
             return state;
     }
