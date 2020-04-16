@@ -56,7 +56,7 @@ class NodeListItem extends React.Component {
 
             this.props.createNode(newNode);
         } else if (e.keyCode === 8 && (e.currentTarget.innerHTML.length === 0)) {
-            // debugger; 
+            debugger; 
             this.props.deleteNode(this.state.id);
         }
     }
@@ -76,7 +76,7 @@ class NodeListItem extends React.Component {
     render() { 
         const allNodes = this.props.allNodes; 
         const childNodeIds = this.props.node.child_ids.sort((a,b) => ( allNodes[a].ord - allNodes[b].ord) );
-            debugger
+            // debugger
         const nestedNodes = childNodeIds.map( id => { 
             const node = allNodes[id];
  
@@ -136,7 +136,7 @@ class NodeListItem extends React.Component {
                         </Link>
 
                         <div
-                            class='editable'
+                            className='editable'
                             contentEditable="true"
                             onKeyDown={(e) => this.handleKeyDown(e)}                            
                             ref={this.textInput}

@@ -33,8 +33,8 @@ export const selectAllNodes = (state = {}, action) => {
     let lastCreated = action.lastCreated;
 
     // debugger; 
-    // let pagesPath = [];
-    //     action.pagesPath.forEach(id => pagesPath.push(id));
+    let pagesPath = [];
+        action.pagesPath.forEach(id => pagesPath.push(id));
 
     // debugger; 
     return Object.assign({}, state, {
@@ -43,6 +43,8 @@ export const selectAllNodes = (state = {}, action) => {
         parentNodeIds
     }, {
         lastCreated: lastCreated
+    }, {
+        pagesPath
     });
     //return newState;
 };

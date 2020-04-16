@@ -16,4 +16,4 @@ end
 
 json.set! :last_created, Node.last_created(@nodes)
 
-# json.set! :path, @node.ancestors
+json.set! :path, @node.ancestors

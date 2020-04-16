@@ -7,6 +7,7 @@ import {AuthRoute, NodeRoute} from '../util/route_util';
 import NodeListContainer from './nodes/nodes_list_container';
 import NodeListFocusContainer from './nodes/node_list_focus_container';
 import Logo from './logo';
+
 import Nav from './navs/nav_main';
 import Splash from './sessions/splash';
 
@@ -17,7 +18,7 @@ const App = () => (
             <Route path="/" component={GreetingContainer} /> 
             <NodeRoute path="/" component={Nav} />
         </header> 
-        <NodeRoute exact path="/" component={NodeListContainer} />
+        <NodeRoute path="/" component={NodeListContainer} />
         <NodeRoute path="/nodes/:id" component={NodeListFocusContainer} />
         <AuthRoute path="/api/login" component={LoginFormContainer} />
         <AuthRoute path="/api/signup" component={SignupFormContainer} />

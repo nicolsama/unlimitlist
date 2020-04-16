@@ -12,7 +12,7 @@ return (
     nodes: nodes.allNodes,
     parentNodeIds: nodes.parentNodeIds, 
     lastCreated: nodes.last_created,
-    // pagesPath: nodes.path
+    pagesPath: nodes.path
     })};
 
 const receiveNode = (node) => ({

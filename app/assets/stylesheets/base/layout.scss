@@ -29,6 +29,7 @@ a {
     display: flex;
     justify-content: left;
     align-items: center;
+    padding: 20px;;
 }
 
 #logolink, #demoLogin {
@@ -93,8 +94,7 @@ header {
     border-radius: 22px;
     text-decoration: none;
     padding: 10px 15px 10px 15px;
-    margin-right: 8px;
-    margin-top:8px;
+    margin: 15px;
 }
 
 .headerButton:hover {
@@ -211,6 +211,13 @@ header {
     margin-left: 30px;
     list-style: none;
     display: block;
+}
+
+.pagination span{
+    font-size: 13px;
+    padding-right: 20px;
+    padding-left: 20px;
+    float: left;
 }
 // .example-enter {
 //     opacity: 0.01;

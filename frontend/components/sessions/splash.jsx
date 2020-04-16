@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { login } from '../../actions/session_actions';
+import { withRouter } from "react-router-dom";
+import { fetchAllNodes } from '../../actions/node_actions';
 
 
 class Splash extends React.Component {
@@ -18,6 +20,7 @@ class Splash extends React.Component {
     handleDemoLogin(e) {
         const user = this.state;
         this.props.demoLogin(user)
+            .then(this.props.fetchAllNodes);
     }
 
 

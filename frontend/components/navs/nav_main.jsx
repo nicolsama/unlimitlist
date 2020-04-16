@@ -1,7 +1,9 @@
 import React from 'react'; 
 import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
+import { fetchAllNodes } from '../../actions/node_actions';
 import Sidebar from './sidebar';
+import { Link, NavLink } from 'react-router-dom';
 // import { CSSTransitionGroup } from 'react-transition-group';
 // import ReactCSSTransitionGroup from 'react-transition-group';
 // import { NodeRoute } from '../../util/route_util';
@@ -15,11 +17,16 @@ class Nav extends React.Component {
             settingsExpanded: false, 
             sidebarExpanded: false,
             sidebarDocked: false,
+            pagesPath: this.props.pagesPath
         }
         this.handleGearClick = this.handleGearClick.bind(this);
         this.handleMenuHover = this.handleMenuHover.bind(this);
         this.handleMenuClick = this.handleMenuClick.bind(this);
         // this.handleMenuDock = this.handleMenuDock.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.fetchAllNodes();
     }
 
     handleGearClick(e) {
@@ -35,6 +42,8 @@ class Nav extends React.Component {
     }
 
     render() {    
+
+
         // debugger; 
         let sidebarClass; 
         if (this.state.sidebarExpanded && this.state.sidebarDocked) {
@@ -47,6 +56,14 @@ class Nav extends React.Component {
             sidebarClass = ""
         }
 
+        let pagination = (this.props.pagesPath) ? this.props.pagesPath.reverse().map(id => {
+            let pagename = (this.props.allNodes[id].body.length > 20) ? 
+                (this.props.allNodes[id].body).slice(0, 18).concat("...") : (this.props.allNodes[id].body);
+
+            return (
+                <span><a href={`#/nodes/${id}`} pagesPath={this.props.pathsPath}>{pagename}</a></span>
+            )
+        }) : null ;  
 
         if (this.props.currentUser) {
             return (
@@ -68,7 +85,10 @@ class Nav extends React.Component {
                             </path>
                         </svg>
                         
-                    
+                        { (pagination && pagination.length >= 1) ? ( <div className="pagination">
+                            <span><a href="#">HOME</a></span>{pagination}
+                        </div>) : null }
+
                         {/* 
                         <ReactCSSTransitionGroup
                             transitionName="example"
@@ -135,12 +155,14 @@ const msp = ({ session, entities: { users, nodes } }, ownProps) => {
         linkPath: ownProps.location.pathname,
         allNodes: nodes.allNodes,
         parentNodeIds: nodes.parentNodeIds,
-        lastCreated: nodes.lastCreated
+        lastCreated: nodes.lastCreated,
+        pagesPath: nodes.pagesPath
     };
 };
 
 const mdp = (dispatch) => ({
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()), 
+    fetchAllNodes: () => dispatch(fetchAllNodes())
 });
 
 export default connect(msp, mdp)(Nav);

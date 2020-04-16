@@ -60,6 +60,7 @@ class Api::NodesController < ApplicationController
 
     def destroy
         Node.delete(params[:id])
+        @node = Node.first
         @nodes = current_user.nodes
         render :index
     end
