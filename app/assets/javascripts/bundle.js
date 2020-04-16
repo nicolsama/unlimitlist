@@ -842,8 +842,6 @@ var SidebarItem = /*#__PURE__*/function (_React$Component) {
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidebarItem"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/nodes/".concat(this.props.node.id)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "SidebarItem"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -853,7 +851,9 @@ var SidebarItem = /*#__PURE__*/function (_React$Component) {
         transform: this.state.show_children && this.props.node.child_ids.length ? "rotate(90)" : ""
       }, this.props.node.child_ids.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
         d: "M13.75 9.56879C14.0833 9.76124 14.0833 10.2424 13.75 10.4348L8.5 13.4659C8.16667 13.6584 7.75 13.4178 7.75 13.0329L7.75 6.97072C7.75 6.58582 8.16667 6.34525 8.5 6.5377L13.75 9.56879Z"
-      }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.node.body))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/nodes/".concat(this.props.node.id)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.node.body))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "sidebarSublist"
       }, this.state.show_children ? nestedNodes : null));
     }
@@ -1039,7 +1039,7 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
 
       if (!this.props.parentNodeIds) return null;
       var parentNodeIds = this.props.parentNodeIds.sort(function (a, b) {
-        return allNodes[a].ord - allNodes[b].ord;
+        return _this2.props.allNodes[a].ord - _this2.props.allNodes[b].ord;
       });
       var nodeLis = parentNodeIds.map(function (id) {
         var node = _this2.props.allNodes[id];
@@ -1052,7 +1052,8 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
           createNode: _this2.props.createNode,
           deleteNode: _this2.props.deleteNode,
           lastCreated: _this2.props.lastCreated,
-          fetchAllNodes: _this2.props.fetchAllNodes
+          fetchAllNodes: _this2.props.fetchAllNodes,
+          currentNodeId: _this2.props.currentNodeId
         });
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1159,9 +1160,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  // debugger; 
-  var currentNodeId = Number(ownProps.match.params.id); // debugger; 
-
+  debugger;
+  var currentNodeId = Number(ownProps.match.params.id);
+  debugger;
   return {
     allNodes: state.entities.nodes.allNodes,
     parentNodeIds: state.entities.nodes.parentNodeIds,
@@ -1246,13 +1247,6 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, NodeListItem);
 
     _this = _super.call(this, props);
-    var _this$props$node = _this.props.node,
-        id = _this$props$node.id,
-        body = _this$props$node.body,
-        completed = _this$props$node.completed,
-        ord = _this$props$node.ord,
-        child_ids = _this$props$node.child_ids,
-        parent_node_id = _this$props$node.parent_node_id;
     _this.state = Object.assign({}, _this.props.node, {
       show_tooltip: false
     });
@@ -1312,10 +1306,14 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "showChildren",
     value: function showChildren() {
+      var _this2 = this;
+
       var show_children = this.state.show_children;
       this.setState({
         show_children: !show_children
-      }); // .then(() => this.props.history.push(`nodes/${this.state.id}`));
+      }).then(function () {
+        return _this2.props.history.push("nodes/".concat(_this2.props.currentNodeId));
+      });
     }
   }, {
     key: "showTooltip",
@@ -1329,7 +1327,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var allNodes = this.props.allNodes;
       var childNodeIds = this.props.node.child_ids.sort(function (a, b) {
@@ -1341,12 +1339,13 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, {
           key: id,
           node: node,
-          allNodes: _this2.props.allNodes,
-          fetchNode: _this2.props.fetchNode,
-          updateNode: _this2.props.updateNode,
-          createNode: _this2.props.createNode,
-          deleteNode: _this2.props.deleteNode,
-          lastCreated: _this2.props.lastCreated,
+          allNodes: _this3.props.allNodes,
+          fetchNode: _this3.props.fetchNode,
+          updateNode: _this3.props.updateNode,
+          createNode: _this3.props.createNode,
+          deleteNode: _this3.props.deleteNode,
+          lastCreated: _this3.props.lastCreated,
+          currentNodeId: _this3.props.currentNodeId,
           type: "child"
         });
       });
@@ -1359,6 +1358,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         className: "tooltipDiv"
       }))); // debugger;
 
+      var showLink = this.props.currentNodeId ? "#/nodes/".concat(this.props.currentNodeId) : "#";
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "NodeListItem"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1385,7 +1385,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         r: "2",
         className: "ttcircle"
       }))), this.state.show_tooltip ? tooltip : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
+        href: showLink,
         onClick: this.showChildren
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
         transform: this.state.show_children && this.state.child_ids.length ? "rotate(90)" : ""
@@ -1403,7 +1403,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         "class": "editable",
         contentEditable: "true",
         onKeyDown: function onKeyDown(e) {
-          return _this2.handleKeyDown(e);
+          return _this3.handleKeyDown(e);
         },
         ref: this.textInput,
         onBlur: this.handleBlur
@@ -1438,10 +1438,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   debugger;
+  var currentNodeId = Number(ownProps.match.params.id);
   return {
     allNodes: state.entities.nodes.allNodes,
     parentNodeIds: state.entities.nodes.parentNodeIds,
-    lastCreated: state.entities.nodes.lastCreated
+    lastCreated: state.entities.nodes.lastCreated,
+    currentNodeId: currentNodeId
   };
 };
 

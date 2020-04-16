@@ -7,7 +7,6 @@ import Tooltip from '../navs/tooltip';
 class NodeListItem extends React.Component {
     constructor(props) {
         super(props);
-        const { id, body, completed, ord, child_ids, parent_node_id } = this.props.node; 
         this.state = Object.assign({}, 
             this.props.node, 
             {show_tooltip: false})
@@ -65,7 +64,7 @@ class NodeListItem extends React.Component {
     showChildren() {
         const show_children = this.state.show_children; 
         this.setState({ show_children: !show_children })
-            // .then(() => this.props.history.push(`nodes/${this.state.id}`));
+            .then(() => this.props.history.push(`nodes/${this.props.currentNodeId}`));
     }
 
     showTooltip() {
@@ -90,6 +89,7 @@ class NodeListItem extends React.Component {
                 createNode={this.props.createNode}
                 deleteNode={this.props.deleteNode}
                 lastCreated={this.props.lastCreated}
+                currentNodeId={this.props.currentNodeId}
                 type="child" />)
         });
 
@@ -103,7 +103,7 @@ class NodeListItem extends React.Component {
         </div>);
 
         // debugger;
-
+        let showLink = (this.props.currentNodeId) ? `#/nodes/${this.props.currentNodeId}` : "#";
         return (
             <>
             <li className="NodeListItem">
@@ -118,8 +118,8 @@ class NodeListItem extends React.Component {
                         </a>
 
                             { this.state.show_tooltip ? tooltip : null }
-
-                        <a href='#' onClick={this.showChildren}>
+                        
+                        <a href={showLink} onClick={this.showChildren}>
                             <svg transform={this.state.show_children && this.state.child_ids.length ? "rotate(90)" : ""}>
                             { (this.state.child_ids.length) ? 
                             <path d="M13.75 9.56879C14.0833 9.76124 14.0833 10.2424 13.75 10.4348L8.5 13.4659C8.16667 13.6584 7.75 13.4178 7.75 13.0329L7.75 6.97072C7.75 6.58582 8.16667 6.34525 8.5 6.5377L13.75 9.56879Z"

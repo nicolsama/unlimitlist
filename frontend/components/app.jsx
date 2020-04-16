@@ -17,8 +17,6 @@ const App = () => (
             <Route path="/" component={GreetingContainer} /> 
             <NodeRoute path="/" component={Nav} />
         </header> 
-
-
         <NodeRoute exact path="/" component={NodeListContainer} />
         <NodeRoute path="/nodes/:id" component={NodeListFocusContainer} />
         <AuthRoute path="/api/login" component={LoginFormContainer} />

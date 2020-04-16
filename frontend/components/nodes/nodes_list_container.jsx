@@ -4,10 +4,12 @@ import { fetchAllNodes, fetchNode, createNode, updateNode, deleteNode } from '..
 
 const mapStateToProps = (state, ownProps) => { 
     debugger; 
+    let currentNodeId = Number(ownProps.match.params.id);
     return ({
         allNodes: state.entities.nodes.allNodes,
         parentNodeIds: state.entities.nodes.parentNodeIds,
         lastCreated: state.entities.nodes.lastCreated,
+        currentNodeId
     })
 }; 
 

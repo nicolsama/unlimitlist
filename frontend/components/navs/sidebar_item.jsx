@@ -29,7 +29,7 @@ class SidebarItem extends React.Component {
 
         return (
         <div className="sidebarItem">
-            <Link to={`/nodes/${this.props.node.id}`}>
+    
                 <li className="SidebarItem">
                     <a href='#' onClick={this.showChildren}>
                         <svg transform={this.state.show_children && this.props.node.child_ids.length ? "rotate(90)" : ""}>
@@ -38,12 +38,13 @@ class SidebarItem extends React.Component {
                                 /> : null}
                         </svg>
                     </a>
+                    <Link to={`/nodes/${this.props.node.id}`}>
                     <span>  
                         {this.props.node.body}
                     </span>
-                    
+                    </Link>
                 </li>
-            </Link>
+            
             <ul className='sidebarSublist' >
                 {this.state.show_children
                     ? nestedNodes

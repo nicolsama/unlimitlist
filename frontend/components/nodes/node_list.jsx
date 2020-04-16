@@ -34,7 +34,8 @@ class NodeList extends React.Component {
 
     render() {
         if (!this.props.parentNodeIds) return null; 
-            const parentNodeIds = this.props.parentNodeIds.sort((a, b) => allNodes[a].ord - allNodes[b].ord);
+            
+            const parentNodeIds = this.props.parentNodeIds.sort((a, b) => this.props.allNodes[a].ord - this.props.allNodes[b].ord);
             const nodeLis = parentNodeIds.map(id => {
 
                 let node = this.props.allNodes[id];
@@ -49,6 +50,7 @@ class NodeList extends React.Component {
                     deleteNode={this.props.deleteNode}
                     lastCreated={this.props.lastCreated}
                     fetchAllNodes={this.props.fetchAllNodes}
+                    currentNodeId={this.props.currentNodeId}
                 />)
             })
 
