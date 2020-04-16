@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import NodeListContainer from './nodes_list_container';
 import Tooltip from '../navs/tooltip'; 
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
 class NodeListItem extends React.Component {
@@ -93,14 +94,16 @@ class NodeListItem extends React.Component {
                 type="child" />)
         });
 
-        const tooltip = (<div>
+
+        const tooltip = this.state.show_tooltip ? (<div>
             <div className="tooltip-arrow" />
-            <div className="tooltip-label"><Tooltip 
-                    node={this.state}
-                    className="tooltipDiv"
-                    />
-                </div>
-        </div>);
+            <div className="tooltip-label"><Tooltip
+                node={this.state}
+                className="tooltipDiv"
+            />
+            </div>
+        </div>) : null ;
+
 
         // debugger;
         let showLink = (this.props.currentNodeId) ? `#/nodes/${this.props.currentNodeId}` : "#";
@@ -117,7 +120,13 @@ class NodeListItem extends React.Component {
                             </svg>
                         </a>
 
-                            { this.state.show_tooltip ? tooltip : null }
+                        <ReactCSSTransitionGroup
+                            transitionName="settings"
+                            transitionEnterTimeout={800}
+                            transitionLeaveTimeout={800}>
+                                    {tooltip}
+
+                        </ReactCSSTransitionGroup>
                         
                         <a href={showLink} onClick={this.showChildren}>
                             <svg transform={this.state.show_children && this.state.child_ids.length ? "rotate(90)" : ""}>

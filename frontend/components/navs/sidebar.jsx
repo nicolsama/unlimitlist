@@ -15,6 +15,7 @@ class Sidebar extends React.Component {
         let SidebarLis = this.props.parentNodeIds.map( id => {
             let node = this.props.allNodes[id];
             return (<SidebarItem 
+                        key={id}
                         node={node}
                         allNodes={this.props.allNodes}
                         />)
