@@ -4,11 +4,12 @@ import { Link, NavLink } from 'react-router-dom';
 // /Users/nicolesamanich/Desktop/unlimitlist/frontend/components/logo.jpg
 // /Users/nicolesamanich/Desktop/unlimitlist/frontend/components/logo.jsx
 
+
 const Logo = (props) => {
     return (<NavLink to="/" id='logolink'>
         <span className='logoContainer'>
-            {/* <img src={logo} alt="logo" /> */}
-            UnlimitList
+            <img src={`${logo_image}`} className="logoImg"/>
+            <h1 className="title">UnlimitList</h1>
         </span>
         </NavLink>
             )

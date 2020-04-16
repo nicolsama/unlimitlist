@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
 import { fetchAllNodes } from '../../actions/node_actions';
 import Sidebar from './sidebar';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // import { Link, NavLink } from 'react-router-dom';
 // import { NodeRoute } from '../../util/route_util';
-
 
 class Nav extends React.Component {
     constructor(props){
@@ -18,12 +17,14 @@ class Nav extends React.Component {
             settingsExpanded: false, 
             sidebarExpanded: false,
             sidebarDocked: false,
-            pagesPath: this.props.pagesPath
+            pagesPath: this.props.pagesPath,
+            showSearchBar: false, 
         }
         this.handleGearClick = this.handleGearClick.bind(this);
         this.handleMenuMouseEnter = this.handleMenuMouseEnter.bind(this);
         this.handleMenuMouseLeave = this.handleMenuMouseLeave.bind(this);
         this.handleMenuClick = this.handleMenuClick.bind(this);
+        this.handleSearchClick = this.handleSearchClick.bind(this);
     }
 
     componentDidMount() {
@@ -48,6 +49,10 @@ class Nav extends React.Component {
 
     handleMenuClick(e) {
         this.setState({ sidebarDocked: !this.state.sidebarDocked });
+    }
+
+    handleSearchClick(e) {
+        this.setState({ showSearchBar: !this.state.showSearchBar});
     }
 
     render() {    
@@ -108,6 +113,17 @@ class Nav extends React.Component {
 
                 </div>)}
 
+
+            let searchBar = null; 
+            if (this.state.showSearchBar) {
+                searchBar = (<input
+                    type="text"
+                    className="searchInput"
+                    placeholder="Search">
+                </input>) }
+
+
+
         if (this.props.currentUser) {
             return (
             <>
@@ -141,12 +157,27 @@ class Nav extends React.Component {
 
 
                     <div className="navBarLeft">
-                        <div className="searchBar">
-                            <svg width="20" height="20" viewBox=" 0 0 20 20" stroke="currentColor" fill="none">
-                                <circle cx="9" cy="9" r="4.5"></circle>
-                                <path d="M13,13 L16.5,16.5"></path>
-                            </svg>
-                        </div>
+
+                            <ReactCSSTransitionGroup
+                                transitionName="search"
+                                transitionEnterTimeout={600}
+                                transitionLeaveTimeout={600}>
+                                <div>
+                                    {searchBar}
+                                </div>
+                            </ReactCSSTransitionGroup>
+
+
+                            {(!this.state.showSearchBar) ? ( <div className="searchIcon"
+                                onClick={this.handleSearchClick}>
+
+                                <svg width="20" height="20" viewBox=" 0 0 20 20" stroke="currentColor" fill="none">
+                                    <circle cx="9" cy="9" r="4.5"></circle>
+                                    <path d="M13,13 L16.5,16.5"></path>
+                                </svg>
+                            </div>) : null }
+
+
 
                         <div className="gearIcon" onClick={this.handleGearClick}>
                             <svg viewBox="0 0 20 20">
@@ -157,7 +188,7 @@ class Nav extends React.Component {
                         </div>
                     </div>
                 </div>
-                
+
                 <ReactCSSTransitionGroup
                         transitionName="settings"
                         transitionEnterTimeout={800}

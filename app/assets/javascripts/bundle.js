@@ -287,6 +287,7 @@ var App = function App() {
     path: "/",
     component: _navs_nav_main__WEBPACK_IMPORTED_MODULE_9__["default"]
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["NodeRoute"], {
+    exact: true,
     path: "/",
     component: _nodes_nodes_list_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["NodeRoute"], {
@@ -449,7 +450,12 @@ var Logo = function Logo(props) {
     id: "logolink"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "logoContainer"
-  }, "UnlimitList"));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "".concat(logo_image),
+    className: "logoImg"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    className: "title"
+  }, "UnlimitList")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Logo);
@@ -520,12 +526,14 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       settingsExpanded: false,
       sidebarExpanded: false,
       sidebarDocked: false,
-      pagesPath: _this.props.pagesPath
+      pagesPath: _this.props.pagesPath,
+      showSearchBar: false
     };
     _this.handleGearClick = _this.handleGearClick.bind(_assertThisInitialized(_this));
     _this.handleMenuMouseEnter = _this.handleMenuMouseEnter.bind(_assertThisInitialized(_this));
     _this.handleMenuMouseLeave = _this.handleMenuMouseLeave.bind(_assertThisInitialized(_this));
     _this.handleMenuClick = _this.handleMenuClick.bind(_assertThisInitialized(_this));
+    _this.handleSearchClick = _this.handleSearchClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -564,6 +572,13 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     value: function handleMenuClick(e) {
       this.setState({
         sidebarDocked: !this.state.sidebarDocked
+      });
+    }
+  }, {
+    key: "handleSearchClick",
+    value: function handleSearchClick(e) {
+      this.setState({
+        showSearchBar: !this.state.showSearchBar
       });
     }
   }, {
@@ -637,6 +652,16 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         }, this.props.currentUser.email)));
       }
 
+      var searchBar = null;
+
+      if (this.state.showSearchBar) {
+        searchBar = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          className: "searchInput",
+          placeholder: "Search"
+        });
+      }
+
       if (this.props.currentUser) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
           transitionName: "sidebar",
@@ -660,8 +685,13 @@ var Nav = /*#__PURE__*/function (_React$Component) {
           href: "#"
         }, "HOME")), pagination) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "navBarLeft"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "searchBar"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
+          transitionName: "search",
+          transitionEnterTimeout: 600,
+          transitionLeaveTimeout: 600
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, searchBar)), !this.state.showSearchBar ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "searchIcon",
+          onClick: this.handleSearchClick
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
           width: "20",
           height: "20",
@@ -674,7 +704,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
           r: "4.5"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
           d: "M13,13 L16.5,16.5"
-        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "gearIcon",
           onClick: this.handleGearClick
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
