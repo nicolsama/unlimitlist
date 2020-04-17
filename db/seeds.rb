@@ -10,17 +10,17 @@ User.destroy_all
 Node.destroy_all
 Branch.destroy_all
 
-test_user = User.create!(email: "nicolsama@gmail.com", password: "password123")
-test_user2 = User.create!(email: "tasha@tasha.com", password: "password")
+# test_user = User.create!(email: "nicolsama@gmail.com", password: "password123")
+# test_user2 = User.create!(email: "tasha@tasha.com", password: "password")
 
 demoUser = User.create!(           
             email: "demo@email.com",
             password: '1234567')
 
-test_node = Node.create!(user_id: test_user.id, body: "art supplies to #buy", parent_node_id: nil, ord: 1)
-test_node2 = Node.create!(user_id: test_user.id, body: "art supplies again", parent_node_id: nil, ord: 2)
-test_node3 = Node.create!(user_id: test_user.id, body: "fooood", parent_node_id: nil, ord: 3)
-test_node4 = Node.create!(user_id: test_user.id, body: "milk", parent_node_id: nil, ord: 4)
+# test_node = Node.create!(user_id: test_user.id, body: "art supplies to #buy", parent_node_id: nil, ord: 1)
+# test_node2 = Node.create!(user_id: test_user.id, body: "art supplies again", parent_node_id: nil, ord: 2)
+# test_node3 = Node.create!(user_id: test_user.id, body: "fooood", parent_node_id: nil, ord: 3)
+# test_node4 = Node.create!(user_id: test_user.id, body: "milk", parent_node_id: nil, ord: 4)
 
 
 test_node16 = Node.create!(user_id: demoUser.id, body: "Welcome to my fullstack!", parent_node_id: nil, ord: 1)
