@@ -173,7 +173,7 @@ class Nav extends React.Component {
                        
                         { (pagination && pagination.length >= 1) ? ( <div className="pagination">
                             <span><a href="#">HOME</a></span>{pagination}
-                        </div>) : null }
+                        </div>) : <div></div>}
 
 
                     <div className="navBarLeft">

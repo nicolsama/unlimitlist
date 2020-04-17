@@ -60,9 +60,12 @@ header {
 
 
 .navBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    padding-top: 5px;
-    box-sizing: border-box;
+    // padding-top: 5px;
+    // box-sizing: border-box;
     border-bottom: rgb(218, 231, 240) 1px solid;
 }
 
@@ -196,6 +199,11 @@ header {
         
 }
 
+.sidebar-docked svg:first-child{
+    // transform: rotate(-135deg);
+    float: right;
+}
+
 .sidebar-expanded {
          display: block;
          position: absolute;
@@ -215,9 +223,10 @@ header {
 }
 
 
-.sidebarArrow {
+.sidebar-expanded svg:first-child {
     float: right;
     transform: rotate(135deg);
+
 }
 
 
