@@ -1177,7 +1177,8 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
         body: body,
         completed: false,
         ord: null,
-        parent_node_id: parent_node_id
+        parent_node_id: parent_node_id,
+        ord_bookmark: this.props.allNodes[this.props.lastCreated].ord
       };
       this.props.createNode(newNode);
     }
