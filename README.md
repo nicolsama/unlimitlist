@@ -1,6 +1,6 @@
 # README
 
-Unlimitlist[https://unlimitlist.herokuapp.com/#/] is Workflowy clone, an app that aims to give organization to to your ideas. 
+[Unlimitlist](https://unlimitlist.herokuapp.com/#/) is Workflowy clone, an app that aims to give organization to to your ideas. 
 
 ## Why Unlimitlist? 
 
