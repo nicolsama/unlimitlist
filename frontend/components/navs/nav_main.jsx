@@ -122,8 +122,8 @@ class Nav extends React.Component {
                         <li className="dd-list-item">Report a Problem</li>
                     </ul>
                     <ul className="dd-list">
-                        <li className="dd-list-item" onClick={this.props.logout}>Log Out</li>
-                        <span className='userEmail'>{this.props.currentUser.email}</span>
+                            <li className="dd-list-item"><a onClick={this.props.logout}>Log Out</a></li>
+                            <span className='userEmail'>{(this.props.currentUser) ? this.props.currentUser.email : null}</span>
                     </ul>
 
                 </div>)}
