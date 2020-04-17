@@ -22,20 +22,29 @@ test_node2 = Node.create!(user_id: test_user.id, body: "art supplies again", par
 test_node3 = Node.create!(user_id: test_user.id, body: "fooood", parent_node_id: nil, ord: 3)
 test_node4 = Node.create!(user_id: test_user.id, body: "milk", parent_node_id: nil, ord: 4)
 
-test_node0 = Node.create!(user_id: demoUser.id, body: "I am your root node, expand me please : ) ", parent_node_id: nil, ord: 1)
-test_node1 = Node.create!(user_id: demoUser.id, body: "textbooks to buy", parent_node_id: test_node0.id, ord: 2)
-test_node2 = Node.create!(user_id: demoUser.id, body: "groceries", parent_node_id: test_node0.id, ord: 3)
-test_node3 = Node.create!(user_id: demoUser.id, body: "fooood", parent_node_id: test_node2.id, ord: 4)
-test_node4 = Node.create!(user_id: demoUser.id, body: "milk", parent_node_id: test_node2.id, ord: 5)
-test_node5 = Node.create!(user_id: demoUser.id, body: "eggs", parent_node_id: test_node2.id, ord: 6)
-test_node6 = Node.create!(user_id: demoUser.id, body: "arugula", parent_node_id: test_node2.id, ord: 7)
-test_node11 = Node.create!(user_id: demoUser.id, body: "spinach", parent_node_id: test_node2.id, ord: 11)
 
-test_node7 = Node.create!(user_id: demoUser.id, body: "vacation ideas", parent_node_id: test_node0.id, ord: 8)
-test_node8 = Node.create!(user_id: demoUser.id, body: "peru", parent_node_id: test_node7.id, ord: 9)
-test_node10 = Node.create!(user_id: demoUser.id, body: "peru", parent_node_id: test_node8.id, ord: 12)
+test_node16 = Node.create!(user_id: demoUser.id, body: "Welcome to my fullstack!", parent_node_id: nil, ord: 1)
+test_node15 = Node.create!(user_id: demoUser.id, body: "I'm so sleepy", parent_node_id: test_node16.id, ord: 2)
 
-test_node9 = Node.create!(user_id: demoUser.id, body: "japan", parent_node_id: test_node7.id, ord: 10)
+test_node14 = Node.create!(user_id: demoUser.id, body: "These are root nodes : D", parent_node_id: nil, ord: 3)
+test_node13 = Node.create!(user_id: demoUser.id, body: "Expand any list to see it's sublist", parent_node_id: nil, ord: 4)
+test_node0 = Node.create!(user_id: demoUser.id, body: "And it's sublist", parent_node_id: test_node13.id, ord: 5)
+test_node17 = Node.create!(user_id: demoUser.id, body: "And it's sublist", parent_node_id: test_node0.id, ord: 6)
+
+test_node2 = Node.create!(user_id: demoUser.id, body: "groceries", parent_node_id: test_node0.id, ord: 7)
+test_node3 = Node.create!(user_id: demoUser.id, body: "fooood", parent_node_id: test_node2.id, ord: 8)
+test_node4 = Node.create!(user_id: demoUser.id, body: "milk", parent_node_id: test_node2.id, ord: 9)
+test_node5 = Node.create!(user_id: demoUser.id, body: "eggs", parent_node_id: test_node2.id, ord: 10)
+test_node6 = Node.create!(user_id: demoUser.id, body: "arugula", parent_node_id: test_node2.id, ord: 11)
+test_node11 = Node.create!(user_id: demoUser.id, body: "spinach", parent_node_id: test_node2.id, ord: 12)
+test_node12 = Node.create!(user_id: demoUser.id, body: "pierogies", parent_node_id: test_node2.id, ord: 13)
+
+test_node7 = Node.create!(user_id: demoUser.id, body: "vacation ideas", parent_node_id: test_node0.id, ord: 14)
+test_node10 = Node.create!(user_id: demoUser.id, body: "peru", parent_node_id: test_node7.id, ord: 15)
+test_node18 = Node.create!(user_id: demoUser.id, body: "llamas", parent_node_id: test_node10.id, ord: 17)
+test_node9 = Node.create!(user_id: demoUser.id, body: "japan", parent_node_id: test_node7.id, ord: 16)
+
+
 
 
 # branch1 = Branch.create!(parent_node_id: test_node2.id, child_node_id: test_node3.id)
