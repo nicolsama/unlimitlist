@@ -1441,13 +1441,14 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         this.setState({
           body: e.currentTarget.textContent
         }, this.updateNode);
+        var ord_bookmark = this.props.node.ord ? this.props.node.ord : null;
         var newNode = {
           id: null,
           body: "",
           completed: false,
           ord: null,
           parent_node_id: this.props.node.parent_node_id,
-          ord_bookmark: this.props.node.ord
+          ord_bookmark: ord_bookmark
         };
         this.props.createNode(newNode);
       } else if (e.keyCode === 8 && e.currentTarget.innerHTML.length === 0) {

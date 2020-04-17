@@ -41,13 +41,14 @@ class NodeListItem extends React.Component {
             e.preventDefault();
             this.setState({ body: e.currentTarget.textContent }, this.updateNode);
     
+            let ord_bookmark = (this.props.node.ord) ? (this.props.node.ord) : null;
             const newNode = {
                 id: null,
                 body: "",
                 completed: false,
                 ord: null,
                 parent_node_id: this.props.node.parent_node_id,
-                ord_bookmark: this.props.node.ord,
+                ord_bookmark: ord_bookmark,
             }
 
             this.props.createNode(newNode);
