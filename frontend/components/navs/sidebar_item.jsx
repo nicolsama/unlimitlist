@@ -16,7 +16,7 @@ class SidebarItem extends React.Component {
     }
 
     render()    {
-        // debugger; 
+
         if (!this.props.node) return null; 
 
         const nestedNodes = this.props.node.child_ids.map(id => {

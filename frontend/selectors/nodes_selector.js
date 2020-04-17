@@ -1,5 +1,5 @@
 export const selectAllNodes = (state = {}, action) => {
-    // debugger;
+   
     let allNodes = {};
     action.nodes.forEach( node => {
         const {
@@ -29,14 +29,14 @@ export const selectAllNodes = (state = {}, action) => {
         action.parentNodeIds.forEach( item => parentNodeIds.push(item.id)); 
         parentNodeIds = parentNodeIds.sort((a,b) => allNodes[a].ord - allNodes[b].ord)
 
-    // debugger;
+   
     let lastCreated = action.lastCreated;
 
-    // debugger; 
+    
     let pagesPath = [];
         action.pagesPath.forEach(id => pagesPath.push(id));
 
-    // debugger; 
+    
     return Object.assign({}, state, {
         allNodes
     }, {

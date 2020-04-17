@@ -12,19 +12,20 @@ class Nav extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            currentSidebar: {},
-            currentSettingsNav: {},
             settingsExpanded: false, 
             sidebarExpanded: false,
             sidebarDocked: false,
             pagesPath: this.props.pagesPath,
             showSearchBar: false, 
+            transformArrow: false
         }
         this.handleGearClick = this.handleGearClick.bind(this);
         this.handleMenuMouseEnter = this.handleMenuMouseEnter.bind(this);
         this.handleMenuMouseLeave = this.handleMenuMouseLeave.bind(this);
         this.handleMenuClick = this.handleMenuClick.bind(this);
         this.handleSearchClick = this.handleSearchClick.bind(this);
+        this.handleSearchQuery = this.handleSearchQuery.bind(this);
+        this.rotateArrow = this.rotateArrow.bind(this);
     }
 
     componentDidMount() {
@@ -48,11 +49,21 @@ class Nav extends React.Component {
     }
 
     handleMenuClick(e) {
-        this.setState({ sidebarDocked: !this.state.sidebarDocked });
+        this.setState({ sidebarDocked: !this.state.sidebarDocked }, this.rotateArrow());
     }
 
     handleSearchClick(e) {
         this.setState({ showSearchBar: !this.state.showSearchBar});
+    }
+
+    handleSearchQuery(e) {
+    //     e.preventDefault(); 
+    //     if (e.key === 'Enter') {
+    //         this.props.????
+    }
+
+    rotateArrow() {
+        this.setState({ transformArrow: !this.state.transformArrow })
     }
 
     render() {    
@@ -62,9 +73,13 @@ class Nav extends React.Component {
                 key="sidebar"
                 allNodes={this.props.allNodes}
                 parentNodeIds={this.props.parentNodeIds}
+                handleMenuClick={this.handleMenuClick}
+                handleMenuMouseLeave={this.handleMenuMouseLeave}
+                sidebarDocked={this.props.sidebarDocked}
+                transformArrow={this.state.transformArrow}
             />)
 
-        // debugger; 
+
         let currentSidebar = null; 
         let sidebarClass = null; 
         if (this.state.sidebarExpanded && this.state.sidebarDocked) {
@@ -119,7 +134,10 @@ class Nav extends React.Component {
                 searchBar = (<input
                     type="text"
                     className="searchInput"
-                    placeholder="Search">
+                    placeholder="Search"
+                    onMouseOut={this.handleSearchClick}
+                    onKeyPress={(e) => this.handleSearchQuery}
+                    >
                 </input>) }
 
 
@@ -141,7 +159,8 @@ class Nav extends React.Component {
             </ReactCSSTransitionGroup>
            
             <div className='navBar'>
-                        <svg
+
+                        { (!this.state.sidebarDocked) ? (<svg
                             onMouseOver={this.handleMenuMouseEnter}
                             onClick={this.handleMenuClick}
                             onMouseOut={this.handleMenuMouseLeave}
@@ -150,7 +169,8 @@ class Nav extends React.Component {
                             <path fill="grey" d="M442 114H6a6 6 0 0 1-6-6V84a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm0 160H6a6 6 0 0 1-6-6v-24a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm0 160H6a6 6 0 0 1-6-6v-24a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6z">
                             </path>
                         </svg>
-                        
+                        ) : null }
+                       
                         { (pagination && pagination.length >= 1) ? ( <div className="pagination">
                             <span><a href="#">HOME</a></span>{pagination}
                         </div>) : null }
@@ -202,7 +222,7 @@ class Nav extends React.Component {
 }
 
 const msp = ({ session, entities: { users, nodes } }, ownProps) => {
-    // debugger;
+  
     return {
         currentUser: users[session.id],
         linkPath: ownProps.location.pathname,

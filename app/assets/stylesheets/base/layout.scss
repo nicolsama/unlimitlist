@@ -61,13 +61,13 @@ header {
 
 .navBar {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: rgb(203, 206, 208) 1px solid;
+    padding-top: 5px;
+    box-sizing: border-box;
+    border-bottom: rgb(218, 231, 240) 1px solid;
 }
 
 .navBarLeft {
+    float: right;
     display: flex;
     justify-content: end;
     align-items: center;
@@ -174,9 +174,9 @@ header {
     filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
     box-sizing: border-box;
     z-index: 5;
-                  transform: translateX(-100%);
-                  transition: opacity 600ms ease-in,
-                  transform 600ms ease-in;
+        transform: translateX(-100%);
+        transition: opacity 600ms ease-in,
+        transform 600ms ease-in;
 
 }
 
@@ -267,56 +267,6 @@ header {
     float: left;
 }
 
-
-// .sidebar-enter {
-//     opacity: 0.01;
-//     transform: translateX(-100%);
-// }
-
-// .sidebar-enter-active {
-//      opacity: 1;
-//      transform: translateX(0);
-//      transition: opacity 500ms ease-in,
-//      transform 500ms ease-in;
-//          display: block;
-//          position: absolute;
-//          width: 225px;
-//          left: 0px;
-//          top: 56px;
-//          height: 87%;
-//          background-color: #fffefa;
-//          border: 1px solid rgb(203, 206, 208);
-//          border-radius: 6px;
-//          filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
-//          box-sizing: border-box;
-//          z-index: 5;
-// }
-
-
-// .sidebar-leave {
-//      opacity: 1;
-//      transform: translateX(0%);
-// }
-
-// .sidebar-leave.sidebar-leave-active {
-//      opacity: 0.01;
-//      transform: translateX(-100%) translateY(40%);
-//      transition: opacity 500ms ease-in,
-//      transform 500ms ease-in;
-//         display: block;
-//         position: absolute;
-//         width: 225px;
-//         left: 0px;
-//         top: 56px;
-//         height: 87%;
-//         background-color: #fffefa;
-//         border: 1px solid rgb(203, 206, 208);
-//         border-radius: 6px;
-//         filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
-//         box-sizing: border-box;
-//         z-index: 5;
-// }
-
 .searchInput{
     position: relative;
     height: 24px;
@@ -345,13 +295,18 @@ header {
     transition: opacity 300ms ease-in, transform 300ms ease-in;
 }
 
-// .search-leave {
-//     opacity: 1;
-//     transform: translateY(0);
-// }
+.search-leave {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-// .search-leave.search-leave-active {
-//     opacity: 0.01;
-//     transform: scale(.9);
-//     transition: opacity 300ms ease-in, transform 300ms ease-in;
-// }
+.search-leave.search-leave-active {
+    opacity: 0.01;
+    transform: scale(.9);
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+
+
+.transformArrow {
+     transform: rotate(135deg);
+}

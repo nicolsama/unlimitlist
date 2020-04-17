@@ -16,7 +16,7 @@ class Api::NodesController < ApplicationController
         @node = Node.new(node_params)
         @node.user_id = current_user.id
         @node.ord = Node.maximum(:ord)
-        #   debugger
+       
         if @node.save
             siblings = @node.sibling_nodes
             younger_siblings = siblings.select { |node| node.ord > params[:node][:ord_bookmark].to_i }
@@ -28,14 +28,14 @@ class Api::NodesController < ApplicationController
             old_ords.each_with_index do |ord, i| 
                 mapping[ord] = new_ords[i] 
             end
-            # debugger
+            
             younger_siblings.each  do |node|
                 node.ord = mapping[node.ord]
                 node.save
             end
-            # debugger
+            
             @nodes = current_user.nodes
-            # debugger
+            
             render :index
         else 
 
@@ -53,7 +53,7 @@ class Api::NodesController < ApplicationController
             @nodes = current_user.nodes.includes(:children)
             render :index
         else 
-            # debugger
+        
             render json: @node.errors.full_messages
         end
     end

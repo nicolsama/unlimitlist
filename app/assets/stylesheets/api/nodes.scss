@@ -7,6 +7,10 @@
     margin: 0 auto; 
 }
 
+.completed-true {
+    color: grey; 
+    text-decoration: line-through;
+}
 
 .editable {
     font-size: 16px;
@@ -18,7 +22,6 @@
     outline: none;
 
 }
-
 
 #addNode {
     color:rgb(42, 49, 53);
@@ -52,7 +55,7 @@ path {
     fill: rgb(203, 206, 208);
 }
 
-circle {
+.bullet circle {
         fill: rgb(42, 49, 53);
 }
 
@@ -62,9 +65,6 @@ circle {
         padding:2px;
     }
 
-.ttcircle {
-    fill: white;
-}
 
 .tooltipCircles:hover {
         background-color: rgb(203, 206, 208);
@@ -106,9 +106,23 @@ circle {
     line-height: 1.5;
 }
 
+#tooltip li a:hover {
+    color: lightgrey;
+}
+
 .tt-list {
     border-top: lightgrey 1px solid;
     padding: 10px;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.tt-list {
+    color: grey; 
+}
+
+.tt-list a {
+    color: rgb(42, 49, 53);
 }
 
 .tt-wrapper {

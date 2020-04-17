@@ -4,13 +4,15 @@ import NodeListContainer from './nodes_list_container';
 import Tooltip from '../navs/tooltip'; 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-
 class NodeListItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = Object.assign({}, 
             this.props.node, 
-            {show_tooltip: false})
+            {
+                show_tooltip: false, 
+                fillColor: false 
+            })
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.updateNode = this.updateNode.bind(this);
         this.showChildren = this.showChildren.bind(this);
@@ -18,7 +20,7 @@ class NodeListItem extends React.Component {
         this.lastCreated = React.createRef();
         this.handleBlur = this.handleBlur.bind(this);
         this.showTooltip = this.showTooltip.bind(this);
-        // this.handleFocus = this.handleFocus.bind(this);
+        this.changeFillColor = this.changeFillColor.bind(this);
     }
 
     componentDidMount() {
@@ -27,20 +29,13 @@ class NodeListItem extends React.Component {
 
     updateNode() {
         this.props.updateNode(this.state)
-            // .then(() => this.props.history.push(`nodes/${this.state.id}`));
     }
-
     
     handleBlur(e) {
         this.setState({ body: e.currentTarget.textContent }, this.updateNode)
-            // .then(() => this.props.history.push(`/${this.state.id}`));
     }
 
-    // handleFocus(e) {
-    // }
-
     handleKeyDown(e) {
-        // debugger;
 
         if ((this.state.id) && e.key === 'Enter') {
             e.preventDefault();
@@ -57,7 +52,7 @@ class NodeListItem extends React.Component {
 
             this.props.createNode(newNode);
         } else if (e.keyCode === 8 && (e.currentTarget.innerHTML.length === 0)) {
-            debugger; 
+ 
             this.props.deleteNode(this.state.id);
         }
     }
@@ -69,15 +64,17 @@ class NodeListItem extends React.Component {
     }
 
     showTooltip() {
-        // debugger; 
         const show_tooltip = this.state.show_tooltip;
         this.setState({ show_tooltip: !show_tooltip });
+    }
+
+    changeFillColor() {
+        this.setState({ fillColor: !this.state.fillColor });
     }
 
     render() { 
         const allNodes = this.props.allNodes; 
         const childNodeIds = this.props.node.child_ids.sort((a,b) => ( allNodes[a].ord - allNodes[b].ord) );
-            // debugger
         const nestedNodes = childNodeIds.map( id => { 
             const node = allNodes[id];
  
@@ -94,29 +91,37 @@ class NodeListItem extends React.Component {
                 type="child" />)
         });
 
-
         const tooltip = this.state.show_tooltip ? (<div>
             <div className="tooltip-arrow" />
-            <div className="tooltip-label"><Tooltip
-                node={this.state}
-                className="tooltipDiv"
+            <div className="tooltip-label">
+
+                <Tooltip
+                    className="tooltipDiv"
+                    showing={this.state.show_tooltip}
+                    node={this.props.node}
+                    updateNode={this.props.updateNode}
+                    createNode={this.props.createNode}
+                    deleteNode={this.props.deleteNode}
             />
             </div>
         </div>) : null ;
 
+        const fillColor = (this.state.fillColor) ? "grey" : "none";
 
-        // debugger;
         let showLink = (this.props.currentNodeId) ? `#/nodes/${this.props.currentNodeId}` : "#";
         return (
             <>
-            <li className="NodeListItem">
+            <li className="NodeListItem"
+                onMouseOver={this.changeFillColor}
+                onMouseOut={this.changeFillColor}
+                className={`completed-${this.props.node.completed}`}>
                 <div className="svgContainer">
 
-                        <a href="#" onClick={this.showTooltip}>
+                        <a href={showLink} onClick={this.showTooltip}>
                             <svg viewBox="0 0 24 24" className="tooltipCircles">
-                                <circle cx="6" cy="12" r="2" className="ttcircle"></circle>
-                                <circle cx="12" cy="12" r="2" className="ttcircle"></circle>
-                                <circle cx="18" cy="12" r="2" className="ttcircle"></circle>
+                                <circle cx="6" cy="12" r="2" className="ttcircle" fill={fillColor}></circle>
+                                <circle cx="12" cy="12" r="2" className="ttcircle" fill={fillColor}></circle>
+                                <circle cx="18" cy="12" r="2" className="ttcircle" fill={fillColor}></circle>
                             </svg>
                         </a>
 
@@ -125,7 +130,6 @@ class NodeListItem extends React.Component {
                             transitionEnterTimeout={800}
                             transitionLeaveTimeout={800}>
                                     {tooltip}
-
                         </ReactCSSTransitionGroup>
                         
                         <a href={showLink} onClick={this.showChildren}>
@@ -151,7 +155,6 @@ class NodeListItem extends React.Component {
                             ref={this.textInput}
                             onBlur={this.handleBlur}
                             >
-        
                             {this.state.body}
                     
                         </div>

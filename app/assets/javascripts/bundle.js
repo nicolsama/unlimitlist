@@ -521,19 +521,20 @@ var Nav = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      currentSidebar: {},
-      currentSettingsNav: {},
       settingsExpanded: false,
       sidebarExpanded: false,
       sidebarDocked: false,
       pagesPath: _this.props.pagesPath,
-      showSearchBar: false
+      showSearchBar: false,
+      transformArrow: false
     };
     _this.handleGearClick = _this.handleGearClick.bind(_assertThisInitialized(_this));
     _this.handleMenuMouseEnter = _this.handleMenuMouseEnter.bind(_assertThisInitialized(_this));
     _this.handleMenuMouseLeave = _this.handleMenuMouseLeave.bind(_assertThisInitialized(_this));
     _this.handleMenuClick = _this.handleMenuClick.bind(_assertThisInitialized(_this));
     _this.handleSearchClick = _this.handleSearchClick.bind(_assertThisInitialized(_this));
+    _this.handleSearchQuery = _this.handleSearchQuery.bind(_assertThisInitialized(_this));
+    _this.rotateArrow = _this.rotateArrow.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -572,13 +573,26 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     value: function handleMenuClick(e) {
       this.setState({
         sidebarDocked: !this.state.sidebarDocked
-      });
+      }, this.rotateArrow());
     }
   }, {
     key: "handleSearchClick",
     value: function handleSearchClick(e) {
       this.setState({
         showSearchBar: !this.state.showSearchBar
+      });
+    }
+  }, {
+    key: "handleSearchQuery",
+    value: function handleSearchQuery(e) {//     e.preventDefault(); 
+      //     if (e.key === 'Enter') {
+      //         this.props.????
+    }
+  }, {
+    key: "rotateArrow",
+    value: function rotateArrow() {
+      this.setState({
+        transformArrow: !this.state.transformArrow
       });
     }
   }, {
@@ -589,9 +603,12 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       var sbDiv = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar__WEBPACK_IMPORTED_MODULE_4__["default"], {
         key: "sidebar",
         allNodes: this.props.allNodes,
-        parentNodeIds: this.props.parentNodeIds
-      }); // debugger; 
-
+        parentNodeIds: this.props.parentNodeIds,
+        handleMenuClick: this.handleMenuClick,
+        handleMenuMouseLeave: this.handleMenuMouseLeave,
+        sidebarDocked: this.props.sidebarDocked,
+        transformArrow: this.state.transformArrow
+      });
       var currentSidebar = null;
       var sidebarClass = null;
 
@@ -658,7 +675,11 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         searchBar = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "searchInput",
-          placeholder: "Search"
+          placeholder: "Search",
+          onMouseOut: this.handleSearchClick,
+          onKeyPress: function onKeyPress(e) {
+            return _this2.handleSearchQuery;
+          }
         });
       }
 
@@ -670,7 +691,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
           className: sidebarClass ? "sidebar-".concat(sidebarClass) : ""
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, currentSidebar)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "navBar"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+        }, !this.state.sidebarDocked ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
           onMouseOver: this.handleMenuMouseEnter,
           onClick: this.handleMenuClick,
           onMouseOut: this.handleMenuMouseLeave,
@@ -679,7 +700,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
           fill: "grey",
           d: "M442 114H6a6 6 0 0 1-6-6V84a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm0 160H6a6 6 0 0 1-6-6v-24a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm0 160H6a6 6 0 0 1-6-6v-24a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6z"
-        })), pagination && pagination.length >= 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        })) : null, pagination && pagination.length >= 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "pagination"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#"
@@ -731,7 +752,6 @@ var msp = function msp(_ref, ownProps) {
       _ref$entities = _ref.entities,
       users = _ref$entities.users,
       nodes = _ref$entities.nodes;
-  // debugger;
   return {
     currentUser: users[session.id],
     linkPath: ownProps.location.pathname,
@@ -814,7 +834,6 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      // debugger; 
       if (!this.props.parentNodeIds) return null;
       var SidebarLis = this.props.parentNodeIds.map(function (id) {
         var node = _this.props.allNodes[id];
@@ -823,12 +842,16 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
           node: node,
           allNodes: _this.props.allNodes
         });
-      });
+      }); // let transform = (this.props.transformArrow) ? "transformArrow" : null; 
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
         viewBox: "0 0 448 512",
-        className: "sidebarArrow"
+        className: "sidebarArrow",
+        onClick: this.props.handleMenuClick,
+        onMouseOut: this.props.handleMenuMouseLeave
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
-        d: "M231.536 475.535l7.071-7.07c4.686-4.686 4.686-12.284 0-16.971L60.113 273H436c6.627 0 12-5.373 12-12v-10c0-6.627-5.373-12-12-12H60.113L238.607 60.506c4.686-4.686 4.686-12.284 0-16.971l-7.071-7.07c-4.686-4.686-12.284-4.686-16.97 0L3.515 247.515c-4.686 4.686-4.686 12.284 0 16.971l211.051 211.05c4.686 4.686 12.284 4.686 16.97-.001z"
+        d: "M231.536 475.535l7.071-7.07c4.686-4.686 4.686-12.284 0-16.971L60.113 273H436c6.627 0 12-5.373 12-12v-10c0-6.627-5.373-12-12-12H60.113L238.607 60.506c4.686-4.686 4.686-12.284 0-16.971l-7.071-7.07c-4.686-4.686-12.284-4.686-16.97 0L3.515 247.515c-4.686 4.686-4.686 12.284 0 16.971l211.051 211.05c4.686 4.686 12.284 4.686 16.97-.001z",
+        rotate: "135"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "SidebarUl"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
@@ -912,7 +935,6 @@ var SidebarItem = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      // debugger; 
       if (!this.props.node) return null;
       var nestedNodes = this.props.node.child_ids.map(function (id) {
         var node = _this2.props.allNodes[id];
@@ -988,12 +1010,53 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(Tooltip);
 
   function Tooltip(props) {
+    var _this;
+
     _classCallCheck(this, Tooltip);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = _this.props.node;
+    _this.handleComplete = _this.handleComplete.bind(_assertThisInitialized(_this));
+    _this.handleDuplicate = _this.handleDuplicate.bind(_assertThisInitialized(_this));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Tooltip, [{
+    key: "handleDuplicate",
+    value: function handleDuplicate() {
+      if (this.props.showing) {
+        var newNode = {
+          id: null,
+          body: this.state.body,
+          completed: this.state.completed,
+          ord: null,
+          parent_node_id: this.state.parent_node_id
+        };
+        this.props.createNode(newNode);
+      }
+    }
+  }, {
+    key: "handleComplete",
+    value: function handleComplete() {
+      this.setState({
+        completed: true
+      });
+      var updatedNode = {
+        id: this.state.id,
+        body: this.state.body,
+        completed: !this.state.completed,
+        ord: this.state.ord,
+        parent_node_id: this.stateparent_node_id
+      };
+      this.props.updateNode(updatedNode);
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete() {
+      this.props.deleteNode(this.state.id);
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1002,11 +1065,15 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
         className: "tt-list"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "tt-list-item"
-      }, "Complete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        onClick: this.handleComplete
+      }, this.props.node.completed ? "Uncomplete" : "Complete")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "tt-list-item"
       }, "Add Note"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "tt-list-item"
-      }, "Duplicate")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        onClick: this.handleDuplicate
+      }, "Duplicate"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "tt-list"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "tt-list-item"
@@ -1023,9 +1090,10 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
       }, "Collapse All")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "tt-list"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item",
-        onClick: this.props.logout
-      }, "Delete")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "tt-list-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        onClick: this.handleDelete
+      }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "userEmail"
       }, "Last changed at "))));
     }
@@ -1097,7 +1165,6 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
   _createClass(NodeList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
       this.props.fetchAllNodes();
     }
   }, {
@@ -1119,7 +1186,6 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      debugger;
       if (!this.props.parentNodeIds) return null;
       var parentNodeIds = this.props.parentNodeIds.sort(function (a, b) {
         return _this2.props.allNodes[a].ord - _this2.props.allNodes[b].ord;
@@ -1243,9 +1309,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  // debugger; 
-  var currentNodeId = Number(ownProps.match.params.id); // debugger; 
-
+  var currentNodeId = Number(ownProps.match.params.id);
   return {
     allNodes: state.entities.nodes.allNodes,
     parentNodeIds: state.entities.nodes.parentNodeIds,
@@ -1296,6 +1360,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1334,7 +1400,8 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = Object.assign({}, _this.props.node, {
-      show_tooltip: false
+      show_tooltip: false,
+      fillColor: false
     });
     _this.handleKeyDown = _this.handleKeyDown.bind(_assertThisInitialized(_this));
     _this.updateNode = _this.updateNode.bind(_assertThisInitialized(_this));
@@ -1342,8 +1409,8 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
     _this.textInput = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.lastCreated = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.handleBlur = _this.handleBlur.bind(_assertThisInitialized(_this));
-    _this.showTooltip = _this.showTooltip.bind(_assertThisInitialized(_this)); // this.handleFocus = this.handleFocus.bind(this);
-
+    _this.showTooltip = _this.showTooltip.bind(_assertThisInitialized(_this));
+    _this.changeFillColor = _this.changeFillColor.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1355,21 +1422,18 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updateNode",
     value: function updateNode() {
-      this.props.updateNode(this.state); // .then(() => this.props.history.push(`nodes/${this.state.id}`));
+      this.props.updateNode(this.state);
     }
   }, {
     key: "handleBlur",
     value: function handleBlur(e) {
       this.setState({
         body: e.currentTarget.textContent
-      }, this.updateNode); // .then(() => this.props.history.push(`/${this.state.id}`));
-    } // handleFocus(e) {
-    // }
-
+      }, this.updateNode);
+    }
   }, {
     key: "handleKeyDown",
     value: function handleKeyDown(e) {
-      // debugger;
       if (this.state.id && e.key === 'Enter') {
         e.preventDefault();
         this.setState({
@@ -1385,7 +1449,6 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         };
         this.props.createNode(newNode);
       } else if (e.keyCode === 8 && e.currentTarget.innerHTML.length === 0) {
-        debugger;
         this.props.deleteNode(this.state.id);
       }
     }
@@ -1404,10 +1467,16 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "showTooltip",
     value: function showTooltip() {
-      // debugger; 
       var show_tooltip = this.state.show_tooltip;
       this.setState({
         show_tooltip: !show_tooltip
+      });
+    }
+  }, {
+    key: "changeFillColor",
+    value: function changeFillColor() {
+      this.setState({
+        fillColor: !this.state.fillColor
       });
     }
   }, {
@@ -1418,8 +1487,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       var allNodes = this.props.allNodes;
       var childNodeIds = this.props.node.child_ids.sort(function (a, b) {
         return allNodes[a].ord - allNodes[b].ord;
-      }); // debugger
-
+      });
       var nestedNodes = childNodeIds.map(function (id) {
         var node = allNodes[id];
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, {
@@ -1440,17 +1508,23 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tooltip-label"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navs_tooltip__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        node: this.state,
-        className: "tooltipDiv"
-      }))) : null; // debugger;
-
+        className: "tooltipDiv",
+        showing: this.state.show_tooltip,
+        node: this.props.node,
+        updateNode: this.props.updateNode,
+        createNode: this.props.createNode,
+        deleteNode: this.props.deleteNode
+      }))) : null;
+      var fillColor = this.state.fillColor ? "grey" : "none";
       var showLink = this.props.currentNodeId ? "#/nodes/".concat(this.props.currentNodeId) : "#";
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "NodeListItem"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", _defineProperty({
+        className: "NodeListItem",
+        onMouseOver: this.changeFillColor,
+        onMouseOut: this.changeFillColor
+      }, "className", "completed-".concat(this.props.node.completed)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "svgContainer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#",
+        href: showLink,
         onClick: this.showTooltip
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
         viewBox: "0 0 24 24",
@@ -1459,17 +1533,20 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         cx: "6",
         cy: "12",
         r: "2",
-        className: "ttcircle"
+        className: "ttcircle",
+        fill: fillColor
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("circle", {
         cx: "12",
         cy: "12",
         r: "2",
-        className: "ttcircle"
+        className: "ttcircle",
+        fill: fillColor
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("circle", {
         cx: "18",
         cy: "12",
         r: "2",
-        className: "ttcircle"
+        className: "ttcircle",
+        fill: fillColor
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_4___default.a, {
         transitionName: "settings",
         transitionEnterTimeout: 800,
@@ -1527,7 +1604,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  // debugger; 
   var currentNodeId = Number(ownProps.match.params.id);
   return {
     allNodes: state.entities.nodes.allNodes,
@@ -1956,18 +2032,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  Object.freeze(state); // debugger;
+  Object.freeze(state);
 
   switch (action.type) {
     case _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NODES"]:
-      // debugger; 
       return Object(_selectors_nodes_selector__WEBPACK_IMPORTED_MODULE_2__["selectAllNodes"])(state, action);
 
     case _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NODE"]:
-      var newState = Object.assign({}, state); // debugger; 
-
-      newState.allNodes[action.node.id] = action.node || action.node; // debugger; 
-
+      var newState = Object.assign({}, state);
+      newState.allNodes[action.node.id] = action.node || action.node;
       return Object.assign({}, newState);
 
     case _actions_node_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_NODE"]:
@@ -2130,7 +2203,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var selectAllNodes = function selectAllNodes() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  // debugger;
   var allNodes = {};
   action.nodes.forEach(function (node) {
     var id = node.id,
@@ -2157,15 +2229,12 @@ var selectAllNodes = function selectAllNodes() {
   });
   parentNodeIds = parentNodeIds.sort(function (a, b) {
     return allNodes[a].ord - allNodes[b].ord;
-  }); // debugger;
-
-  var lastCreated = action.lastCreated; // debugger; 
-
+  });
+  var lastCreated = action.lastCreated;
   var pagesPath = [];
   action.pagesPath.forEach(function (id) {
     return pagesPath.push(id);
-  }); // debugger; 
-
+  });
   return Object.assign({}, state, {
     allNodes: allNodes
   }, {

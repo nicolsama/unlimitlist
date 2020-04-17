@@ -12,7 +12,7 @@ class NodeList extends React.Component {
     }
 
     componentDidMount() {
-            debugger;
+            
             this.props.fetchAllNodes();
     }
     
@@ -34,7 +34,7 @@ class NodeList extends React.Component {
     }
 
     render() {
-        debugger;
+        
         if (!this.props.parentNodeIds) return null; 
             
             const parentNodeIds = this.props.parentNodeIds.sort((a, b) => this.props.allNodes[a].ord - this.props.allNodes[b].ord);
