@@ -8,8 +8,7 @@ Unlimitlist provides the ability to make and edit lists, mark items as complete,
 
 ## Key Features
 
-![unlimitlist-app-image](app/assets/images/unlimitlist-ss-1.png)
-![unlimitlist-app-image](app/assets/images/unlimitlist-ss-2.png)
+![unlimitlist-app-image](app/assets/images/unlimitlist-ss-3.png)
 
 * Unlimitlist allows for list items to be created from the interface (button) or with the keyboard, with a press of the enter key for seamless jotting. Items will be created with preservation of list order - with the next item being inserted after the item previously in focus. 
 
