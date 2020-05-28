@@ -11,6 +11,7 @@
 #  updated_at     :datetime         not null
 #  parent_node_id :integer          not null
 #
+
 class Node < ApplicationRecord
 
     belongs_to :user
@@ -25,6 +26,11 @@ class Node < ApplicationRecord
         class_name: :Node, 
         inverse_of: :children,
         optional: true
+
+    has_many :tags, 
+        foreign_key: :node_id, 
+        class_name: :Tag, 
+        dependent: :destroy
 
     def descendants
         descendants_arr = []
@@ -62,6 +68,35 @@ class Node < ApplicationRecord
 
     def self.last_updated(nodes_array)
         nodes_array.sort_by{ |node| node[:updated_at] }.last[:id]
+    end
+
+    def save_tags
+            self.body.split(" ").each do |word|
+                obj = {tag: word, node_id: self.id, user_id: self.user_id}
+                if (word.start_with?("#") && !Tag.find_by(obj))
+                    new_tag = Tag.new(obj)
+                    new_tag.save
+                end
+            end
+    end
+
+    def self.search(search = nil, nodes)
+        if search
+            results = []
+
+            matches = nodes.where("body LIKE ?", "%#{search}%")
+            results += matches
+
+            matches.each do |node|
+                ancestors = node.ancestors.map{ |id| Node.find_by(id: id) } 
+                results += ancestors
+            end
+            
+            return results.uniq
+        else 
+            return nodes
+        end
+
     end
 
 end

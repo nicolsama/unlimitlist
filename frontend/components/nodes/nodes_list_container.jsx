@@ -4,12 +4,16 @@ import { fetchAllNodes, fetchNode, createNode, updateNode, deleteNode } from '..
 
 const mapStateToProps = (state, ownProps) => { 
 
-    let currentNodeId = Number(ownProps.match.params.id);
+    let currentNodeId = parseInt(ownProps.match.params.id);
+    debugger; 
     return ({
         allNodes: state.entities.nodes.allNodes,
         parentNodeIds: state.entities.nodes.parentNodeIds,
+        filteredNodes: state.entities.nodes.filteredNodes,
+        filteredParentNodeIds: state.entities.nodes.filteredParentNodeIds,
         lastCreated: state.entities.nodes.lastCreated,
-        currentNodeId
+        currentNodeId, 
+        search: state.entities.nodes.search
     })
 }; 
 

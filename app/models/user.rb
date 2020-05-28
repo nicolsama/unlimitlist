@@ -15,8 +15,13 @@ class User < ApplicationRecord
     validates :password, allow_nil: true, length:  {minimum: 6}
     validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
 
-    has_many :nodes
+    has_many :nodes, 
+        dependent: :destroy
         
+    has_many :tags, 
+        foreign_key: :user_id, 
+        class_name: :Tag
+
     attr_reader :password
     after_initialize :ensure_session_token
 

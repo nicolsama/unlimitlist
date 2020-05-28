@@ -1,8 +1,12 @@
-export const fetchAllNodes = () => (
+export const fetchAllNodes = (search) => {
+
+return (
     $.ajax({
         url: "/api/nodes",
+        data: { search }
+
     })
-);
+)};
 
 export const fetchNode = (NodeId) => {
     return ($.ajax({
@@ -27,8 +31,6 @@ export const createNode = (node) => (
         }
     })
 );
-
-// node = {user_id: 3, body: "testing", parent_node_id: nil, ord: 4}
 
 
 export const deleteNode = (nodeId) => (

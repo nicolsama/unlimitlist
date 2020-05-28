@@ -8,18 +8,17 @@ class Greeting extends React.Component {
     }
 
     render() {
-        if (this.props.currentUser) {
-            return ( null )
-        } else {
+        if (this.props.currentUser) return null;
+
             let linkValue;
             let newPath; 
 
-            if (this.props.linkPath == '/api/signup') { 
-                linkValue ='Log In'; 
-                newPath = '/api/login';
+            if (this.props.linkPath == '/api/login') {
+                linkValue = "Sign Up"; 
+                newPath = '/api/signup'
             } else { 
-                linkValue = 'Sign Up';
-                newPath = '/api/signup';
+                linkValue = 'Log In';
+                newPath = '/api/login';
             }
 
             return (
@@ -32,7 +31,7 @@ class Greeting extends React.Component {
                 </div>
             )
         }
-    }
+
 }
 
 export default Greeting;

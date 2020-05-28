@@ -16,7 +16,7 @@ class Nav extends React.Component {
             sidebarExpanded: false,
             sidebarDocked: false,
             pagesPath: this.props.pagesPath,
-            showSearchBar: false, 
+            showSearchBar: true, 
             transformArrow: false
         }
         this.handleGearClick = this.handleGearClick.bind(this);
@@ -26,6 +26,7 @@ class Nav extends React.Component {
         this.handleSearchClick = this.handleSearchClick.bind(this);
         this.handleSearchQuery = this.handleSearchQuery.bind(this);
         this.rotateArrow = this.rotateArrow.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
 
     componentDidMount() {
@@ -43,12 +44,11 @@ class Nav extends React.Component {
     }
 
     handleMenuMouseLeave() {
-        if (this.state.sidebarExpanded) {
-            this.setState({ sidebarExpanded: false });
-        }
+        (this.state.sidebarExpanded) ? 
+            this.setState({ sidebarExpanded: false }) : null ; 
     }
 
-    handleMenuClick(e) {
+    handleMenuClick() {
         this.setState({ sidebarDocked: !this.state.sidebarDocked }, this.rotateArrow());
     }
 
@@ -56,10 +56,19 @@ class Nav extends React.Component {
         this.setState({ showSearchBar: !this.state.showSearchBar});
     }
 
+    handleLogout() {
+        this.setState({ settingsExpanded: false });
+        this.props.logout();
+    }
+
     handleSearchQuery(e) {
-    //     e.preventDefault(); 
-    //     if (e.key === 'Enter') {
-    //         this.props.????
+  
+        if (e.key === 'Enter') {
+            e.preventDefault(); 
+            
+            let search = { tag: e.currentTarget.value }
+            this.props.fetchAllNodes(search);
+        }
     }
 
     rotateArrow() {
@@ -122,7 +131,7 @@ class Nav extends React.Component {
                         <li className="dd-list-item">Report a Problem</li>
                     </ul>
                     <ul className="dd-list">
-                            <li className="dd-list-item"><a onClick={this.props.logout}>Log Out</a></li>
+                            <li className="dd-list-item"><a onClick={this.handleLogout}>Log Out</a></li>
                             <span className='userEmail'>{(this.props.currentUser) ? this.props.currentUser.email : null}</span>
                     </ul>
 
@@ -135,8 +144,8 @@ class Nav extends React.Component {
                     type="text"
                     className="searchInput"
                     placeholder="Search"
-                    onMouseOut={this.handleSearchClick}
-                    onKeyPress={(e) => this.handleSearchQuery}
+                    // onMouseOut={this.handleSearchClick}
+                    onKeyDown={this.handleSearchQuery}
                     >
                 </input>) }
 
@@ -229,13 +238,14 @@ const msp = ({ session, entities: { users, nodes } }, ownProps) => {
         allNodes: nodes.allNodes,
         parentNodeIds: nodes.parentNodeIds,
         lastCreated: nodes.lastCreated,
-        pagesPath: nodes.pagesPath
+        pagesPath: nodes.pagesPath, 
+        search: nodes.search
     };
 };
 
 const mdp = (dispatch) => ({
     logout: () => dispatch(logout()), 
-    fetchAllNodes: () => dispatch(fetchAllNodes())
+    fetchAllNodes: (search) => dispatch(fetchAllNodes(search))
 });
 
 export default connect(msp, mdp)(Nav);

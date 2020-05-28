@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { login } from '../../actions/session_actions';
 import { withRouter } from "react-router-dom";
 import { fetchAllNodes } from '../../actions/node_actions';
+import SplashFormContainer from './splash_form_container';
 
 
 class Splash extends React.Component {
@@ -30,17 +31,10 @@ class Splash extends React.Component {
             <h2><span>Overwhelmed?</span> We can help!</h2>
             <p>Unlimitlist offers a simpler way to stay organized. If you have a crazy job or an ambitious project, we will be your trusty sidekick.
             </p>
-                <div className="splashForm">
-                    <input 
-                        type="text" 
-                        placeholder="Enter your email">
-                    </input>
-                    <button>
-                        Sign Up
-                    </button>
-                </div>
+
+                <SplashFormContainer/>
                 <div 
-                className="splashForm">
+                className="demo">
                     <span id='splashSignIn'>Not sure?
                     </span>
                     <a

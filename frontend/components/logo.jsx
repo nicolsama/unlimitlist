@@ -9,7 +9,7 @@ const Logo = (props) => {
     return (<NavLink to="/" id='logolink'>
         <span className='logoContainer'>
             <img src={logo_image} className="logoImg"/>
-            <h1 className="title">UnlimitList</h1>
+            <h1 className="title">Unlimitlist</h1>
         </span>
         </NavLink>
             )

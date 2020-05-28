@@ -43,10 +43,18 @@ input:focus {
     background-color:#8f9bff;
 }
 
-.errorSpan  {
-    padding: 10px;
+.errorUl  {
+    list-style: none;
+    padding: 0;
     color: red;
     font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.errorUl li {
+    margin-top: 10px;
 }
 
 .splashContainer {
@@ -72,13 +80,27 @@ input:focus {
     font-weight: 900;
 }
 
-.splashForm {
+.demo {
     margin: 30px auto;
     font-size: 13px;
     width: 375px;
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+.splashForm input{
+    margin-bottom: 15px;
+}
+
+.splashForm {
+    margin: 30px auto;
+    font-size: 13px;
+    width: 252px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
 }
 
 .splashForm button {
@@ -89,7 +111,13 @@ input:focus {
         border-radius: 16px;
         background-color:#536dfe;
         border-color:#536dfe;
+        border-style: none;
 }
+
+button:focus {
+    outline: none;
+}
+
 
 .splashForm button:hover {
     border-color: #8f9bff;
@@ -100,4 +128,16 @@ input:focus {
     font-size: 13px;
     color: grey; 
     font-weight: 500;
+}
+
+a {
+    cursor: pointer;
+}
+
+*::selection {
+    background-color: none;
+}
+
+.hidden {
+    display: none;
 }

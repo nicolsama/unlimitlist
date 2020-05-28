@@ -25,11 +25,12 @@
 
 #addNode {
     color:rgb(42, 49, 53);
-    border-color: none;
+    border: grey 1px solid;
     border-radius: 20px;
     width: 25px;
     height: 25px;
     margin-left: 53px;
+
 }
 
 #addNode:hover {
@@ -95,7 +96,12 @@ path {
 .focusTitle {
     font-weight: 900;
     font-size: 24px;
-    padding-bottom: 15px;
+    margin-bottom: 15px;
+    color:rgb(121, 121, 121);
+}
+
+.focusTitle:focus {
+    outline: none;
 }
 
 .tooltipDiv {
@@ -136,4 +142,8 @@ path {
     height: 300px;
     margin-left: -30px;
     margin-top: 25px;
+}
+
+.highlight {
+    background-color: yellow;
 }

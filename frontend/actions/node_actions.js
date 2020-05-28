@@ -5,15 +5,19 @@ export const RECEIVE_NODE = 'RECEIVE_NODE';
 export const REMOVE_NODE = 'REMOVE_NODE';
 
 const receiveNodes = (nodes) => {
-    
+    debugger;
 return (    
 {
     type: RECEIVE_NODES, 
-    nodes: nodes.allNodes,
+    allNodes: nodes.allNodes,
     parentNodeIds: nodes.parentNodeIds, 
+    filteredNodes: nodes.filteredNodes,
+    filteredParentNodeIds: nodes.filteredParentNodeIds,
     lastCreated: nodes.last_created,
-    pagesPath: nodes.path
-    })};
+    pagesPath: nodes.path, 
+    search: nodes.search
+
+})};
 
 const receiveNode = (node) => ({
     type: RECEIVE_NODE,
@@ -25,10 +29,11 @@ const removeNode = (nodeId) => ({
     nodeId
 });
 
-export const fetchAllNodes = () => dispatch => (
-    NodeApiUtil.fetchAllNodes()
+export const fetchAllNodes = (search) => dispatch => {
+return (
+    NodeApiUtil.fetchAllNodes(search)
         .then(nodes => dispatch(receiveNodes(nodes)))
-);
+)};
 
 export const fetchNode = nodeId => dispatch => (
     NodeApiUtil.fetchNode(nodeId)

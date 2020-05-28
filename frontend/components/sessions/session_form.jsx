@@ -24,15 +24,16 @@ class SessionForm extends React.Component {
     }
 
     render() {
-        let word = this.props.formType === 'Sign up' ? 'for' : 'to';
-        let err = "";
-        if (this.props.errors.session.length) {
-            err = this.props.errors.session
-        }
+        let words = this.props.formType === 'Sign up' ? 'for' : 'to';
+        let errors = (this.props.errors.session.length) ? (
+            this.props.errors.session.map(error => <li>{error}</li>))
+            : "";
+
+
         return (<div>
             
             <form onSubmit={this.handleSubmit} className='sessionForm'>
-                <h3>{this.props.formType} {word} Unlimitlist</h3>
+                <h3>{this.props.formType} {words} Unlimitlist</h3>
 
                     <input
                         type='text'
@@ -53,7 +54,7 @@ class SessionForm extends React.Component {
                     className="sessionButton">
                     {this.props.formType}
                 </button>
-                <span className="errorSpan">{err}</span>
+                <ul className="errorUl">{errors}</ul>
             </form>
         </div>)
     }

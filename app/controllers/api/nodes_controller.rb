@@ -2,7 +2,16 @@ class Api::NodesController < ApplicationController
 
     def index
         @node = Node.first
-        @nodes = current_user.nodes
+        @nodes = current_user.nodes.includes(:children)
+        
+        if params[:search]
+            @filtered_nodes = Node.search(search_params[:tag], @nodes)
+            @search = search_params[:tag]
+        else            
+            @filtered_nodes = []
+            @search = false
+        end
+        
         render :index
     end
 
@@ -17,7 +26,9 @@ class Api::NodesController < ApplicationController
         @node.user_id = current_user.id
         @node.ord = Node.maximum(:ord)
        
-        if @node.save
+        if @node.save 
+            # && @node.save_tags
+
             siblings = @node.sibling_nodes
             younger_siblings = siblings.select { |node| node.ord > params[:node][:ord_bookmark].to_i }
             younger_siblings_ords = younger_siblings.map { |node| node.ord }
@@ -33,41 +44,50 @@ class Api::NodesController < ApplicationController
                 node.ord = mapping[node.ord]
                 node.save
             end
-            
-            @nodes = current_user.nodes
-            
+
+            @nodes = current_user.nodes.includes(:children)
+            @filtered_nodes = []
+            @search = false
             render :index
         else 
 
             render json: @node.errors.full_messages
         end
-    end
-
-    def insert 
     end
 
     def update
         @node = Node.find_by(id: params[:id])
-        if @node && @node.update(node_params)
-            
+        debugger
+        if @node && @node.update(node_params) 
+            debugger
+            # && @node.save_tags
             @nodes = current_user.nodes.includes(:children)
+            @filtered_nodes = []
+            @search = false
             render :index
         else 
-        
+            debugger; 
             render json: @node.errors.full_messages
         end
     end
 
+
     def destroy
-        Node.delete(params[:id])
+        Node.destroy(params[:id])
         @node = Node.first
-        @nodes = current_user.nodes
+        @nodes = current_user.nodes.includes(:children)
+        @filtered_nodes = []
+        @search = false
         render :index
     end
 
     private
     def node_params
-        params.require(:node).permit(:body, :completed, :ord, :parent_node_id)
+        params.require(:node).permit(:body, :completed, :ord, :parent_node_id, :search)
+    end
+
+    def search_params
+        params.require(:search).permit(:tag)
     end
 
 end
