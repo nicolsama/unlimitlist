@@ -17,7 +17,7 @@ class NodeListItem extends React.Component {
                 fillColor: false,
                 searchToggled: false
             })
-        this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.updateNode = this.updateNode.bind(this);
         this.showChildren = this.showChildren.bind(this);
         this.textInput = React.createRef();
@@ -27,24 +27,24 @@ class NodeListItem extends React.Component {
         this.changeFillColor = this.changeFillColor.bind(this);
     }
 
-    // componentDidMount() {
-    //     this.textInput.current.focus();
-    // }
+    componentDidMount() {
+        if (!this.props.search) this.textInput.current.focus();
+    }
 
     updateNode() {
-        this.props.updateNode(this.state)
+        this.props.updateNode(this.state);
     }
     
     handleBlur(e) {
-        this.setState({ body: e.currentTarget.textContent }, this.updateNode)
+        this.setState({ body: e.currentTarget.textContent }, this.updateNode); 
     }
 
-    handleKeyDown(e) {
+    handleKeyPress(e) {
 
         if ((this.state.id) && e.key === 'Enter') {
             e.preventDefault();
             this.setState({ body: e.currentTarget.textContent }, this.updateNode);
-    
+
             let ord_bookmark = (this.props.node.ord) ? (this.props.node.ord) : null;
             const newNode = {
                 id: null,
@@ -56,9 +56,9 @@ class NodeListItem extends React.Component {
             }
 
             this.props.createNode(newNode);
-        } else if (e.keyCode === 8 && (e.currentTarget.innerHTML.length === 0)) {
- 
-            this.props.deleteNode(this.state.id);
+        } else if ((e.keyCode === 8 || e.key === "Backspace") && (e.currentTarget.innerHTML.length === 0)) {
+            debugger
+            this.props.deleteNode(this.state.id).then(() => (console.log("deleted")));
         }
     }
 
@@ -130,7 +130,7 @@ class NodeListItem extends React.Component {
         const fillColor = (this.state.fillColor) ? "grey" : "none";
         let showLink = (this.props.currentNodeId) ? `#/nodes/${this.props.currentNodeId}` : "#";
 
-        debugger;
+
         return (
             <>
             <li className="NodeListItem"
@@ -170,20 +170,9 @@ class NodeListItem extends React.Component {
                             </div>
                         </Link>
 
-                        {/* <div
-                            className='editable'
-                            contentEditable="true"
-                            onKeyDown={(e) => this.handleKeyDown(e)}                            
-                            ref={this.textInput}
-                            onBlur={this.handleBlur}
-                            >
-                            {this.state.body}
-                    
-                        </div> */}
-
                         <Text 
-                            handleKeyDown={this.handleKeyDown}
-                            // ref={this.textInput}
+                            handleKeyPress={this.handleKeyPress}
+                            textInput={this.textInput}
                             handleBlur={this.handleBlur}
                             body={this.state.body} 
                             query={this.props.search}/>

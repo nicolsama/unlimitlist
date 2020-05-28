@@ -16,7 +16,7 @@ class Nav extends React.Component {
             sidebarExpanded: false,
             sidebarDocked: false,
             pagesPath: this.props.pagesPath,
-            showSearchBar: true, 
+            showSearchBar: false, 
             transformArrow: false
         }
         this.handleGearClick = this.handleGearClick.bind(this);
@@ -29,9 +29,9 @@ class Nav extends React.Component {
         this.handleLogout = this.handleLogout.bind(this);
     }
 
-    componentDidMount() {
-        this.props.fetchAllNodes();
-    }
+    // componentDidMount() {
+    //     this.props.fetchAllNodes();
+    // }
 
     handleGearClick(e) {
         this.setState({settingsExpanded: !this.state.settingsExpanded});
@@ -52,8 +52,12 @@ class Nav extends React.Component {
         this.setState({ sidebarDocked: !this.state.sidebarDocked }, this.rotateArrow());
     }
 
-    handleSearchClick(e) {
-        this.setState({ showSearchBar: !this.state.showSearchBar});
+    handleSearchClick() {
+        debugger; 
+        (this.props.search) ? null :  
+            (this.state.showSearchBar) 
+                ?   setTimeout(() => this.setState({ showSearchBar: !this.state.showSearchBar}), 500) 
+                :   this.setState({ showSearchBar: !this.state.showSearchBar});
     }
 
     handleLogout() {
@@ -62,7 +66,7 @@ class Nav extends React.Component {
     }
 
     handleSearchQuery(e) {
-  
+        debugger; 
         if (e.key === 'Enter') {
             e.preventDefault(); 
             
@@ -140,11 +144,12 @@ class Nav extends React.Component {
 
             let searchBar = null; 
             if (this.state.showSearchBar) {
-                searchBar = (<input
+                searchBar = (
+                    <input
                     type="text"
                     className="searchInput"
                     placeholder="Search"
-                    // onMouseOut={this.handleSearchClick}
+                    onMouseOut={this.handleSearchClick}
                     onKeyDown={this.handleSearchQuery}
                     >
                 </input>) }
@@ -161,10 +166,7 @@ class Nav extends React.Component {
                 transitionLeaveTimeout={800}
                 className={ sidebarClass ? `sidebar-${sidebarClass}` : "" }
                 >
-                <div >
                     {currentSidebar}
-                </div>
-
             </ReactCSSTransitionGroup>
            
             <div className='navBar'>
@@ -191,9 +193,7 @@ class Nav extends React.Component {
                                 transitionName="search"
                                 transitionEnterTimeout={600}
                                 transitionLeaveTimeout={600}>
-                                <div>
                                     {searchBar}
-                                </div>
                             </ReactCSSTransitionGroup>
 
 

@@ -110,7 +110,6 @@ var RECEIVE_NODE = 'RECEIVE_NODE';
 var REMOVE_NODE = 'REMOVE_NODE';
 
 var receiveNodes = function receiveNodes(nodes) {
-  debugger;
   return {
     type: RECEIVE_NODES,
     allNodes: nodes.allNodes,
@@ -526,7 +525,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       sidebarExpanded: false,
       sidebarDocked: false,
       pagesPath: _this.props.pagesPath,
-      showSearchBar: true,
+      showSearchBar: false,
       transformArrow: false
     };
     _this.handleGearClick = _this.handleGearClick.bind(_assertThisInitialized(_this));
@@ -538,14 +537,12 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     _this.rotateArrow = _this.rotateArrow.bind(_assertThisInitialized(_this));
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } // componentDidMount() {
+  //     this.props.fetchAllNodes();
+  // }
+
 
   _createClass(Nav, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.fetchAllNodes();
-    }
-  }, {
     key: "handleGearClick",
     value: function handleGearClick(e) {
       this.setState({
@@ -577,8 +574,15 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleSearchClick",
-    value: function handleSearchClick(e) {
-      this.setState({
+    value: function handleSearchClick() {
+      var _this2 = this;
+
+      debugger;
+      this.props.search ? null : this.state.showSearchBar ? setTimeout(function () {
+        return _this2.setState({
+          showSearchBar: !_this2.state.showSearchBar
+        });
+      }, 500) : this.setState({
         showSearchBar: !this.state.showSearchBar
       });
     }
@@ -593,6 +597,8 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSearchQuery",
     value: function handleSearchQuery(e) {
+      debugger;
+
       if (e.key === 'Enter') {
         e.preventDefault();
         var search = {
@@ -611,7 +617,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var sbDiv = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar__WEBPACK_IMPORTED_MODULE_4__["default"], {
         key: "sidebar",
@@ -637,10 +643,10 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       }
 
       var pagination = this.props.pagesPath ? this.props.pagesPath.reverse().map(function (id) {
-        var pagename = _this2.props.allNodes[id].body.length > 20 ? _this2.props.allNodes[id].body.slice(0, 18).concat("...") : _this2.props.allNodes[id].body;
+        var pagename = _this3.props.allNodes[id].body.length > 20 ? _this3.props.allNodes[id].body.slice(0, 18).concat("...") : _this3.props.allNodes[id].body;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#/nodes/".concat(id),
-          pagesPath: _this2.props.pathsPath
+          pagesPath: _this3.props.pathsPath
         }, pagename));
       }) : null;
       var settingsDiv = null;
@@ -689,8 +695,8 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         searchBar = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           className: "searchInput",
-          placeholder: "Search" // onMouseOut={this.handleSearchClick}
-          ,
+          placeholder: "Search",
+          onMouseOut: this.handleSearchClick,
           onKeyDown: this.handleSearchQuery
         });
       }
@@ -701,7 +707,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
           transitionEnterTimeout: 800,
           transitionLeaveTimeout: 800,
           className: sidebarClass ? "sidebar-".concat(sidebarClass) : ""
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, currentSidebar)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, currentSidebar), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "navBar"
         }, !this.state.sidebarDocked ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
           onMouseOver: this.handleMenuMouseEnter,
@@ -722,7 +728,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
           transitionName: "search",
           transitionEnterTimeout: 600,
           transitionLeaveTimeout: 600
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, searchBar)), !this.state.showSearchBar ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, searchBar), !this.state.showSearchBar ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "searchIcon",
           onClick: this.handleSearchClick
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
@@ -1169,15 +1175,8 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, NodeList);
 
     _this = _super.call(this, props);
-    _this.state = {
-      allNodes: _this.props.allNodes,
-      parentNodeIds: _this.props.parentNodeIds,
-      currentNodeBody: "",
-      bodyUpdated: false
-    };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     _this.handleBlur = _this.handleBlur.bind(_assertThisInitialized(_this));
-    _this.updateStateBody = _this.updateStateBody.bind(_assertThisInitialized(_this));
     _this.handleKeyDown = _this.handleKeyDown.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -1185,7 +1184,11 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
   _createClass(NodeList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchAllNodes();
+      if (!this.props.search) {
+        this.props.fetchAllNodes();
+      } else {
+        this.props.fetchAllNodes(this.props.search);
+      }
     }
   }, {
     key: "handleClick",
@@ -1204,30 +1207,23 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "updateNode",
-    value: function updateNode() {
-      var newNode = this.state.allNodes[this.props.currentNodeId];
-      newNode.body = this.state.currentNodeBody;
+    value: function updateNode(e) {
+      debugger;
+      var newNode = this.props.allNodes[this.props.currentNodeId];
+      newNode.body = e.currentTarget.innerText;
       this.props.updateNode(newNode);
-    }
-  }, {
-    key: "updateStateBody",
-    value: function updateStateBody() {// this.setState({currentNodeBody: this.props.allNodes[this.props.currentNodeId].body, bodyUpdated: true})
     }
   }, {
     key: "handleBlur",
     value: function handleBlur(e) {
-      this.setState({
-        currentNodeBody: e.currentTarget.textContent
-      }, this.updateNode);
+      this.updateNode(e);
     }
   }, {
     key: "handleKeyDown",
     value: function handleKeyDown(e) {
       if (e.key === 'Enter' && this.props.allNodes[this.props.currentNodeId]) {
         e.preventDefault();
-        this.setState({
-          currentNodeBody: this.props.allNodes[this.props.currentNodeId].body
-        }, this.updateNode);
+        this.updateNode(e);
       }
     }
   }, {
@@ -1254,11 +1250,6 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
           search: _this2.props.search
         });
       });
-
-      if (this.props.allNodes[this.props.currentNodeId] && !this.state.bodyUpdated) {
-        this.updateStateBody();
-      }
-
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "NodeListDiv"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1268,7 +1259,7 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
         contentEditable: "true",
         onBlur: this.handleBlur,
         onKeyDown: this.handleKeyDown
-      }, this.state.currentNodeBody) : null, nodeLis), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, this.props.allNodes[this.props.currentNodeId].body) : null, nodeLis), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "addNode",
         onClick: this.handleClick
       }, "+")));
@@ -1465,7 +1456,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       fillColor: false,
       searchToggled: false
     });
-    _this.handleKeyDown = _this.handleKeyDown.bind(_assertThisInitialized(_this));
+    _this.handleKeyPress = _this.handleKeyPress.bind(_assertThisInitialized(_this));
     _this.updateNode = _this.updateNode.bind(_assertThisInitialized(_this));
     _this.showChildren = _this.showChildren.bind(_assertThisInitialized(_this));
     _this.textInput = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -1474,12 +1465,14 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
     _this.showTooltip = _this.showTooltip.bind(_assertThisInitialized(_this));
     _this.changeFillColor = _this.changeFillColor.bind(_assertThisInitialized(_this));
     return _this;
-  } // componentDidMount() {
-  //     this.textInput.current.focus();
-  // }
-
+  }
 
   _createClass(NodeListItem, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (!this.props.search) this.textInput.current.focus();
+    }
+  }, {
     key: "updateNode",
     value: function updateNode() {
       this.props.updateNode(this.state);
@@ -1492,8 +1485,8 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       }, this.updateNode);
     }
   }, {
-    key: "handleKeyDown",
-    value: function handleKeyDown(e) {
+    key: "handleKeyPress",
+    value: function handleKeyPress(e) {
       if (this.state.id && e.key === 'Enter') {
         e.preventDefault();
         this.setState({
@@ -1509,8 +1502,11 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           ord_bookmark: ord_bookmark
         };
         this.props.createNode(newNode);
-      } else if (e.keyCode === 8 && e.currentTarget.innerHTML.length === 0) {
-        this.props.deleteNode(this.state.id);
+      } else if ((e.keyCode === 8 || e.key === "Backspace") && e.currentTarget.innerHTML.length === 0) {
+        debugger;
+        this.props.deleteNode(this.state.id).then(function () {
+          return console.log("deleted");
+        });
       }
     }
   }, {
@@ -1590,7 +1586,6 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       }))) : null;
       var fillColor = this.state.fillColor ? "grey" : "none";
       var showLink = this.props.currentNodeId ? "#/nodes/".concat(this.props.currentNodeId) : "#";
-      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", _defineProperty({
         className: "NodeListItem",
         onMouseOver: this.changeFillColor,
@@ -1641,8 +1636,8 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         cy: "9",
         r: "3.5"
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_text_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        handleKeyDown: this.handleKeyDown // ref={this.textInput}
-        ,
+        handleKeyPress: this.handleKeyPress,
+        textInput: this.textInput,
         handleBlur: this.handleBlur,
         body: this.state.body,
         query: this.props.search
@@ -1677,7 +1672,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var currentNodeId = parseInt(ownProps.match.params.id);
-  debugger;
   return {
     allNodes: state.entities.nodes.allNodes,
     parentNodeIds: state.entities.nodes.parentNodeIds,
@@ -1762,7 +1756,7 @@ var Text = /*#__PURE__*/function (_React$Component) {
   _createClass(Text, [{
     key: "_highlighter",
     value: function _highlighter(body, query) {
-      if (body.match(query)) {
+      if (query && body.match(query)) {
         var index = body.match(query).index;
         var front = body.slice(0, index);
         var highlight = body.slice(index, index + query.length);
@@ -1780,8 +1774,9 @@ var Text = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "editable",
         contentEditable: "true",
-        onKeyDown: this.props.handleKeyDown,
-        onBlur: this.props.handleBlur
+        onKeyDown: this.props.handleKeyPress,
+        onBlur: this.props.handleBlur,
+        ref: this.props.textInput
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this._highlighter(this.props.body, this.props.query)));
     }
   }]);

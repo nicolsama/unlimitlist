@@ -8,7 +8,7 @@ class Text extends React.Component {
 
     _highlighter(body, query) {
 
-        if (body.match(query)) {
+        if (query && body.match(query)) {
             const index = body.match(query).index
 
             const front = body.slice(0, index);
@@ -28,14 +28,17 @@ class Text extends React.Component {
     }
 
     render() {
-        return (<div
-            className='editable'
+        return (
+          <div
+            className="editable"
             contentEditable="true"
-            onKeyDown={this.props.handleKeyDown}
+            onKeyDown={this.props.handleKeyPress}
             onBlur={this.props.handleBlur}
-            >
+            ref={this.props.textInput}
+          >
             <span>{this._highlighter(this.props.body, this.props.query)}</span>
-        </div>)
+          </div>
+        );
 
     }
 

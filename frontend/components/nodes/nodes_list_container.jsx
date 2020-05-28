@@ -5,7 +5,7 @@ import { fetchAllNodes, fetchNode, createNode, updateNode, deleteNode } from '..
 const mapStateToProps = (state, ownProps) => { 
 
     let currentNodeId = parseInt(ownProps.match.params.id);
-    debugger; 
+
     return ({
         allNodes: state.entities.nodes.allNodes,
         parentNodeIds: state.entities.nodes.parentNodeIds,

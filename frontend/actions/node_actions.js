@@ -5,7 +5,7 @@ export const RECEIVE_NODE = 'RECEIVE_NODE';
 export const REMOVE_NODE = 'REMOVE_NODE';
 
 const receiveNodes = (nodes) => {
-    debugger;
+
 return (    
 {
     type: RECEIVE_NODES, 

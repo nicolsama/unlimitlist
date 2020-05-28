@@ -6,21 +6,18 @@ import { withRouter } from 'react-router-dom';
 class NodeList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-                    allNodes: this.props.allNodes, 
-                    parentNodeIds: this.props.parentNodeIds,
-                    currentNodeBody: "", 
-                    bodyUpdated: false
-                }
-
         this.handleClick = this.handleClick.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
-        this.updateStateBody = this.updateStateBody.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
     componentDidMount() {
+
+        if (!this.props.search) {
             this.props.fetchAllNodes();
+        } else {
+            this.props.fetchAllNodes(this.props.search);
+        }
     }
     
     handleClick(e) {
@@ -40,30 +37,27 @@ class NodeList extends React.Component {
             this.props.createNode(newNode);
     }
 
-    updateNode() {
-        let newNode = this.state.allNodes[this.props.currentNodeId]; 
-        newNode.body = this.state.currentNodeBody; 
+    updateNode(e) {
+        debugger
+        let newNode = this.props.allNodes[this.props.currentNodeId]; 
+        newNode.body = e.currentTarget.innerText; 
         this.props.updateNode(newNode);
     }
 
-    updateStateBody() {
-        // this.setState({currentNodeBody: this.props.allNodes[this.props.currentNodeId].body, bodyUpdated: true})
-    }
 
     handleBlur(e) {
-        this.setState({ currentNodeBody: e.currentTarget.textContent }, this.updateNode)
+        this.updateNode(e);
     }
 
     handleKeyDown(e) {
         
         if (e.key === 'Enter' && this.props.allNodes[this.props.currentNodeId] ) {
             e.preventDefault();
-            this.setState({ currentNodeBody: this.props.allNodes[this.props.currentNodeId].body}, this.updateNode)
+            this.updateNode(e);
         }
     }
 
     render() {
-        
         
         if (!this.props.parentNodeIds) return null; 
             
@@ -88,34 +82,29 @@ class NodeList extends React.Component {
                 />)
             })
 
-        
-        if (this.props.allNodes[this.props.currentNodeId] && !this.state.bodyUpdated) {  
-            this.updateStateBody(); 
-        }
-
-        return (<>
-
+        return (
+          <>
             <div className="NodeListDiv">
-                <ul className="NodeListUl">
-                { (this.props.allNodes[this.props.currentNodeId]) 
-                        ? (<h2 className="focusTitle"
-                            contentEditable="true"
-                            onBlur={this.handleBlur}
-                            onKeyDown={this.handleKeyDown}>
-                            {this.state.currentNodeBody}
-                        </h2>)
-                        : null }
+              <ul className="NodeListUl">
+                {this.props.allNodes[this.props.currentNodeId] ? (
+                  <h2
+                    className="focusTitle"
+                    contentEditable="true"
+                    onBlur={this.handleBlur}
+                    onKeyDown={this.handleKeyDown}
+                  >
+                    {this.props.allNodes[this.props.currentNodeId].body}
+                  </h2>
+                ) : null}
 
-                    {nodeLis}
-                </ul>
-                <button
-                    id="addNode"
-                    onClick={this.handleClick}>
+                {nodeLis}
+              </ul>
+              <button id="addNode" onClick={this.handleClick}>
                 +
-                </button>
+              </button>
             </div>
-        </>
-        )
+          </>
+        );
     }
 
 }

@@ -57,16 +57,15 @@ class Api::NodesController < ApplicationController
 
     def update
         @node = Node.find_by(id: params[:id])
-        debugger
+
         if @node && @node.update(node_params) 
-            debugger
             # && @node.save_tags
             @nodes = current_user.nodes.includes(:children)
             @filtered_nodes = []
             @search = false
             render :index
         else 
-            debugger; 
+
             render json: @node.errors.full_messages
         end
     end

@@ -17,8 +17,6 @@ class NodeListAdd extends React.Component {
             ord: null,
             parent_node_id: null,
         }
-
-        // this.props.createNode(newNode);
     }
 
     render() {
