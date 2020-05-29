@@ -1658,7 +1658,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         handleKeyPress: this.handleKeyPress,
         textInput: this.textInput,
         handleBlur: this.handleBlur,
-        body: this.state.body,
+        body: this.props.node.body,
         query: this.props.search
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "sublist"

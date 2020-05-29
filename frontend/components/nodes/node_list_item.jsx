@@ -179,7 +179,7 @@ class NodeListItem extends React.Component {
                             handleKeyPress={this.handleKeyPress}
                             textInput={this.textInput}
                             handleBlur={this.handleBlur}
-                            body={this.state.body} 
+                            body={this.props.node.body} 
                             query={this.props.search}/>
                     </div>
                 <ul className='sublist' >
