@@ -22,7 +22,8 @@ class Text extends React.Component {
                 contentEditable="true"
                 onBlur={this.props.onBlur}
                 onKeyDown={this.props.onKeyDown}
-                ref={this.props.ref}>
+                ref={this.props.children.ref}
+                >
                     <span>{front}</span>
                     <span className="highlight">{highlight}</span>
                     <span>{back}</span>
@@ -36,11 +37,13 @@ class Text extends React.Component {
                 contentEditable="true"
                 onBlur={this.props.onBlur}
                 onKeyDown={this.props.onKeyDown}
-                ref={this.props.ref}>{text}</span>
+                ref={this.props.children.ref}
+                >{text}</span>
         }
     }
 
     render() {
+        debugger; 
         return (<>
                     {this._highlighter(this.props.children, this.props.query)}
                 </>);

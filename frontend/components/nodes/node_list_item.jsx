@@ -25,7 +25,8 @@ class NodeListItem extends React.Component {
     }
 
     componentDidMount() {
-        // if (!this.props.search) this.textInput.current.focus();
+        debugger; 
+        if (!this.props.search) this.textInput.current.focus();
     }
     
     handleBlur(e) {
@@ -137,7 +138,7 @@ class NodeListItem extends React.Component {
         const fillColor = (this.state.fillColor) ? "grey" : "none";
         let showLink = (this.props.currentNodeId) ? `#/nodes/${this.props.currentNodeId}` : "#";
 
-
+            debugger; 
         return (
             <>
             <li className="NodeListItem"
@@ -187,8 +188,8 @@ class NodeListItem extends React.Component {
                             query={this.props.search}
                             onKeyDown={this.handleKeyPress}
                             onBlur={this.handleBlur}
-                            ref={this.textInput}>
-                            <span>
+                            >
+                            <span ref={this.textInput}>
                                 {this.props.node.body}
                             </span>
                         </Text>

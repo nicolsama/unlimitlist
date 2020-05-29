@@ -1486,7 +1486,9 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
 
   _createClass(NodeListItem, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// if (!this.props.search) this.textInput.current.focus();
+    value: function componentDidMount() {
+      debugger;
+      if (!this.props.search) this.textInput.current.focus();
     }
   }, {
     key: "handleBlur",
@@ -1616,6 +1618,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       }))) : null;
       var fillColor = this.state.fillColor ? "grey" : "none";
       var showLink = this.props.currentNodeId ? "#/nodes/".concat(this.props.currentNodeId) : "#";
+      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", _defineProperty({
         className: "NodeListItem",
         onMouseOver: this.changeFillColor,
@@ -1668,9 +1671,10 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_text_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
         query: this.props.search,
         onKeyDown: this.handleKeyPress,
-        onBlur: this.handleBlur,
+        onBlur: this.handleBlur
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         ref: this.textInput
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.node.body))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, this.props.node.body))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "sublist"
       }, this.props.search || this.state.showChildren ? nestedNodes : null)));
     }
@@ -1797,7 +1801,7 @@ var Text = /*#__PURE__*/function (_React$Component) {
           contentEditable: "true",
           onBlur: this.props.onBlur,
           onKeyDown: this.props.onKeyDown,
-          ref: this.props.ref
+          ref: this.props.children.ref
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, front), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "highlight"
         }, highlight), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, back)));
@@ -1807,13 +1811,14 @@ var Text = /*#__PURE__*/function (_React$Component) {
           contentEditable: "true",
           onBlur: this.props.onBlur,
           onKeyDown: this.props.onKeyDown,
-          ref: this.props.ref
+          ref: this.props.children.ref
         }, text);
       }
     }
   }, {
     key: "render",
     value: function render() {
+      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, this._highlighter(this.props.children, this.props.query));
     }
   }]);
