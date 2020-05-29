@@ -1538,7 +1538,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         };
         this.props.createNode(newNode);
       } else if ((e.keyCode === 8 || e.key === "Backspace") && e.currentTarget.innerHTML.length === 0) {
-        this.props.deleteNode(this.state.id);
+        this.props.deleteNode(this.props.node.id);
       }
     }
   }, {
