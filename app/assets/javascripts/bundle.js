@@ -537,12 +537,14 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     _this.rotateArrow = _this.rotateArrow.bind(_assertThisInitialized(_this));
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     return _this;
-  } // componentDidMount() {
-  //     this.props.fetchAllNodes();
-  // }
-
+  }
 
   _createClass(Nav, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchAllNodes();
+    }
+  }, {
     key: "handleGearClick",
     value: function handleGearClick(e) {
       this.setState({
@@ -701,15 +703,10 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         });
       }
 
-      if (this.props.currentUser) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
-          transitionName: "sidebar",
-          transitionEnterTimeout: 800,
-          transitionLeaveTimeout: 800,
-          className: sidebarClass ? "sidebar-".concat(sidebarClass) : ""
-        }, currentSidebar), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "navBar"
-        }, !this.state.sidebarDocked ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+      var menuIcon = null;
+
+      if (!this.state.sidebarDocked) {
+        menuIcon = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
           onMouseOver: this.handleMenuMouseEnter,
           onClick: this.handleMenuClick,
           onMouseOut: this.handleMenuMouseLeave,
@@ -718,13 +715,35 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
           fill: "grey",
           d: "M442 114H6a6 6 0 0 1-6-6V84a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm0 160H6a6 6 0 0 1-6-6v-24a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm0 160H6a6 6 0 0 1-6-6v-24a6 6 0 0 1 6-6h436a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6z"
-        })) : null, pagination && pagination.length >= 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }));
+      }
+
+      if (this.props.currentUser) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
+          transitionName: "sidebar",
+          transitionEnterTimeout: 800,
+          transitionLeaveTimeout: 800,
+          className: sidebarClass ? "sidebar-".concat(sidebarClass) : ""
+        }, currentSidebar), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "navBar"
+        }, menuIcon, pagination && pagination.length >= 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "pagination"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#"
         }, "HOME")), pagination) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "navBarLeft"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "show"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "checkbox",
+          id: "switch",
+          "class": "checkbox"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          "for": "switch",
+          "class": "toggle"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "toggle-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Show Completed")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
           transitionName: "search",
           transitionEnterTimeout: 600,
           transitionLeaveTimeout: 600
@@ -1624,7 +1643,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         href: showLink,
         onClick: this.showChildren
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
-        transform: this.state.showChildren || this.props.search ? "rotate(90)" : ""
+        transform: this.state.showChildren && this.props.search ? "rotate(45)" : this.state.showChildren ? "rotate(90)" : ""
       }, this.state.child_ids.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
         d: "M13.75 9.56879C14.0833 9.76124 14.0833 10.2424 13.75 10.4348L8.5 13.4659C8.16667 13.6584 7.75 13.4178 7.75 13.0329L7.75 6.97072C7.75 6.58582 8.16667 6.34525 8.5 6.5377L13.75 9.56879Z"
       }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {

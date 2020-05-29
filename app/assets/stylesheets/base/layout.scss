@@ -76,6 +76,25 @@ header {
     align-items: center;
 }
 
+.showCompleteToggle {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+
+.showCompleteToggle input,
+.showCompleteToggle > label {
+    width: fit-content;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+
+
 .navBarLeft path {
     fill:none;
     border: 1px solid rgb(203, 206, 208);
@@ -314,11 +333,39 @@ header {
 .search-leave.search-leave-active {
     opacity: .1;
     transform: translateX(100%);
-    // transform: scale(.1);
     transition: opacity 600ms ease-in, transform 600ms ease-in;
 }
 
 
 .transformArrow {
      transform: rotate(135deg);
+}
+
+
+.toggle-container {
+    height: 12px;
+    width: fit-content;
+
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 12px;
+    background-color: lightgray;
+    border-radius: 30px;
+}
+
+/* After slide changes */
+.toggle:after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: white;
+    top: 1px;
+    left: 1px;
+    transition: all 0.5s;
 }
