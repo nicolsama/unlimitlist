@@ -6,40 +6,44 @@ class Text extends React.Component {
         super(props)
     }
 
-    _highlighter(body, query) {
+    _highlighter(span, query) {
 
-        if (query && body.match(query)) {
-            const index = body.match(query).index
+        let text = span.props.children;
 
-            const front = body.slice(0, index);
-            const highlight = body.slice(index, index + query.length);
-            const back = body.slice(index + query.length); 
+        if (query && text.match(query)) {
+            const index = text.match(query).index
+            const front = text.slice(0, index);
+            const highlight = text.slice(index, index + query.length);
+            const back = text.slice(index + query.length); 
 
         return (<>
-            <span>{front}</span>
-            <span className="highlight">{highlight}</span>
-            <span>{back}</span>
+            <span 
+                className="editable"
+                contentEditable="true"
+                onBlur={this.props.onBlur}
+                onKeyDown={this.props.onKeyDown}
+                ref={this.props.ref}>
+                    <span>{front}</span>
+                    <span className="highlight">{highlight}</span>
+                    <span>{back}</span>
+            </span> 
             </>
             )
 
         } else {
-            return body
+            return <span
+                className="editable"
+                contentEditable="true"
+                onBlur={this.props.onBlur}
+                onKeyDown={this.props.onKeyDown}
+                ref={this.props.ref}>{text}</span>
         }
     }
 
     render() {
-        return (
-          <div
-            className="editable"
-            contentEditable="true"
-            onKeyDown={this.props.handleKeyPress}
-            onBlur={this.props.handleBlur}
-            ref={this.props.textInput}
-          >
-            <span>{this._highlighter(this.props.body, this.props.query)}</span>
-          </div>
-        );
-
+        return (<>
+                    {this._highlighter(this.props.children, this.props.query)}
+                </>);
     }
 
 }

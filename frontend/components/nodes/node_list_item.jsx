@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import NodeListContainer from './nodes_list_container';
 import { withRouter } from 'react-router-dom';
 import Tooltip from '../navs/tooltip'; 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
@@ -9,16 +8,14 @@ import Text from './text.jsx'
 class NodeListItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = Object.assign({}, 
-            this.props.node, 
-            {   
+        this.state = {
+                node: this.props.node,    
                 showChildren: this.props.search,
                 show_tooltip: false, 
                 fillColor: false,
                 searchToggled: false
-            })
+            }
         this.handleKeyPress = this.handleKeyPress.bind(this);
-        this.updateNode = this.updateNode.bind(this);
         this.showChildren = this.showChildren.bind(this);
         this.textInput = React.createRef();
         this.lastCreated = React.createRef();
@@ -28,22 +25,34 @@ class NodeListItem extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.props.search) this.textInput.current.focus();
-    }
-
-    updateNode() {
-        this.props.updateNode(this.state);
+        // if (!this.props.search) this.textInput.current.focus();
     }
     
     handleBlur(e) {
-        this.setState({ body: e.currentTarget.textContent }, this.updateNode); 
+        this.setState({
+            node: {
+                body: e.currentTarget.textContent,
+                child_ids: this.props.node.child_ids,
+                completed: this.props.node.completed,
+                id: this.props.node.id,
+                ord: this.props.node.ord,
+                parent_node_id: this.props.node.parent_node_id
+            }
+        }, () => this.props.updateNode(this.state.node));
     }
 
     handleKeyPress(e) {
 
-        if ((this.state.id) && e.key === 'Enter') {
+        if ((this.props.node.id) && e.key === 'Enter') {
             e.preventDefault();
-            this.setState({ body: e.currentTarget.textContent }, this.updateNode);
+            this.setState({ node: {     
+                body: e.currentTarget.textContent,
+                child_ids: this.props.node.child_ids,
+                completed: this.props.node.completed,
+                id: this.props.node.id,
+                ord: this.props.node.ord,
+                parent_node_id: this.props.node.parent_node_id
+            } }, () => this.props.updateNode(this.state.node));
 
             let ord_bookmark = (this.props.node.ord) ? (this.props.node.ord) : null;
             const newNode = {
@@ -57,8 +66,7 @@ class NodeListItem extends React.Component {
 
             this.props.createNode(newNode);
         } else if ((e.keyCode === 8 || e.key === "Backspace") && (e.currentTarget.innerHTML.length === 0)) {
-            debugger
-            this.props.deleteNode(this.state.id).then(() => (console.log("deleted")));
+            this.props.deleteNode(this.state.id)
         }
     }
 
@@ -79,7 +87,6 @@ class NodeListItem extends React.Component {
     render() {     
    
         const allNodes = this.props.allNodes;  
-
         let filteredIds; 
         if (this.props.search) {
          
@@ -161,13 +168,13 @@ class NodeListItem extends React.Component {
                                     : (this.state.showChildren) 
                                         ? "rotate(90)" 
                                         : ""}>
-                            { (this.state.child_ids.length) ? 
+                            { (this.props.node.child_ids.length) ? 
                             <path d="M13.75 9.56879C14.0833 9.76124 14.0833 10.2424 13.75 10.4348L8.5 13.4659C8.16667 13.6584 7.75 13.4178 7.75 13.0329L7.75 6.97072C7.75 6.58582 8.16667 6.34525 8.5 6.5377L13.75 9.56879Z"
                             /> : null }
                             </svg>
                         </a>
 
-                        <Link to={`/nodes/${this.state.id}`}>
+                        <Link to={`/nodes/${this.props.node.id}`}>
                             <div>
                                 <svg className="bullet">
                                     <circle cx="9" cy="9" r="3.5" />
@@ -175,12 +182,17 @@ class NodeListItem extends React.Component {
                             </div>
                         </Link>
 
+                                
                         <Text 
-                            handleKeyPress={this.handleKeyPress}
-                            textInput={this.textInput}
-                            handleBlur={this.handleBlur}
-                            body={this.props.node.body} 
-                            query={this.props.search}/>
+                            query={this.props.search}
+                            onKeyDown={this.handleKeyPress}
+                            onBlur={this.handleBlur}
+                            ref={this.textInput}>
+                            <span>
+                                {this.props.node.body}
+                            </span>
+                        </Text>
+
                     </div>
                 <ul className='sublist' >
                     { this.props.search || this.state.showChildren

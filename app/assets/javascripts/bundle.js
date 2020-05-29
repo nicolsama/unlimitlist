@@ -1421,11 +1421,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _nodes_list_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./nodes_list_container */ "./frontend/components/nodes/nodes_list_container.jsx");
-/* harmony import */ var _navs_tooltip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../navs/tooltip */ "./frontend/components/navs/tooltip.jsx");
-/* harmony import */ var react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-addons-css-transition-group */ "./node_modules/react-addons-css-transition-group/index.js");
-/* harmony import */ var react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _text_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./text.jsx */ "./frontend/components/nodes/text.jsx");
+/* harmony import */ var _navs_tooltip__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../navs/tooltip */ "./frontend/components/navs/tooltip.jsx");
+/* harmony import */ var react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-addons-css-transition-group */ "./node_modules/react-addons-css-transition-group/index.js");
+/* harmony import */ var react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _text_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./text.jsx */ "./frontend/components/nodes/text.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1457,7 +1456,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
 var NodeListItem = /*#__PURE__*/function (_React$Component) {
   _inherits(NodeListItem, _React$Component);
 
@@ -1469,14 +1467,14 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, NodeListItem);
 
     _this = _super.call(this, props);
-    _this.state = Object.assign({}, _this.props.node, {
+    _this.state = {
+      node: _this.props.node,
       showChildren: _this.props.search,
       show_tooltip: false,
       fillColor: false,
       searchToggled: false
-    });
+    };
     _this.handleKeyPress = _this.handleKeyPress.bind(_assertThisInitialized(_this));
-    _this.updateNode = _this.updateNode.bind(_assertThisInitialized(_this));
     _this.showChildren = _this.showChildren.bind(_assertThisInitialized(_this));
     _this.textInput = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.lastCreated = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -1488,29 +1486,45 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
 
   _createClass(NodeListItem, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      if (!this.props.search) this.textInput.current.focus();
-    }
-  }, {
-    key: "updateNode",
-    value: function updateNode() {
-      this.props.updateNode(this.state);
+    value: function componentDidMount() {// if (!this.props.search) this.textInput.current.focus();
     }
   }, {
     key: "handleBlur",
     value: function handleBlur(e) {
+      var _this2 = this;
+
       this.setState({
-        body: e.currentTarget.textContent
-      }, this.updateNode);
+        node: {
+          body: e.currentTarget.textContent,
+          child_ids: this.props.node.child_ids,
+          completed: this.props.node.completed,
+          id: this.props.node.id,
+          ord: this.props.node.ord,
+          parent_node_id: this.props.node.parent_node_id
+        }
+      }, function () {
+        return _this2.props.updateNode(_this2.state.node);
+      });
     }
   }, {
     key: "handleKeyPress",
     value: function handleKeyPress(e) {
-      if (this.state.id && e.key === 'Enter') {
+      var _this3 = this;
+
+      if (this.props.node.id && e.key === 'Enter') {
         e.preventDefault();
         this.setState({
-          body: e.currentTarget.textContent
-        }, this.updateNode);
+          node: {
+            body: e.currentTarget.textContent,
+            child_ids: this.props.node.child_ids,
+            completed: this.props.node.completed,
+            id: this.props.node.id,
+            ord: this.props.node.ord,
+            parent_node_id: this.props.node.parent_node_id
+          }
+        }, function () {
+          return _this3.props.updateNode(_this3.state.node);
+        });
         var ord_bookmark = this.props.node.ord ? this.props.node.ord : null;
         var newNode = {
           id: null,
@@ -1522,21 +1536,18 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         };
         this.props.createNode(newNode);
       } else if ((e.keyCode === 8 || e.key === "Backspace") && e.currentTarget.innerHTML.length === 0) {
-        debugger;
-        this.props.deleteNode(this.state.id).then(function () {
-          return console.log("deleted");
-        });
+        this.props.deleteNode(this.state.id);
       }
     }
   }, {
     key: "showChildren",
     value: function showChildren() {
-      var _this2 = this;
+      var _this4 = this;
 
       this.setState({
         showChildren: !this.state.showChildren
       }).then(function () {
-        return _this2.props.history.push("nodes/".concat(_this2.props.currentNodeId));
+        return _this4.props.history.push("nodes/".concat(_this4.props.currentNodeId));
       });
     }
   }, {
@@ -1557,7 +1568,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this5 = this;
 
       var allNodes = this.props.allNodes;
       var filteredIds;
@@ -1580,14 +1591,14 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           key: id,
           node: node,
           allNodes: allNodes,
-          filteredNodes: _this3.props.filteredNodes,
-          fetchNode: _this3.props.fetchNode,
-          updateNode: _this3.props.updateNode,
-          createNode: _this3.props.createNode,
-          deleteNode: _this3.props.deleteNode,
-          lastCreated: _this3.props.lastCreated,
-          currentNodeId: _this3.props.currentNodeId,
-          search: _this3.props.search,
+          filteredNodes: _this5.props.filteredNodes,
+          fetchNode: _this5.props.fetchNode,
+          updateNode: _this5.props.updateNode,
+          createNode: _this5.props.createNode,
+          deleteNode: _this5.props.deleteNode,
+          lastCreated: _this5.props.lastCreated,
+          currentNodeId: _this5.props.currentNodeId,
+          search: _this5.props.search,
           type: "child"
         });
       });
@@ -1595,7 +1606,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         className: "tooltip-arrow"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tooltip-label"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navs_tooltip__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navs_tooltip__WEBPACK_IMPORTED_MODULE_2__["default"], {
         className: "tooltipDiv",
         showing: this.state.show_tooltip,
         node: this.props.node,
@@ -1635,7 +1646,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         r: "2",
         className: "ttcircle",
         fill: fillColor
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_4___default.a, {
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_3___default.a, {
         transitionName: "settings",
         transitionEnterTimeout: 800,
         transitionLeaveTimeout: 800
@@ -1644,23 +1655,22 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         onClick: this.showChildren
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
         transform: this.state.showChildren && this.props.search ? "rotate(45)" : this.state.showChildren ? "rotate(90)" : ""
-      }, this.state.child_ids.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+      }, this.props.node.child_ids.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
         d: "M13.75 9.56879C14.0833 9.76124 14.0833 10.2424 13.75 10.4348L8.5 13.4659C8.16667 13.6584 7.75 13.4178 7.75 13.0329L7.75 6.97072C7.75 6.58582 8.16667 6.34525 8.5 6.5377L13.75 9.56879Z"
       }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/nodes/".concat(this.state.id)
+        to: "/nodes/".concat(this.props.node.id)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
         className: "bullet"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("circle", {
         cx: "9",
         cy: "9",
         r: "3.5"
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_text_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        handleKeyPress: this.handleKeyPress,
-        textInput: this.textInput,
-        handleBlur: this.handleBlur,
-        body: this.props.node.body,
-        query: this.props.search
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_text_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        query: this.props.search,
+        onKeyDown: this.handleKeyPress,
+        onBlur: this.handleBlur,
+        ref: this.textInput
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.node.body))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "sublist"
       }, this.props.search || this.state.showChildren ? nestedNodes : null)));
     }
@@ -1774,29 +1784,37 @@ var Text = /*#__PURE__*/function (_React$Component) {
 
   _createClass(Text, [{
     key: "_highlighter",
-    value: function _highlighter(body, query) {
-      if (query && body.match(query)) {
-        var index = body.match(query).index;
-        var front = body.slice(0, index);
-        var highlight = body.slice(index, index + query.length);
-        var back = body.slice(index + query.length);
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, front), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    value: function _highlighter(span, query) {
+      var text = span.props.children;
+
+      if (query && text.match(query)) {
+        var index = text.match(query).index;
+        var front = text.slice(0, index);
+        var highlight = text.slice(index, index + query.length);
+        var back = text.slice(index + query.length);
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "editable",
+          contentEditable: "true",
+          onBlur: this.props.onBlur,
+          onKeyDown: this.props.onKeyDown,
+          ref: this.props.ref
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, front), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "highlight"
-        }, highlight), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, back));
+        }, highlight), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, back)));
       } else {
-        return body;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "editable",
+          contentEditable: "true",
+          onBlur: this.props.onBlur,
+          onKeyDown: this.props.onKeyDown,
+          ref: this.props.ref
+        }, text);
       }
     }
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "editable",
-        contentEditable: "true",
-        onKeyDown: this.props.handleKeyPress,
-        onBlur: this.props.handleBlur,
-        ref: this.props.textInput
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this._highlighter(this.props.body, this.props.query)));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, this._highlighter(this.props.children, this.props.query));
     }
   }]);
 
