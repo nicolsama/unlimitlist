@@ -12,15 +12,20 @@
     <script type='text/javascript'>
       window.logo_image = "<%= image_url('logo.jpg') %>";
     </script>
+    <script src="https://kit.fontawesome.com/f956292aa3.js" crossorigin="anonymous"></script>
     <meta property="og:image" content="<%=image_url('ss-ul.png')%>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   </head>
 
   <body>
     <%= yield %>
 
-
-
- 
+    <div class="icons">
+      <a href="https://github.com/nicolsama"><i class="fab fa-github" target="blank"></i></a>
+      <a href="https://www.linkedin.com/in/nicole-samanich-b21078136/" target=ß"blank"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://angel.co/u/nicole-samanich"><i class="fab fa-angellist" target="blank"></i></a>
+      <a href="https://www.nicolesamanich.com" target="blank"><i class="fas fa-desktop"></i></a>ß
+    </div>
   </body>
 </html>

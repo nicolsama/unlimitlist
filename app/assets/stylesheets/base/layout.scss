@@ -18,6 +18,24 @@ input {
 
 }
 
+.icons {
+    display: flex;
+    justify-content: space-around;
+    width: 150px;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    font-size: 20px;
+}
+
+.icons a {
+     color: rgb(42, 49, 53);
+}
+
+.icons a:hover {
+    color: lightgray;
+}
+
 a {
     color: rgb(42, 49, 53);
 }
