@@ -79,6 +79,8 @@ class Api::NodesController < ApplicationController
     def destroy
         Node.destroy(params[:id])
         @node = Node.first
+
+        debugger
         @nodes = current_user.nodes.includes(:children)
         @tags = current_user.tags.map { |tag| tag.tag }.uniq
 
