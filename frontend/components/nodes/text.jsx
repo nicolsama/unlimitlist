@@ -43,7 +43,7 @@ class Text extends React.Component {
     }
 
     render() {
-        debugger; 
+    
         return (<>
                     {this._highlighter(this.props.children, this.props.query)}
                 </>);

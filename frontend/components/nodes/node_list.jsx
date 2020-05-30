@@ -24,6 +24,7 @@ class NodeList extends React.Component {
 
             let body = (this.props.currentNodeId) ? e.currentTarget.value : "";
             let parent_node_id = (this.props.currentNodeId) ? this.props.currentNodeId : null; 
+            let ord_bookmark = (this.props.allNodes) ? this.props.allNodes[this.props.lastCreated].ord : 1;
 
             const newNode = {
                 id: null,
@@ -31,14 +32,13 @@ class NodeList extends React.Component {
                 completed: false,
                 ord: null,
                 parent_node_id: parent_node_id,
-                ord_bookmark: this.props.allNodes[this.props.lastCreated].ord,
+                ord_bookmark: ord_bookmark,
             }
             
             this.props.createNode(newNode);
     }
 
     updateNode(e) {
-        debugger
         let newNode = this.props.allNodes[this.props.currentNodeId]; 
         newNode.body = e.currentTarget.innerText; 
         this.props.updateNode(newNode);
@@ -59,7 +59,14 @@ class NodeList extends React.Component {
 
     render() {
         
-        if (!this.props.parentNodeIds) return null; 
+        if (!this.props.parentNodeIds) {
+          return (<>
+            <div className="NodeListDiv">
+              <button id="addNode" onClick={this.handleClick}>
+                +
+              </button>
+              </div></>);
+        }; 
             
             const parentNodeIds = (this.props.search) ? this.props.filteredParentNodeIds : this.props.parentNodeIds ;
             const nodeLis = parentNodeIds.map(id => {

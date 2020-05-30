@@ -80,7 +80,6 @@ class Api::NodesController < ApplicationController
         Node.destroy(params[:id])
         @node = Node.first
 
-        debugger
         @nodes = current_user.nodes.includes(:children)
         @tags = current_user.tags.map { |tag| tag.tag }.uniq
 

@@ -50,7 +50,6 @@ class Nav extends React.Component {
     }
 
     handleSearchClick() {
-        debugger; 
         (this.props.search) ? null :  
             (this.state.showSearchBar) 
                 ?   setTimeout(() => this.setState({ showSearchBar: !this.state.showSearchBar}), 500) 
@@ -63,7 +62,6 @@ class Nav extends React.Component {
     }
 
     handleSearchQuery(e) {
-        debugger; 
         if (e.key === 'Enter') {
             e.preventDefault(); 
             
@@ -105,14 +103,14 @@ class Nav extends React.Component {
             currentSidebar = sbDiv;
         }
         
-        let pagination = (this.props.pagesPath) ? this.props.pagesPath.reverse().map(id => {
+        let pagination = (this.props.pagesPath) ? this.props.pagesPath.map(id => {
             let pagename = (this.props.allNodes[id].body.length > 20) ? 
                 (this.props.allNodes[id].body).slice(0, 18).concat("...") : (this.props.allNodes[id].body);
 
             return (<span><a href={`#/nodes/${id}`} pagesPath={this.props.pathsPath}>{pagename}</a></span>)
             }) : null ;  
 
-            
+            debugger; 
             let settingsDiv = null;
             if (this.state.settingsExpanded) {
                 settingsDiv  = (
@@ -167,7 +165,7 @@ class Nav extends React.Component {
             }
 
 
-
+          
         if (this.props.currentUser) {
             return (
               <>
@@ -183,7 +181,9 @@ class Nav extends React.Component {
                 <div className="navBar">
                   {menuIcon}
 
-                  {pagination && pagination.length >= 1 ? (
+                
+
+                  {(this.props.currentNodeId) ? (
                     <div className="pagination">
                       <span>
                         <a href="#">HOME</a>
@@ -256,8 +256,12 @@ class Nav extends React.Component {
 }
 
 const msp = ({ session, entities: { users, nodes } }, ownProps) => {
-  
+
+  let path = ownProps.history.location.pathname.split("/");
+  let currentNodeId = parseInt(path[path.length-1]);
+
     return {
+        currentNodeId,
         currentUser: users[session.id],
         linkPath: ownProps.location.pathname,
         allNodes: nodes.allNodes,

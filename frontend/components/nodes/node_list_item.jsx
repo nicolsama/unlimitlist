@@ -25,7 +25,6 @@ class NodeListItem extends React.Component {
     }
 
     componentDidMount() {
-        debugger; 
         if (!this.props.search) this.textInput.current.focus();
     }
     
@@ -76,9 +75,15 @@ class NodeListItem extends React.Component {
             .then(() => this.props.history.push(`nodes/${this.props.currentNodeId}`));
     }
 
-    showTooltip() {
-        const show_tooltip = this.state.show_tooltip;
-        this.setState({ show_tooltip: !show_tooltip });
+    showTooltip(e) {
+        debugger;
+        if (e.type === "mouseleave" && this.state.show_tooltip) {
+         this.setState({ show_tooltip: !this.state.show_tooltip });
+        } 
+
+        if (e.type == "click" && !this.state.show_tooltip) {
+        this.setState({ show_tooltip: !this.state.show_tooltip });
+        }
     }
 
     changeFillColor() {
@@ -138,7 +143,7 @@ class NodeListItem extends React.Component {
         const fillColor = (this.state.fillColor) ? "grey" : "none";
         let showLink = (this.props.currentNodeId) ? `#/nodes/${this.props.currentNodeId}` : "#";
 
-            debugger; 
+
         return (
             <>
             <li className="NodeListItem"
@@ -146,8 +151,8 @@ class NodeListItem extends React.Component {
                 onMouseOut={this.changeFillColor}
                 className={`completed-${this.props.node.completed}`}>
                 <div className="svgContainer">
-
-                        <a href={showLink} onClick={this.showTooltip}>
+                        <div onMouseLeave={(e) => this.showTooltip(e)}>
+                        <a href={showLink} onClick={(e) => this.showTooltip(e)}>
                             <svg viewBox="0 0 24 24" className="tooltipCircles">
                                 <circle cx="6" cy="12" r="2" className="ttcircle" fill={fillColor}></circle>
                                 <circle cx="12" cy="12" r="2" className="ttcircle" fill={fillColor}></circle>
@@ -161,7 +166,7 @@ class NodeListItem extends React.Component {
                             transitionLeaveTimeout={800}>
                                     {tooltip}
                         </ReactCSSTransitionGroup>
-                        
+                        </div>
                         <a href={showLink} onClick={this.showChildren}>
                             <svg transform={
                                 this.state.showChildren && this.props.search 

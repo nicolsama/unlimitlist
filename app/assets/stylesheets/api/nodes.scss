@@ -101,7 +101,7 @@ path {
     font-weight: 900;
     font-size: 24px;
     margin-bottom: 15px;
-    color:rgb(121, 121, 121);
+    color: rgb(42, 49, 53);
 }
 
 .focusTitle:focus {
@@ -137,15 +137,13 @@ path {
 
 .tt-wrapper {
     position: absolute;
-    background-color: #fffefa;
+    background-color: white;
     border: 1px solid rgb(203, 206, 208);
     border-radius: 6px;
     filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
     box-sizing: border-box;
     width: 145px;
     height: 300px;
-    margin-left: -30px;
-    margin-top: 25px;
 }
 
 .highlight {

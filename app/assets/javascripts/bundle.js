@@ -579,7 +579,6 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     value: function handleSearchClick() {
       var _this2 = this;
 
-      debugger;
       this.props.search ? null : this.state.showSearchBar ? setTimeout(function () {
         return _this2.setState({
           showSearchBar: !_this2.state.showSearchBar
@@ -599,8 +598,6 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSearchQuery",
     value: function handleSearchQuery(e) {
-      debugger;
-
       if (e.key === 'Enter') {
         e.preventDefault();
         var search = {
@@ -646,13 +643,14 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         currentSidebar = sbDiv;
       }
 
-      var pagination = this.props.pagesPath ? this.props.pagesPath.reverse().map(function (id) {
+      var pagination = this.props.pagesPath ? this.props.pagesPath.map(function (id) {
         var pagename = _this3.props.allNodes[id].body.length > 20 ? _this3.props.allNodes[id].body.slice(0, 18).concat("...") : _this3.props.allNodes[id].body;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#/nodes/".concat(id),
           pagesPath: _this3.props.pathsPath
         }, pagename));
       }) : null;
+      debugger;
       var settingsDiv = null;
 
       if (this.state.settingsExpanded) {
@@ -728,7 +726,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
           className: sidebarClass ? "sidebar-".concat(sidebarClass) : ""
         }, currentSidebar), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "navBar"
-        }, menuIcon, pagination && pagination.length >= 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, menuIcon, this.props.currentNodeId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "pagination"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#"
@@ -791,7 +789,10 @@ var msp = function msp(_ref, ownProps) {
       _ref$entities = _ref.entities,
       users = _ref$entities.users,
       nodes = _ref$entities.nodes;
+  var path = ownProps.history.location.pathname.split("/");
+  var currentNodeId = parseInt(path[path.length - 1]);
   return {
+    currentNodeId: currentNodeId,
     currentUser: users[session.id],
     linkPath: ownProps.location.pathname,
     allNodes: nodes.allNodes,
@@ -1233,20 +1234,20 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     value: function handleClick(e) {
       var body = this.props.currentNodeId ? e.currentTarget.value : "";
       var parent_node_id = this.props.currentNodeId ? this.props.currentNodeId : null;
+      var ord_bookmark = this.props.allNodes ? this.props.allNodes[this.props.lastCreated].ord : 1;
       var newNode = {
         id: null,
         body: body,
         completed: false,
         ord: null,
         parent_node_id: parent_node_id,
-        ord_bookmark: this.props.allNodes[this.props.lastCreated].ord
+        ord_bookmark: ord_bookmark
       };
       this.props.createNode(newNode);
     }
   }, {
     key: "updateNode",
     value: function updateNode(e) {
-      debugger;
       var newNode = this.props.allNodes[this.props.currentNodeId];
       newNode.body = e.currentTarget.innerText;
       this.props.updateNode(newNode);
@@ -1269,7 +1270,16 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      if (!this.props.parentNodeIds) return null;
+      if (!this.props.parentNodeIds) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "NodeListDiv"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          id: "addNode",
+          onClick: this.handleClick
+        }, "+")));
+      }
+
+      ;
       var parentNodeIds = this.props.search ? this.props.filteredParentNodeIds : this.props.parentNodeIds;
       var nodeLis = parentNodeIds.map(function (id) {
         var node = _this2.props.allNodes[id];
@@ -1506,7 +1516,6 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   _createClass(NodeListItem, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
       if (!this.props.search) this.textInput.current.focus();
     }
   }, {
@@ -1573,11 +1582,20 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "showTooltip",
-    value: function showTooltip() {
-      var show_tooltip = this.state.show_tooltip;
-      this.setState({
-        show_tooltip: !show_tooltip
-      });
+    value: function showTooltip(e) {
+      debugger;
+
+      if (e.type === "mouseleave" && this.state.show_tooltip) {
+        this.setState({
+          show_tooltip: !this.state.show_tooltip
+        });
+      }
+
+      if (e.type == "click" && !this.state.show_tooltip) {
+        this.setState({
+          show_tooltip: !this.state.show_tooltip
+        });
+      }
     }
   }, {
     key: "changeFillColor",
@@ -1637,16 +1655,21 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       }))) : null;
       var fillColor = this.state.fillColor ? "grey" : "none";
       var showLink = this.props.currentNodeId ? "#/nodes/".concat(this.props.currentNodeId) : "#";
-      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", _defineProperty({
         className: "NodeListItem",
         onMouseOver: this.changeFillColor,
         onMouseOut: this.changeFillColor
       }, "className", "completed-".concat(this.props.node.completed)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "svgContainer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onMouseLeave: function onMouseLeave(e) {
+          return _this5.showTooltip(e);
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: showLink,
-        onClick: this.showTooltip
+        onClick: function onClick(e) {
+          return _this5.showTooltip(e);
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
         viewBox: "0 0 24 24",
         className: "tooltipCircles"
@@ -1672,7 +1695,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         transitionName: "settings",
         transitionEnterTimeout: 800,
         transitionLeaveTimeout: 800
-      }, tooltip), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, tooltip)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: showLink,
         onClick: this.showChildren
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
@@ -1837,7 +1860,6 @@ var Text = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, this._highlighter(this.props.children, this.props.query));
     }
   }]);
