@@ -71,13 +71,26 @@ class Node < ApplicationRecord
     end
 
     def save_tags
-            self.body.split(" ").each do |word|
-                obj = {tag: word, node_id: self.id, user_id: self.user_id}
-                if (word.start_with?("#") && !Tag.find_by(obj))
-                    new_tag = Tag.new(obj)
-                    new_tag.save
-                end
+
+        old_tags = self.tags
+        tag_words = []
+
+        self.body.split(" ").each do |word|
+            obj = {tag: word, node_id: self.id, user_id: self.user_id}
+            if (word.start_with?("#") && !Tag.find_by(obj))
+                new_tag = Tag.new(obj)
+                tag = new_tag.save
+                tag_words << word
             end
+        end
+
+        old_tags.each do |tag|
+            if !tag_words.include?(tag.tag) 
+                Tag.destroy(tag.id)
+            end
+        end
+
+        tag_words
     end
 
     def self.search(search = nil, nodes)

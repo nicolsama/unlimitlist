@@ -44,7 +44,7 @@ test_node7 = Node.create!(user_id: demoUser.id, body: "vacation #ideas", parent_
 test_node10 = Node.create!(user_id: demoUser.id, body: "peru", parent_node_id: test_node7.id, ord: 15)
 test_node18 = Node.create!(user_id: demoUser.id, body: "llamas", parent_node_id: test_node10.id, ord: 17)
 test_node9 = Node.create!(user_id: demoUser.id, body: "japan", parent_node_id: test_node7.id, ord: 16)
-test_node17 = Node.create!(user_id: demoUser.id, body: "other #ideas?", parent_node_id: test_node7.id, ord: 18)
+test_node17 = Node.create!(user_id: demoUser.id, body: "other #ideas", parent_node_id: test_node7.id, ord: 18)
 
 test_node14.save_tags
 test_node13.save_tags

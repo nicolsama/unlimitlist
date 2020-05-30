@@ -60,12 +60,12 @@ class Api::NodesController < ApplicationController
     end
 
     def update
-        @node = Node.find_by(id: params[:id])
+        @node = Node.find_by(id: params[:id].to_i)
 
         if @node && @node.update(node_params) && @node.save_tags
+
             @nodes = current_user.nodes.includes(:children)
             @tags = current_user.tags.map { |tag| tag.tag }.uniq
-
             @filtered_nodes = []
             @search = false
             render :index

@@ -1260,7 +1260,7 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleKeyDown",
     value: function handleKeyDown(e) {
-      if (e.key === 'Enter' && this.props.allNodes[this.props.currentNodeId]) {
+      if (e.key === "Enter" && this.props.allNodes[this.props.currentNodeId]) {
         e.preventDefault();
         this.updateNode(e);
       }
@@ -1269,6 +1269,8 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var _this2 = this;
+
+      if (!this.props.loggedIn) return null;
 
       if (!this.props.parentNodeIds) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1279,7 +1281,6 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
         }, "+")));
       }
 
-      ;
       var parentNodeIds = this.props.search ? this.props.filteredParentNodeIds : this.props.parentNodeIds;
       var nodeLis = parentNodeIds.map(function (id) {
         var node = _this2.props.allNodes[id];
@@ -1541,7 +1542,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
     value: function handleKeyPress(e) {
       var _this3 = this;
 
-      if (this.props.node.id && e.key === 'Enter') {
+      if (this.props.node.id && e.key === "Enter") {
         e.preventDefault();
         this.setState({
           node: {
@@ -1747,7 +1748,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var currentNodeId = parseInt(ownProps.match.params.id);
+  debugger;
   return {
+    loggedIn: !!state.session.id,
     allNodes: state.entities.nodes.allNodes,
     parentNodeIds: state.entities.nodes.parentNodeIds,
     filteredNodes: state.entities.nodes.filteredNodes,

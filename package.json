@@ -33,7 +33,9 @@
     "lib": "lib",
     "test": "test"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "2.0.5"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nicolsama/unlimitlist.git"
