@@ -5,7 +5,6 @@ export const RECEIVE_NODE = 'RECEIVE_NODE';
 export const REMOVE_NODE = 'REMOVE_NODE';
 
 const receiveNodes = (nodes) => {
-
 return (    
 {
     type: RECEIVE_NODES, 
@@ -14,6 +13,7 @@ return (
     filteredNodes: nodes.filteredNodes,
     filteredParentNodeIds: nodes.filteredParentNodeIds,
     lastCreated: nodes.last_created,
+    tags: nodes.tags, 
     pagesPath: nodes.path, 
     search: nodes.search
 

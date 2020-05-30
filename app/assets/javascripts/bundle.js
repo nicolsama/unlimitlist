@@ -117,6 +117,7 @@ var receiveNodes = function receiveNodes(nodes) {
     filteredNodes: nodes.filteredNodes,
     filteredParentNodeIds: nodes.filteredParentNodeIds,
     lastCreated: nodes.last_created,
+    tags: nodes.tags,
     pagesPath: nodes.path,
     search: nodes.search
   };
@@ -506,8 +507,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- // import { Link, NavLink } from 'react-router-dom';
-// import { NodeRoute } from '../../util/route_util';
+
 
 var Nav = /*#__PURE__*/function (_React$Component) {
   _inherits(Nav, _React$Component);
@@ -628,7 +628,9 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         handleMenuClick: this.handleMenuClick,
         handleMenuMouseLeave: this.handleMenuMouseLeave,
         sidebarDocked: this.props.sidebarDocked,
-        transformArrow: this.state.transformArrow
+        transformArrow: this.state.transformArrow,
+        fetchAllNodes: this.props.fetchAllNodes,
+        tags: this.props.tags
       });
       var currentSidebar = null;
       var sidebarClass = null;
@@ -796,7 +798,8 @@ var msp = function msp(_ref, ownProps) {
     parentNodeIds: nodes.parentNodeIds,
     lastCreated: nodes.lastCreated,
     pagesPath: nodes.pagesPath,
-    search: nodes.search
+    search: nodes.search,
+    tags: nodes.tags
   };
 };
 
@@ -880,7 +883,23 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
           node: node,
           allNodes: _this.props.allNodes
         });
-      }); // let transform = (this.props.transformArrow) ? "transformArrow" : null; 
+      });
+      var tagLis;
+
+      if (this.props.tags) {
+        tagLis = this.props.tags.map(function (text, i) {
+          var search = {
+            tag: text
+          };
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: i,
+            onClick: function onClick() {
+              return _this.props.fetchAllNodes(search);
+            },
+            className: "sidebarItem tagItem"
+          }, text);
+        });
+      }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
         viewBox: "0 0 448 512",
@@ -894,7 +913,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
         className: "SidebarUl"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
         to: "/"
-      }, "HOME")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, SidebarLis)));
+      }, "HOME")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, tagLis, SidebarLis)));
     }
   }]);
 
@@ -2611,6 +2630,8 @@ var selectAllNodes = function selectAllNodes() {
     pagesPath: pagesPath
   }, {
     search: action.search
+  }, {
+    tags: action.tags
   }); //return newState;
 };
 

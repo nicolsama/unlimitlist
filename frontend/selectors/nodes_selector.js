@@ -63,7 +63,6 @@ export const selectAllNodes = (state = {}, action) => {
     let pagesPath = [];
         action.pagesPath.forEach(id => pagesPath.push(id));
 
-    
     return Object.assign({}, state, {
         allNodes
     }, {
@@ -78,6 +77,8 @@ export const selectAllNodes = (state = {}, action) => {
         pagesPath
     }, {
         search: action.search
+    }, {
+        tags: action.tags
     });
     //return newState;
 };

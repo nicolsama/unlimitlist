@@ -266,8 +266,17 @@ header {
 
 }
 
+.sidebarItem.tagItem {
+    padding-left: 20px;
+}
 
-.SidebarUl li { padding: 5px; }
+.SidebarUl {
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.SidebarUl li { padding: 5px 20px; }
+
 .sidebarItem:hover {
     background-color: rgb(232, 235, 237);
 }

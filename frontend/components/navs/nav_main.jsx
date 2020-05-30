@@ -5,9 +5,6 @@ import { fetchAllNodes } from '../../actions/node_actions';
 import Sidebar from './sidebar';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-// import { Link, NavLink } from 'react-router-dom';
-// import { NodeRoute } from '../../util/route_util';
-
 class Nav extends React.Component {
     constructor(props){
         super(props)
@@ -90,6 +87,8 @@ class Nav extends React.Component {
                 handleMenuMouseLeave={this.handleMenuMouseLeave}
                 sidebarDocked={this.props.sidebarDocked}
                 transformArrow={this.state.transformArrow}
+                fetchAllNodes={this.props.fetchAllNodes}
+                tags={this.props.tags}
             />)
 
 
@@ -265,7 +264,8 @@ const msp = ({ session, entities: { users, nodes } }, ownProps) => {
         parentNodeIds: nodes.parentNodeIds,
         lastCreated: nodes.lastCreated,
         pagesPath: nodes.pagesPath, 
-        search: nodes.search
+        search: nodes.search,
+        tags: nodes.tags
     };
 };
 

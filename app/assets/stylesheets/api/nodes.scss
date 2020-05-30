@@ -24,17 +24,21 @@
 }
 
 #addNode {
-    color:rgb(42, 49, 53);
-    border: grey 1px solid;
+    background-color: white;
+    color: grey;
     border-radius: 20px;
     width: 25px;
     height: 25px;
     margin-left: 53px;
+    line-height: 25px;
+    border-style: none;
+    font-size: 20px;
 
 }
 
 #addNode:hover {
     background-color: lightgray;
+    color: rgb(42, 49, 53);
 }
 
 svg { 
@@ -87,7 +91,7 @@ path {
 }
 
 .sublist {
-    margin-left: 66px;
+    margin-left: 65px;
     list-style: none;
     display: block;
     border-left: rgb(203, 206, 208) 1px solid;

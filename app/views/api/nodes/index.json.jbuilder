@@ -24,5 +24,7 @@ json.parentNodeIds do
     json.array! @parents, :id
 end
 
+json.set! :tags, @tags
+
 json.set! :last_created, Node.last_created(@nodes)
 json.set! :path, @node.ancestors

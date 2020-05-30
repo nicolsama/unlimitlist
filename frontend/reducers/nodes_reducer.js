@@ -16,13 +16,10 @@ export default (state = {}, action) => {
     
     switch (action.type) {
         case RECEIVE_NODES: 
-             
             return selectAllNodes(state, action);
         case RECEIVE_NODE: 
-            let newState = Object.assign({}, state);
-             
+            let newState = Object.assign({}, state);     
             newState.allNodes[action.node.id] = action.node || action.node
-             
             return Object.assign({}, newState );
         case REMOVE_NODE:
             let nextState = Object.assign({}, state); 
@@ -30,7 +27,6 @@ export default (state = {}, action) => {
             return nextState;
         case LOGOUT_CURRENT_USER:
             return {};
-            
         default:
             return state;
     }

@@ -12,6 +12,7 @@ class Sidebar extends React.Component {
     render() {
 
         if (!this.props.parentNodeIds) return null; 
+
         let SidebarLis = this.props.parentNodeIds.map( id => {
             let node = this.props.allNodes[id];
             return (<SidebarItem 
@@ -21,7 +22,18 @@ class Sidebar extends React.Component {
                         />)
         })
 
-        // let transform = (this.props.transformArrow) ? "transformArrow" : null; 
+        let tagLis;
+        if (this.props.tags) {
+            tagLis = this.props.tags.map((text, i) => {
+                let search = { tag: text }
+                return(<li
+                        key={i}
+                        onClick={() => this.props.fetchAllNodes(search)}
+                        className="sidebarItem tagItem">
+                                    {text}
+                        </li>)
+            })
+        }
 
         return (<>
             
@@ -32,8 +44,9 @@ class Sidebar extends React.Component {
             </svg>
 
             <ul className='SidebarUl'>
-                <li><Link to="/" >HOME</Link></li>
+                <li><Link to="/">HOME</Link></li>
                 <ul>
+                    {tagLis}
                     {SidebarLis}
                 </ul>
             </ul>
