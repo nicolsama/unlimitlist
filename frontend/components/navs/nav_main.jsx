@@ -66,7 +66,8 @@ class Nav extends React.Component {
             e.preventDefault(); 
             
             let search = { tag: e.currentTarget.value }
-            this.props.fetchAllNodes(search);
+            this.setState({search: true}, () => this.props.fetchAllNodes(search))
+            // this.props.fetchAllNodes(search);
         }
     }
 

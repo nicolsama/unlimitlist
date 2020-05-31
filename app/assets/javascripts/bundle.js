@@ -598,12 +598,18 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSearchQuery",
     value: function handleSearchQuery(e) {
+      var _this3 = this;
+
       if (e.key === 'Enter') {
         e.preventDefault();
         var search = {
           tag: e.currentTarget.value
         };
-        this.props.fetchAllNodes(search);
+        this.setState({
+          search: true
+        }, function () {
+          return _this3.props.fetchAllNodes(search);
+        }); // this.props.fetchAllNodes(search);
       }
     }
   }, {
@@ -616,7 +622,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var sbDiv = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar__WEBPACK_IMPORTED_MODULE_4__["default"], {
         key: "sidebar",
@@ -644,10 +650,10 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       }
 
       var pagination = this.props.pagesPath ? this.props.pagesPath.map(function (id) {
-        var pagename = _this3.props.allNodes[id].body.length > 20 ? _this3.props.allNodes[id].body.slice(0, 18).concat("...") : _this3.props.allNodes[id].body;
+        var pagename = _this4.props.allNodes[id].body.length > 20 ? _this4.props.allNodes[id].body.slice(0, 18).concat("...") : _this4.props.allNodes[id].body;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#/nodes/".concat(id),
-          pagesPath: _this3.props.pathsPath
+          pagesPath: _this4.props.pathsPath
         }, pagename));
       }) : null;
       debugger;
