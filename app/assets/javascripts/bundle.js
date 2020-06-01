@@ -525,6 +525,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       sidebarExpanded: false,
       sidebarDocked: false,
       sidebarUndocking: false,
+      sidebarUnexpanding: false,
       pagesPath: _this.props.pagesPath,
       showSearchBar: false,
       transformArrow: false
@@ -557,40 +558,70 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     value: function handleMenuMouseEnter() {
       if (!this.state.sidebarExpanded) {
         this.setState({
-          sidebarExpanded: true
+          sidebarExpanded: true,
+          sidebarDocked: false
         });
       }
     }
   }, {
     key: "handleMenuMouseLeave",
     value: function handleMenuMouseLeave() {
-      this.state.sidebarExpanded ? this.setState({
-        sidebarExpanded: false
-      }) : null;
+      var _this2 = this;
+
+      if (this.state.sidebarExpanded) {
+        this.setState({
+          sidebarExpanded: false,
+          sidebarDocked: false
+        });
+        this.setState({
+          sidebarUnexpanding: true,
+          sidebarUndocking: false
+        }), function () {
+          return setTimeout(function () {
+            _this2.setState({
+              sidebarUnexpanding: false
+            });
+          }, 200);
+        };
+      } else {
+        null;
+      }
     }
   }, {
     key: "handleMenuClick",
     value: function handleMenuClick() {
+      var _this3 = this;
+
       if (this.state.sidebarDocked) {
         this.setState({
           sidebarDocked: false,
-          sidebarExpanded: false,
-          sidebarUndocking: true
-        }, this.rotateArrow());
+          sidebarExpanded: false
+        });
+        this.setState({
+          sidebarUndocking: true,
+          sidebarUnexpanding: false
+        }, this.rotateArrow(), function () {
+          return setTimeout(function () {
+            _this3.setState({
+              sidebarUndocking: false
+            });
+          }, 200);
+        });
       } else {
         this.setState({
-          sidebarDocked: true
+          sidebarDocked: true,
+          sidebarExpanded: false
         });
       }
     }
   }, {
     key: "handleSearchClick",
     value: function handleSearchClick() {
-      var _this2 = this;
+      var _this4 = this;
 
       this.props.search ? null : this.state.showSearchBar ? setTimeout(function () {
-        return _this2.setState({
-          showSearchBar: !_this2.state.showSearchBar
+        return _this4.setState({
+          showSearchBar: !_this4.state.showSearchBar
         });
       }, 500) : this.setState({
         showSearchBar: !this.state.showSearchBar
@@ -607,9 +638,9 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSearchQuery",
     value: function handleSearchQuery(e) {
-      var _this3 = this;
+      var _this5 = this;
 
-      if (e.key === 'Enter') {
+      if (e.key === "Enter") {
         e.preventDefault();
         var search = {
           tag: e.currentTarget.value
@@ -617,7 +648,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         this.setState({
           search: true
         }, function () {
-          return _this3.props.fetchAllNodes(search);
+          return _this5.props.fetchAllNodes(search);
         });
       }
     }
@@ -631,7 +662,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this6 = this;
 
       var sbDiv = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar__WEBPACK_IMPORTED_MODULE_4__["default"], {
         key: "sidebar",
@@ -647,10 +678,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       var currentSidebar = null;
       var sidebarClass = null;
 
-      if (this.state.sidebarExpanded && this.state.sidebarDocked) {
-        sidebarClass = "docked";
-        currentSidebar = sbDiv;
-      } else if (this.state.sidebarExpanded) {
+      if (this.state.sidebarExpanded) {
         sidebarClass = "expanded";
         currentSidebar = sbDiv;
       } else if (this.state.sidebarDocked) {
@@ -659,13 +687,16 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       } else if (this.state.sidebarUndocking) {
         sidebarClass = "undocked";
         currentSidebar = sbDiv;
+      } else if (this.state.sidebarUnexpanding) {
+        sidebarClass = "unexpanded";
+        currentSidebar = sbDiv;
       }
 
       var pagination = this.props.pagesPath ? this.props.pagesPath.map(function (id) {
-        var pagename = _this4.props.allNodes[id].body.length > 20 ? _this4.props.allNodes[id].body.slice(0, 18).concat("...") : _this4.props.allNodes[id].body;
+        var pagename = _this6.props.allNodes[id].body.length > 20 ? _this6.props.allNodes[id].body.slice(0, 18).concat("...") : _this6.props.allNodes[id].body;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#/nodes/".concat(id),
-          pagesPath: _this4.props.pathsPath
+          pagesPath: _this6.props.pathsPath
         }, pagename));
       }) : null;
       debugger;
@@ -930,7 +961,9 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
         rotate: "135"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "SidebarUl"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "home-li"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
         to: "/"
       }, "HOME")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, tagLis, SidebarLis)));
     }

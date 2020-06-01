@@ -200,14 +200,43 @@ header {
     color: grey;
 }
 
+.home-li a {
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+
+.sidebar-unexpanded {
+    display: block;
+    position: absolute;
+    width: 300px;
+    left: -300px;
+    top: 56px;
+    height: 87%;
+    background-color: #fffefa;
+    border: 1px solid rgb(203, 206, 208);
+    border-radius: 6px;
+    filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
+    box-sizing: border-box;
+    z-index: 5;
+        transform: translateX(-100%);
+        transition: opacity 600ms ease-in,
+        transform 600ms ease-in;
+}
+
+.sidebar-unexpanded svg:first-child {
+    float: right;
+    transform: rotate(135deg);
+}
 
 .sidebar-undocked {
     display: block;
     position: absolute;
-    width: 325px;
+    width: 300px;
     left: 0;
     top: 0px;
-    height: 1500%;
+    height: 150%;
     background-color: #fffefa;
     border-right: 1px solid rgb(203, 206, 208);
     border-radius: 6px;
@@ -217,7 +246,6 @@ header {
         transform: translateX(-100%);
         transition: opacity 600ms ease-in,
         transform 600ms ease-in;
-
 }
 
 .sidebar-undocked svg:first-child {
@@ -227,7 +255,7 @@ header {
 .sidebar-docked {
         display: block;
         position: absolute;
-        width: 325px;
+        width: 300px;
         left: 0px;
         top: 0px;
         height: 100%;
@@ -247,8 +275,8 @@ header {
 .sidebar-expanded {
          display: block;
          position: absolute;
-         width: 225px;
-         left: -225px;
+         width: 300px;
+         left: -300px;
          top: 56px;
          height: 87%;
          background-color: #fffefa;
@@ -266,11 +294,11 @@ header {
 .sidebar-expanded svg:first-child {
     float: right;
     transform: rotate(135deg);
-
 }
 
 .sidebarItem.tagItem {
-    padding-left: 20px;
+    padding-left: 30px;
+    cursor: pointer;
 }
 
 
@@ -289,7 +317,6 @@ header {
     display: flex;
     align-items: center;
 }
-
 
 .sidebarSublist {
     margin-left: 30px;
@@ -341,7 +368,6 @@ header {
     border-radius: 24px;
 }
 
-
 .search-enter {
     opacity: .1;
     transform: scale(.1);
@@ -389,7 +415,6 @@ header {
     border-radius: 30px;
 }
 
-/* After slide changes */
 .toggle:after {
     content: '';
     position: absolute;

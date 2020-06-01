@@ -44,7 +44,7 @@ class Sidebar extends React.Component {
             </svg>
 
             <ul className='SidebarUl'>
-                <li><Link to="/">HOME</Link></li>
+                <li className="home-li"><Link to="/">HOME</Link></li>
                 <ul>
                     {tagLis}
                     {SidebarLis}
