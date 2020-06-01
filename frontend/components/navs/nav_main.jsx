@@ -198,8 +198,8 @@ class Nav extends React.Component {
                   <div className="navBarLeft">
                       <div className='toggle-container'>
                     <div className="show">
-                      <input type="checkbox" id="switch" class="checkbox" />
-                      <label for="switch" class="toggle"></label>
+                      <input type="checkbox" id="switch" className="checkbox" />
+                      <label HTMLfor="switch" className="toggle"></label>
                         <label>
                           <p>Show Completed</p>
                         </label>

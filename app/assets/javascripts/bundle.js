@@ -745,10 +745,10 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "checkbox",
           id: "switch",
-          "class": "checkbox"
+          className: "checkbox"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-          "for": "switch",
-          "class": "toggle"
+          HTMLfor: "switch",
+          className: "toggle"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Show Completed")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
           transitionName: "search",
           transitionEnterTimeout: 600,
@@ -1276,48 +1276,50 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      if (!this.props.loggedIn) return null;
+      if (!this.props.loggedIn) {
+        return null;
+      } else {
+        if (!this.props.parentNodeIds) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "NodeListDiv"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            id: "addNode",
+            onClick: this.handleClick
+          }, "+")));
+        }
 
-      if (!this.props.parentNodeIds) {
+        var parentNodeIds = this.props.search ? this.props.filteredParentNodeIds : this.props.parentNodeIds;
+        var nodeLis = parentNodeIds.map(function (id) {
+          var node = _this2.props.allNodes[id];
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            key: node.id,
+            node: node,
+            allNodes: _this2.props.allNodes,
+            filteredNodes: _this2.props.filteredNodes,
+            fetchNode: _this2.props.fetchNode,
+            updateNode: _this2.props.updateNode,
+            createNode: _this2.props.createNode,
+            deleteNode: _this2.props.deleteNode,
+            lastCreated: _this2.props.lastCreated,
+            fetchAllNodes: _this2.props.fetchAllNodes,
+            currentNodeId: _this2.props.currentNodeId,
+            search: _this2.props.search
+          });
+        });
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "NodeListDiv"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "NodeListUl"
+        }, this.props.allNodes[this.props.currentNodeId] ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+          className: "focusTitle",
+          contentEditable: "true",
+          onBlur: this.handleBlur,
+          onKeyDown: this.handleKeyDown
+        }, this.props.allNodes[this.props.currentNodeId].body) : null, nodeLis), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           id: "addNode",
           onClick: this.handleClick
         }, "+")));
       }
-
-      var parentNodeIds = this.props.search ? this.props.filteredParentNodeIds : this.props.parentNodeIds;
-      var nodeLis = parentNodeIds.map(function (id) {
-        var node = _this2.props.allNodes[id];
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          key: node.id,
-          node: node,
-          allNodes: _this2.props.allNodes,
-          filteredNodes: _this2.props.filteredNodes,
-          fetchNode: _this2.props.fetchNode,
-          updateNode: _this2.props.updateNode,
-          createNode: _this2.props.createNode,
-          deleteNode: _this2.props.deleteNode,
-          lastCreated: _this2.props.lastCreated,
-          fetchAllNodes: _this2.props.fetchAllNodes,
-          currentNodeId: _this2.props.currentNodeId,
-          search: _this2.props.search
-        });
-      });
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "NodeListDiv"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "NodeListUl"
-      }, this.props.allNodes[this.props.currentNodeId] ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-        className: "focusTitle",
-        contentEditable: "true",
-        onBlur: this.handleBlur,
-        onKeyDown: this.handleKeyDown
-      }, this.props.allNodes[this.props.currentNodeId].body) : null, nodeLis), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        id: "addNode",
-        onClick: this.handleClick
-      }, "+")));
     }
   }]);
 
@@ -1414,6 +1416,7 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var currentNodeId = Number(ownProps.match.params.id);
   return {
+    loggedIn: !!state.session.id,
     allNodes: state.entities.nodes.allNodes,
     parentNodeIds: state.entities.nodes.parentNodeIds,
     lastCreated: state.entities.nodes.lastCreated,

@@ -12,6 +12,7 @@ const mapStateToProps = (state, ownProps) => {
   let currentNodeId = Number(ownProps.match.params.id);
 
   return {
+    loggedIn: !!state.session.id,
     allNodes: state.entities.nodes.allNodes,
     parentNodeIds: state.entities.nodes.parentNodeIds,
     lastCreated: state.entities.nodes.lastCreated,

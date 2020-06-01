@@ -57,7 +57,9 @@ class NodeList extends React.Component {
   }
 
   render() {
-    if (!this.props.loggedIn) return null; 
+    if (!this.props.loggedIn) { 
+      return null 
+    } else {
 
     if (!this.props.parentNodeIds) {
       return (
@@ -95,29 +97,31 @@ class NodeList extends React.Component {
       );
     });
 
-    return (
-      <>
-        <div className="NodeListDiv">
-          <ul className="NodeListUl">
-            {this.props.allNodes[this.props.currentNodeId] ? (
-              <h2
-                className="focusTitle"
-                contentEditable="true"
-                onBlur={this.handleBlur}
-                onKeyDown={this.handleKeyDown}
-              >
-                {this.props.allNodes[this.props.currentNodeId].body}
-              </h2>
-            ) : null}
 
-            {nodeLis}
-          </ul>
-          <button id="addNode" onClick={this.handleClick}>
-            +
-          </button>
-        </div>
-      </>
-    );
+      return (
+        <>
+          <div className="NodeListDiv">
+            <ul className="NodeListUl">
+              {this.props.allNodes[this.props.currentNodeId] ? (
+                <h2
+                  className="focusTitle"
+                  contentEditable="true"
+                  onBlur={this.handleBlur}
+                  onKeyDown={this.handleKeyDown}
+                >
+                  {this.props.allNodes[this.props.currentNodeId].body}
+                </h2>
+              ) : null}
+
+              {nodeLis}
+            </ul>
+            <button id="addNode" onClick={this.handleClick}>
+              +
+            </button>
+          </div>
+        </>
+      );
+    }
   }
 }
 
