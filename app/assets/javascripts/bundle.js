@@ -480,6 +480,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sidebar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidebar */ "./frontend/components/navs/sidebar.jsx");
 /* harmony import */ var react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-addons-css-transition-group */ "./node_modules/react-addons-css-transition-group/index.js");
 /* harmony import */ var react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -509,6 +510,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Nav = /*#__PURE__*/function (_React$Component) {
   _inherits(Nav, _React$Component);
 
@@ -524,6 +526,8 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       settingsExpanded: false,
       sidebarExpanded: false,
       sidebarDocked: false,
+      sidebarUndocking: false,
+      sidebarUnexpanding: false,
       pagesPath: _this.props.pagesPath,
       showSearchBar: false,
       transformArrow: false
@@ -556,32 +560,70 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     value: function handleMenuMouseEnter() {
       if (!this.state.sidebarExpanded) {
         this.setState({
-          sidebarExpanded: true
+          sidebarExpanded: true,
+          sidebarDocked: false
         });
       }
     }
   }, {
     key: "handleMenuMouseLeave",
     value: function handleMenuMouseLeave() {
-      this.state.sidebarExpanded ? this.setState({
-        sidebarExpanded: false
-      }) : null;
+      var _this2 = this;
+
+      if (this.state.sidebarExpanded) {
+        this.setState({
+          sidebarExpanded: false,
+          sidebarDocked: false
+        });
+        this.setState({
+          sidebarUnexpanding: true,
+          sidebarUndocking: false
+        }), function () {
+          return setTimeout(function () {
+            _this2.setState({
+              sidebarUnexpanding: false
+            });
+          }, 200);
+        };
+      } else {
+        null;
+      }
     }
   }, {
     key: "handleMenuClick",
     value: function handleMenuClick() {
-      this.setState({
-        sidebarDocked: !this.state.sidebarDocked
-      }, this.rotateArrow());
+      var _this3 = this;
+
+      if (this.state.sidebarDocked) {
+        this.setState({
+          sidebarDocked: false,
+          sidebarExpanded: false
+        });
+        this.setState({
+          sidebarUndocking: true,
+          sidebarUnexpanding: false
+        }, this.rotateArrow(), function () {
+          return setTimeout(function () {
+            _this3.setState({
+              sidebarUndocking: false
+            });
+          }, 200);
+        });
+      } else {
+        this.setState({
+          sidebarDocked: true,
+          sidebarExpanded: false
+        });
+      }
     }
   }, {
     key: "handleSearchClick",
     value: function handleSearchClick() {
-      var _this2 = this;
+      var _this4 = this;
 
       this.props.search ? null : this.state.showSearchBar ? setTimeout(function () {
-        return _this2.setState({
-          showSearchBar: !_this2.state.showSearchBar
+        return _this4.setState({
+          showSearchBar: !_this4.state.showSearchBar
         });
       }, 500) : this.setState({
         showSearchBar: !this.state.showSearchBar
@@ -598,9 +640,9 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSearchQuery",
     value: function handleSearchQuery(e) {
-      var _this3 = this;
+      var _this5 = this;
 
-      if (e.key === 'Enter') {
+      if (e.key === "Enter") {
         e.preventDefault();
         var search = {
           tag: e.currentTarget.value
@@ -608,8 +650,8 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         this.setState({
           search: true
         }, function () {
-          return _this3.props.fetchAllNodes(search);
-        }); // this.props.fetchAllNodes(search);
+          return _this5.props.fetchAllNodes(search);
+        });
       }
     }
   }, {
@@ -622,7 +664,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this6 = this;
 
       var sbDiv = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar__WEBPACK_IMPORTED_MODULE_4__["default"], {
         key: "sidebar",
@@ -638,22 +680,25 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       var currentSidebar = null;
       var sidebarClass = null;
 
-      if (this.state.sidebarExpanded && this.state.sidebarDocked) {
-        sidebarClass = "docked";
-        currentSidebar = sbDiv;
-      } else if (this.state.sidebarExpanded) {
+      if (this.state.sidebarExpanded) {
         sidebarClass = "expanded";
         currentSidebar = sbDiv;
       } else if (this.state.sidebarDocked) {
         sidebarClass = "docked";
         currentSidebar = sbDiv;
+      } else if (this.state.sidebarUndocking) {
+        sidebarClass = "undocked";
+        currentSidebar = sbDiv;
+      } else if (this.state.sidebarUnexpanding) {
+        sidebarClass = "unexpanded";
+        currentSidebar = sbDiv;
       }
 
       var pagination = this.props.pagesPath ? this.props.pagesPath.map(function (id) {
-        var pagename = _this4.props.allNodes[id].body.length > 20 ? _this4.props.allNodes[id].body.slice(0, 18).concat("...") : _this4.props.allNodes[id].body;
+        var pagename = _this6.props.allNodes[id].body.length > 20 ? _this6.props.allNodes[id].body.slice(0, 18).concat("...") : _this6.props.allNodes[id].body;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#/nodes/".concat(id),
-          pagesPath: _this4.props.pathsPath
+          pagesPath: _this6.props.pathsPath
         }, pagename));
       }) : null;
       debugger;
@@ -725,17 +770,17 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       }
 
       if (this.props.currentUser) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "navBar"
+        }, menuIcon, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
           transitionName: "sidebar",
           transitionEnterTimeout: 800,
           transitionLeaveTimeout: 800,
           className: sidebarClass ? "sidebar-".concat(sidebarClass) : ""
-        }, currentSidebar), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "navBar"
-        }, menuIcon, this.props.currentNodeId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, currentSidebar), this.props.currentNodeId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "pagination"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: "#"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Link"], {
+          to: "/"
         }, "HOME")), pagination) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "navBarLeft"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -918,8 +963,13 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
         rotate: "135"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "SidebarUl"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-        to: "/"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "home-li"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/",
+        onClick: function onClick() {
+          return window.location.reload();
+        }
       }, "HOME")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, tagLis, SidebarLis)));
     }
   }]);
@@ -1138,14 +1188,6 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         onClick: this.handleDuplicate
       }, "Duplicate"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "tt-list"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
-      }, "Share"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
-      }, "Export"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
-      }, "Copy Link")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "tt-list"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "tt-list-item"
