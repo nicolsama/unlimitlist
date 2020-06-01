@@ -12,6 +12,7 @@ class Nav extends React.Component {
             settingsExpanded: false, 
             sidebarExpanded: false,
             sidebarDocked: false,
+            sidebarUndocking: false, 
             pagesPath: this.props.pagesPath,
             showSearchBar: false, 
             transformArrow: false
@@ -46,7 +47,11 @@ class Nav extends React.Component {
     }
 
     handleMenuClick() {
-        this.setState({ sidebarDocked: !this.state.sidebarDocked }, this.rotateArrow());
+        if (this.state.sidebarDocked) {
+          this.setState({ sidebarDocked: false, sidebarExpanded: false, sidebarUndocking: true}, this.rotateArrow());
+        } else {
+          this.setState({ sidebarDocked: true })
+        }
     }
 
     handleSearchClick() {
@@ -67,7 +72,6 @@ class Nav extends React.Component {
             
             let search = { tag: e.currentTarget.value }
             this.setState({search: true}, () => this.props.fetchAllNodes(search))
-            // this.props.fetchAllNodes(search);
         }
     }
 
@@ -102,6 +106,9 @@ class Nav extends React.Component {
         } else if ( this.state.sidebarDocked ) {
             sidebarClass = "docked"; 
             currentSidebar = sbDiv;
+        } else if ( this.state.sidebarUndocking ) {
+            sidebarClass = "undocked"
+            currentSidebar = sbDiv; 
         }
         
         let pagination = (this.props.pagesPath) ? this.props.pagesPath.map(id => {
@@ -170,18 +177,17 @@ class Nav extends React.Component {
         if (this.props.currentUser) {
             return (
               <>
-                <ReactCSSTransitionGroup
-                  transitionName="sidebar"
-                  transitionEnterTimeout={800}
-                  transitionLeaveTimeout={800}
-                  className={sidebarClass ? `sidebar-${sidebarClass}` : ""}
-                >
-                  {currentSidebar}
-                </ReactCSSTransitionGroup>
 
                 <div className="navBar">
                   {menuIcon}
 
+                <ReactCSSTransitionGroup
+                  transitionName="sidebar"
+                  transitionEnterTimeout={800}
+                  transitionLeaveTimeout={800}
+                  className={sidebarClass ? `sidebar-${sidebarClass}` : ""}>
+                  {currentSidebar}
+                </ReactCSSTransitionGroup>
                 
 
                   {(this.props.currentNodeId) ? (

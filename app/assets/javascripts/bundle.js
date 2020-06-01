@@ -524,6 +524,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       settingsExpanded: false,
       sidebarExpanded: false,
       sidebarDocked: false,
+      sidebarUndocking: false,
       pagesPath: _this.props.pagesPath,
       showSearchBar: false,
       transformArrow: false
@@ -570,9 +571,17 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleMenuClick",
     value: function handleMenuClick() {
-      this.setState({
-        sidebarDocked: !this.state.sidebarDocked
-      }, this.rotateArrow());
+      if (this.state.sidebarDocked) {
+        this.setState({
+          sidebarDocked: false,
+          sidebarExpanded: false,
+          sidebarUndocking: true
+        }, this.rotateArrow());
+      } else {
+        this.setState({
+          sidebarDocked: true
+        });
+      }
     }
   }, {
     key: "handleSearchClick",
@@ -609,7 +618,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
           search: true
         }, function () {
           return _this3.props.fetchAllNodes(search);
-        }); // this.props.fetchAllNodes(search);
+        });
       }
     }
   }, {
@@ -646,6 +655,9 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         currentSidebar = sbDiv;
       } else if (this.state.sidebarDocked) {
         sidebarClass = "docked";
+        currentSidebar = sbDiv;
+      } else if (this.state.sidebarUndocking) {
+        sidebarClass = "undocked";
         currentSidebar = sbDiv;
       }
 
@@ -725,14 +737,14 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       }
 
       if (this.props.currentUser) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "navBar"
+        }, menuIcon, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
           transitionName: "sidebar",
           transitionEnterTimeout: 800,
           transitionLeaveTimeout: 800,
           className: sidebarClass ? "sidebar-".concat(sidebarClass) : ""
-        }, currentSidebar), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "navBar"
-        }, menuIcon, this.props.currentNodeId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, currentSidebar), this.props.currentNodeId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "pagination"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#"
@@ -1138,14 +1150,6 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         onClick: this.handleDuplicate
       }, "Duplicate"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "tt-list"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
-      }, "Share"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
-      }, "Export"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
-      }, "Copy Link")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "tt-list"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "tt-list-item"

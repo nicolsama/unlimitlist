@@ -203,9 +203,9 @@ header {
 
 .sidebar-undocked {
     display: block;
-    position: relative;
+    position: absolute;
     width: 325px;
-    left: -325px;
+    left: 0;
     top: 0px;
     height: 1500%;
     background-color: #fffefa;
@@ -220,13 +220,17 @@ header {
 
 }
 
+.sidebar-undocked svg:first-child {
+    float: right;
+}
+
 .sidebar-docked {
         display: block;
-        position: relative;
+        position: absolute;
         width: 325px;
         left: 0px;
         top: 0px;
-        height: 1500%;
+        height: 100%;
         background-color: #fffefa;
         border-right: 1px solid rgb(203, 206, 208);
         border-radius: 6px;
@@ -237,7 +241,6 @@ header {
 }
 
 .sidebar-docked svg:first-child{
-    // transform: rotate(-135deg);
     float: right;
 }
 
@@ -269,6 +272,7 @@ header {
 .sidebarItem.tagItem {
     padding-left: 20px;
 }
+
 
 .SidebarUl {
     padding-top: 20px;

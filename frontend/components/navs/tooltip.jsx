@@ -61,15 +61,6 @@ class Tooltip extends React.Component {
                 </ul>
 
                 <ul className="tt-list">
-
-                    <li className="tt-list-item">Share</li>
-
-                    <li className="tt-list-item">Export</li>
-                    
-                    <li className="tt-list-item"
-                        >Copy Link</li>
-                </ul>
-                <ul className="tt-list">
                     
                     <li className="tt-list-item">Expand All</li>
                     
