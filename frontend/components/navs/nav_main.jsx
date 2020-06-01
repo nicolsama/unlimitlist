@@ -4,6 +4,8 @@ import { logout } from "../../actions/session_actions";
 import { fetchAllNodes } from "../../actions/node_actions";
 import Sidebar from "./sidebar";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { Link } from "react-router-dom";
+
 
 class Nav extends React.Component {
   constructor(props) {
@@ -229,7 +231,7 @@ class Nav extends React.Component {
             {this.props.currentNodeId ? (
               <div className="pagination">
                 <span>
-                  <a href="#">HOME</a>
+                  <Link to="/" >HOME</Link>
                 </span>
                 {pagination}
               </div>
