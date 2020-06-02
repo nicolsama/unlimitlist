@@ -49,13 +49,14 @@ class Sidebar extends React.Component {
         </svg>
 
         <ul className="SidebarUl">
-          <li className="home-li">
-            <Link to="/" onClick={() => window.location.reload()}>HOME</Link>
-          </li>
-          <ul>
-            {tagLis}
-            {SidebarLis}
-          </ul>
+            <li className="section-li"><a>STARRED</a></li>
+                <ul></ul>
+            <li className="section-li"><a>TAGS</a></li>
+                <ul>{tagLis}</ul>
+            <li className="section-li">
+                <Link to="/" onClick={() => window.location.reload()}>HOME</Link>
+            </li>
+                <ul>{SidebarLis}</ul>
         </ul>
       </>
     );

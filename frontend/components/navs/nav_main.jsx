@@ -74,14 +74,13 @@ class Nav extends React.Component {
   }
 
   handleSearchClick() {
-    this.props.search
-      ? null
-      : this.state.showSearchBar
+    !this.state.showSearchBar
+      ?  this.setState({ showSearchBar: !this.state.showSearchBar }): null; 
+
+    this.state.showSearchBar
       ? setTimeout(
           () => this.setState({ showSearchBar: !this.state.showSearchBar }),
-          500
-        )
-      : this.setState({ showSearchBar: !this.state.showSearchBar });
+          500 ): null; 
   }
 
   handleLogout() {
@@ -92,8 +91,13 @@ class Nav extends React.Component {
   handleSearchQuery(e) {
     if (e.key === "Enter") {
       e.preventDefault();
-
       let search = { tag: e.currentTarget.value };
+      
+      if (this.props.currentNodeId) {
+        window.location.reload().then(
+
+        )
+      }
       this.setState({ search: true }, () => this.props.fetchAllNodes(search));
     }
   }

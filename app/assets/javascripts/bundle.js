@@ -621,13 +621,14 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     value: function handleSearchClick() {
       var _this4 = this;
 
-      this.props.search ? null : this.state.showSearchBar ? setTimeout(function () {
+      !this.state.showSearchBar ? this.setState({
+        showSearchBar: !this.state.showSearchBar
+      }) : null;
+      this.state.showSearchBar ? setTimeout(function () {
         return _this4.setState({
           showSearchBar: !_this4.state.showSearchBar
         });
-      }, 500) : this.setState({
-        showSearchBar: !this.state.showSearchBar
-      });
+      }, 500) : null;
     }
   }, {
     key: "handleLogout",
@@ -647,6 +648,11 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         var search = {
           tag: e.currentTarget.value
         };
+
+        if (this.props.currentNodeId) {
+          window.location.reload().then();
+        }
+
         this.setState({
           search: true
         }, function () {
@@ -964,13 +970,17 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "SidebarUl"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "home-li"
+        className: "section-li"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "STARRED")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "section-li"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "TAGS")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, tagLis), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "section-li"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
         to: "/",
         onClick: function onClick() {
           return window.location.reload();
         }
-      }, "HOME")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, tagLis, SidebarLis)));
+      }, "HOME")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, SidebarLis)));
     }
   }]);
 
