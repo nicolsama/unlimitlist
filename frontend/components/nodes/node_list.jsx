@@ -14,7 +14,8 @@ class NodeList extends React.Component {
     if (!this.props.search) {
       this.props.fetchAllNodes();
     } else {
-      this.props.fetchAllNodes(this.props.search);
+      let search = { tag: this.props.search };
+      this.props.fetchAllNodes(search);
     }
   }
 
@@ -40,9 +41,9 @@ class NodeList extends React.Component {
   }
 
   updateNode(e) {
-    let newNode = this.props.allNodes[this.props.currentNodeId];
-    newNode.body = e.currentTarget.innerText;
-    this.props.updateNode(newNode);
+      let newNode = this.props.allNodes[this.props.currentNodeId];
+      newNode.body = e.currentTarget.innerText;
+      this.props.updateNode(newNode)
   }
 
   handleBlur(e) {
@@ -57,6 +58,8 @@ class NodeList extends React.Component {
   }
 
   render() {
+
+
     if (!this.props.loggedIn) { 
       return null 
     } else {

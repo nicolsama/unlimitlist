@@ -30,9 +30,15 @@ class Nav extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  componentDidMount() {
-    this.props.fetchAllNodes();
-  }
+//  componentDidMount() {
+//    debugger; 
+//     if (!this.props.search) {
+//       this.props.fetchAllNodes();
+//     } else {
+//       let search = { tag: this.props.search };
+//       this.props.fetchAllNodes(search);
+//     }
+//   }
 
   handleGearClick(e) {
     this.setState({ settingsExpanded: !this.state.settingsExpanded });
@@ -89,16 +95,9 @@ class Nav extends React.Component {
   }
 
   handleSearchQuery(e) {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault();
-      let search = { tag: e.currentTarget.value };
-      
-      if (this.props.currentNodeId) {
-        window.location.reload().then(
-
-        )
-      }
-      this.setState({ search: true }, () => this.props.fetchAllNodes(search));
+      this.props.history.push(`/nodes/search/${e.currentTarget.value}`)
     }
   }
 
@@ -154,7 +153,7 @@ class Nav extends React.Component {
         })
       : null;
 
-    debugger;
+
     let settingsDiv = null;
     if (this.state.settingsExpanded) {
       settingsDiv = (
@@ -305,9 +304,18 @@ class Nav extends React.Component {
 
 const msp = ({ session, entities: { users, nodes } }, ownProps) => {
   let path = ownProps.history.location.pathname.split("/");
-  let currentNodeId = parseInt(path[path.length - 1]);
 
+  let currentNodeId = null; 
+  let search = false; 
+  if (path[path.length - 2] === "search") {
+    search = path[path.length - 1]
+  } else {
+    currentNodeId = parseInt(path[path.length - 1]);
+  }
+  debugger; 
   return {
+
+    search,
     currentNodeId,
     currentUser: users[session.id],
     linkPath: ownProps.location.pathname,
@@ -315,7 +323,6 @@ const msp = ({ session, entities: { users, nodes } }, ownProps) => {
     parentNodeIds: nodes.parentNodeIds,
     lastCreated: nodes.lastCreated,
     pagesPath: nodes.pagesPath,
-    search: nodes.search,
     tags: nodes.tags,
   };
 };

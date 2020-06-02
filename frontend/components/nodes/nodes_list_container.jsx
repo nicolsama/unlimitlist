@@ -10,9 +10,9 @@ import {
 
 const mapStateToProps = (state, ownProps) => {
   let currentNodeId = parseInt(ownProps.match.params.id);
-  
-  debugger; 
+  let search = ownProps.match.params.tag;
 
+  
   return {
     loggedIn: !!state.session.id,
     allNodes: state.entities.nodes.allNodes,
@@ -21,12 +21,12 @@ const mapStateToProps = (state, ownProps) => {
     filteredParentNodeIds: state.entities.nodes.filteredParentNodeIds,
     lastCreated: state.entities.nodes.lastCreated,
     currentNodeId,
-    search: state.entities.nodes.search,
+    search,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchAllNodes: () => dispatch(fetchAllNodes()),
+  fetchAllNodes: (search) => dispatch(fetchAllNodes(search)),
   fetchNode: (nodeId) => dispatch(fetchNode(nodeId)),
   createNode: (node) => dispatch(createNode(node)),
   updateNode: (node) => dispatch(updateNode(node)),

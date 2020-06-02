@@ -160,6 +160,7 @@ var createNode = function createNode(node) {
 };
 var updateNode = function updateNode(node) {
   return function (dispatch) {
+    debugger;
     return _util_node_api_util__WEBPACK_IMPORTED_MODULE_0__["updateNode"](node).then(function (nodes) {
       return dispatch(receiveNodes(nodes));
     });
@@ -294,10 +295,13 @@ var App = function App() {
     exact: true,
     path: "/",
     component: _nodes_nodes_list_container__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["NodeRoute"], {
+    path: "/nodes/search/:tag",
+    component: _nodes_nodes_list_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["NodeRoute"], {
     path: "/nodes/:id",
     component: _nodes_node_list_focus_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
     path: "/api/login",
     component: _sessions_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
@@ -541,14 +545,18 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     _this.rotateArrow = _this.rotateArrow.bind(_assertThisInitialized(_this));
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } //  componentDidMount() {
+  //    debugger; 
+  //     if (!this.props.search) {
+  //       this.props.fetchAllNodes();
+  //     } else {
+  //       let search = { tag: this.props.search };
+  //       this.props.fetchAllNodes(search);
+  //     }
+  //   }
+
 
   _createClass(Nav, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.fetchAllNodes();
-    }
-  }, {
     key: "handleGearClick",
     value: function handleGearClick(e) {
       this.setState({
@@ -641,23 +649,9 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSearchQuery",
     value: function handleSearchQuery(e) {
-      var _this5 = this;
-
-      if (e.key === "Enter") {
+      if (e.key === 'Enter') {
         e.preventDefault();
-        var search = {
-          tag: e.currentTarget.value
-        };
-
-        if (this.props.currentNodeId) {
-          window.location.reload().then();
-        }
-
-        this.setState({
-          search: true
-        }, function () {
-          return _this5.props.fetchAllNodes(search);
-        });
+        this.props.history.push("/nodes/search/".concat(e.currentTarget.value));
       }
     }
   }, {
@@ -670,7 +664,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this5 = this;
 
       var sbDiv = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar__WEBPACK_IMPORTED_MODULE_4__["default"], {
         key: "sidebar",
@@ -701,13 +695,12 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       }
 
       var pagination = this.props.pagesPath ? this.props.pagesPath.map(function (id) {
-        var pagename = _this6.props.allNodes[id].body.length > 20 ? _this6.props.allNodes[id].body.slice(0, 18).concat("...") : _this6.props.allNodes[id].body;
+        var pagename = _this5.props.allNodes[id].body.length > 20 ? _this5.props.allNodes[id].body.slice(0, 18).concat("...") : _this5.props.allNodes[id].body;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#/nodes/".concat(id),
-          pagesPath: _this6.props.pathsPath
+          pagesPath: _this5.props.pathsPath
         }, pagename));
       }) : null;
-      debugger;
       var settingsDiv = null;
 
       if (this.state.settingsExpanded) {
@@ -847,8 +840,18 @@ var msp = function msp(_ref, ownProps) {
       users = _ref$entities.users,
       nodes = _ref$entities.nodes;
   var path = ownProps.history.location.pathname.split("/");
-  var currentNodeId = parseInt(path[path.length - 1]);
+  var currentNodeId = null;
+  var search = false;
+
+  if (path[path.length - 2] === "search") {
+    search = path[path.length - 1];
+  } else {
+    currentNodeId = parseInt(path[path.length - 1]);
+  }
+
+  debugger;
   return {
+    search: search,
     currentNodeId: currentNodeId,
     currentUser: users[session.id],
     linkPath: ownProps.location.pathname,
@@ -856,7 +859,6 @@ var msp = function msp(_ref, ownProps) {
     parentNodeIds: nodes.parentNodeIds,
     lastCreated: nodes.lastCreated,
     pagesPath: nodes.pagesPath,
-    search: nodes.search,
     tags: nodes.tags
   };
 };
@@ -1284,7 +1286,10 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
       if (!this.props.search) {
         this.props.fetchAllNodes();
       } else {
-        this.props.fetchAllNodes(this.props.search);
+        var search = {
+          tag: this.props.search
+        };
+        this.props.fetchAllNodes(search);
       }
     }
   }, {
@@ -1592,7 +1597,8 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           completed: this.props.node.completed,
           id: this.props.node.id,
           ord: this.props.node.ord,
-          parent_node_id: this.props.node.parent_node_id
+          parent_node_id: this.props.node.parent_node_id,
+          search: this.props.search
         }
       }, function () {
         return _this2.props.updateNode(_this2.state.node);
@@ -1605,6 +1611,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
 
       if (this.props.node.id && e.key === "Enter") {
         e.preventDefault();
+        if (this.props.search) this.props.history.push("/");
         this.setState({
           node: {
             body: e.currentTarget.textContent,
@@ -1634,19 +1641,13 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "showChildren",
     value: function showChildren() {
-      var _this4 = this;
-
       this.setState({
         showChildren: !this.state.showChildren
-      }).then(function () {
-        return _this4.props.history.push("nodes/".concat(_this4.props.currentNodeId));
-      });
+      }).then(this.props.history.push("nodes/".concat(this.props.currentNodeId)));
     }
   }, {
     key: "showTooltip",
     value: function showTooltip(e) {
-      debugger;
-
       if (e.type === "mouseleave" && this.state.show_tooltip) {
         this.setState({
           show_tooltip: !this.state.show_tooltip
@@ -1669,7 +1670,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this4 = this;
 
       var allNodes = this.props.allNodes;
       var filteredIds;
@@ -1692,14 +1693,14 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           key: id,
           node: node,
           allNodes: allNodes,
-          filteredNodes: _this5.props.filteredNodes,
-          fetchNode: _this5.props.fetchNode,
-          updateNode: _this5.props.updateNode,
-          createNode: _this5.props.createNode,
-          deleteNode: _this5.props.deleteNode,
-          lastCreated: _this5.props.lastCreated,
-          currentNodeId: _this5.props.currentNodeId,
-          search: _this5.props.search,
+          filteredNodes: _this4.props.filteredNodes,
+          fetchNode: _this4.props.fetchNode,
+          updateNode: _this4.props.updateNode,
+          createNode: _this4.props.createNode,
+          deleteNode: _this4.props.deleteNode,
+          lastCreated: _this4.props.lastCreated,
+          currentNodeId: _this4.props.currentNodeId,
+          search: _this4.props.search,
           type: "child"
         });
       });
@@ -1725,12 +1726,12 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
         className: "svgContainer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onMouseLeave: function onMouseLeave(e) {
-          return _this5.showTooltip(e);
+          return _this4.showTooltip(e);
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: showLink,
         onClick: function onClick(e) {
-          return _this5.showTooltip(e);
+          return _this4.showTooltip(e);
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
         viewBox: "0 0 24 24",
@@ -1809,7 +1810,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var currentNodeId = parseInt(ownProps.match.params.id);
-  debugger;
+  var search = ownProps.match.params.tag;
   return {
     loggedIn: !!state.session.id,
     allNodes: state.entities.nodes.allNodes,
@@ -1818,14 +1819,14 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     filteredParentNodeIds: state.entities.nodes.filteredParentNodeIds,
     lastCreated: state.entities.nodes.lastCreated,
     currentNodeId: currentNodeId,
-    search: state.entities.nodes.search
+    search: search
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchAllNodes: function fetchAllNodes() {
-      return dispatch(Object(_actions_node_actions__WEBPACK_IMPORTED_MODULE_2__["fetchAllNodes"])());
+    fetchAllNodes: function fetchAllNodes(search) {
+      return dispatch(Object(_actions_node_actions__WEBPACK_IMPORTED_MODULE_2__["fetchAllNodes"])(search));
     },
     fetchNode: function fetchNode(nodeId) {
       return dispatch(Object(_actions_node_actions__WEBPACK_IMPORTED_MODULE_2__["fetchNode"])(nodeId));
@@ -1958,7 +1959,9 @@ var Root = function Root(_ref) {
   var store = _ref.store;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_1__["Provider"], {
     store: store
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["HashRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["HashRouter"], {
+    history: history
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Root);
@@ -2253,8 +2256,8 @@ var mdp = function mdp(dispatch) {
     demoLogin: function demoLogin(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["login"])(user));
     },
-    fetchAllNodes: function fetchAllNodes() {
-      return dispatch(Object(_actions_node_actions__WEBPACK_IMPORTED_MODULE_4__["fetchAllNodes"])());
+    fetchAllNodes: function fetchAllNodes(search) {
+      return dispatch(Object(_actions_node_actions__WEBPACK_IMPORTED_MODULE_4__["fetchAllNodes"])(search));
     }
   };
 };

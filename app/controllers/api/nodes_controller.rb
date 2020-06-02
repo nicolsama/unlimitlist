@@ -1,14 +1,17 @@
 class Api::NodesController < ApplicationController
 
     def index
+
         @node = Node.first
         @nodes = current_user.nodes.includes(:children)
         @tags = current_user.tags.map { |tag| tag.tag }.uniq
 
         if params[:search]
+
             @filtered_nodes = Node.search(search_params[:tag], @nodes)
             @search = search_params[:tag]
         else            
+
             @filtered_nodes = []
             @search = false
         end
@@ -21,10 +24,19 @@ class Api::NodesController < ApplicationController
         @nodes = @node.descendants.map {|id| Node.find_by(id: id)}
         @tags = current_user.tags.map { |tag| tag.tag }.uniq
 
+        if params[:search]
+            @filtered_nodes = Node.search(search_params[:tag], @nodes)
+            @search = search_params[:tag]
+        else            
+            @filtered_nodes = []
+            @search = false
+        end
+
         render :show
     end
     
     def create
+
         @node = Node.new(node_params)
         @node.user_id = current_user.id
         @node.ord = Node.maximum(:ord)
@@ -62,12 +74,26 @@ class Api::NodesController < ApplicationController
     def update
         @node = Node.find_by(id: params[:id].to_i)
 
-        if @node && @node.update(node_params) && @node.save_tags
+        new_node = {
+                body: node_params[:body], 
+                completed: node_params[:completed], 
+                ord: node_params[:ord], 
+                parent_node_id: node_params[:parent_node_id]
+            }
+        
+        if @node && @node.update(new_node) && @node.save_tags
+            
 
             @nodes = current_user.nodes.includes(:children)
-            @tags = current_user.tags.map { |tag| tag.tag }.uniq
-            @filtered_nodes = []
-            @search = false
+            if node_params[:search] 
+                @filtered_nodes = Node.search(node_params[:search], @nodes)
+                @search = node_params[:search]
+            else
+                @tags = current_user.tags.map { |tag| tag.tag }.uniq
+                @filtered_nodes = []
+                @search = false
+            end
+            
             render :index
         else 
 

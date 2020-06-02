@@ -20,8 +20,10 @@ const App = () => (
         </header> 
         
         <NodeRoute exact path="/" component={NodeListContainer} />
-        <NodeRoute path="/nodes/:id" component={NodeListFocusContainer} />
-
+        <Switch>
+            <NodeRoute path="/nodes/search/:tag" component={NodeListContainer} />
+            <NodeRoute path="/nodes/:id" component={NodeListFocusContainer} />
+        </Switch> 
         <AuthRoute path="/api/login" component={LoginFormContainer} />
         <AuthRoute path="/api/signup" component={SignupFormContainer} />
         <AuthRoute exact path="/" component={Splash} />

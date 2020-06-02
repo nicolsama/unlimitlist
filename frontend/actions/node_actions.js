@@ -45,10 +45,12 @@ export const createNode = node => dispatch => (
         .then(nodes => dispatch(receiveNodes(nodes)))
 ); 
 
-export const updateNode = node => dispatch => (
-    NodeApiUtil.updateNode(node)
+export const updateNode = node => dispatch => {
+    debugger; 
+    return (NodeApiUtil.updateNode(node)
         .then(nodes => dispatch(receiveNodes(nodes)))
-); 
+    )}; 
+
 
 export const deleteNode = nodeId => dispatch => (
     NodeApiUtil.deleteNode(nodeId)

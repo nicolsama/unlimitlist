@@ -53,7 +53,7 @@ const msp = (state) => ({
 
 const mdp = (dispatch) => ({
     demoLogin: (user) => dispatch(login(user)),
-    fetchAllNodes: () => dispatch(fetchAllNodes())
+    fetchAllNodes: (search) => dispatch(fetchAllNodes(search))
 });
 
 export default connect(msp, mdp)(Splash);

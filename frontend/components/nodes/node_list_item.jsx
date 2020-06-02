@@ -38,6 +38,7 @@ class NodeListItem extends React.Component {
           id: this.props.node.id,
           ord: this.props.node.ord,
           parent_node_id: this.props.node.parent_node_id,
+          search: this.props.search,
         },
       },
       () => this.props.updateNode(this.state.node)
@@ -47,6 +48,7 @@ class NodeListItem extends React.Component {
   handleKeyPress(e) {
     if (this.props.node.id && e.key === "Enter") {
       e.preventDefault();
+      if (this.props.search) this.props.history.push("/");
       this.setState(
         {
           node: {
@@ -70,7 +72,6 @@ class NodeListItem extends React.Component {
         parent_node_id: this.props.node.parent_node_id,
         ord_bookmark: ord_bookmark,
       };
-
       this.props.createNode(newNode);
     } else if (
       (e.keyCode === 8 || e.key === "Backspace") &&
@@ -81,13 +82,11 @@ class NodeListItem extends React.Component {
   }
 
   showChildren() {
-    this.setState({ showChildren: !this.state.showChildren }).then(() =>
-      this.props.history.push(`nodes/${this.props.currentNodeId}`)
-    );
+    this.setState({ showChildren: !this.state.showChildren })
+      .then(this.props.history.push(`nodes/${this.props.currentNodeId}`))
   }
 
   showTooltip(e) {
-    debugger;
     if (e.type === "mouseleave" && this.state.show_tooltip) {
       this.setState({ show_tooltip: !this.state.show_tooltip });
     }
