@@ -32,6 +32,11 @@ class Node < ApplicationRecord
         class_name: :Tag, 
         dependent: :destroy
 
+    has_one :star,
+        foreign_key: :node_id,
+        class_name: :Star, 
+        dependent: :destroy
+
     def descendants
         descendants_arr = []
         self.children.each do |child|
@@ -60,6 +65,10 @@ class Node < ApplicationRecord
 
     def root?
         self.parent_node_id == nil
+    end
+
+    def starred? 
+        !!self.star
     end
 
     def self.last_created(nodes_array)

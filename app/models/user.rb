@@ -22,6 +22,10 @@ class User < ApplicationRecord
         foreign_key: :user_id, 
         class_name: :Tag
 
+    has_many :stars,
+        foreign_key: :user_id,
+        class_name: :Star
+
     attr_reader :password
     after_initialize :ensure_session_token
 

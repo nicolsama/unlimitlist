@@ -15,7 +15,7 @@ const sessionErrorsReducer = (state = _initialstate, action) => {
         case CLEAR_ERRORS: 
             return _initialstate; 
         default:
-            return state;
+            return _initialstate;
     }
 };
 

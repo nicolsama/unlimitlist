@@ -14,6 +14,7 @@ return (
     filteredParentNodeIds: nodes.filteredParentNodeIds,
     lastCreated: nodes.last_created,
     tags: nodes.tags, 
+    stars: nodes.stars,
     pagesPath: nodes.path, 
     search: nodes.search
 

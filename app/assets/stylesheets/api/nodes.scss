@@ -149,3 +149,25 @@ path {
 .highlight {
     background-color: yellow;
 }
+
+.starBar {
+    height: 30px;
+    border: 1px solid red; 
+    width: 200px; 
+    float: right;
+    display: flex;
+    flex-direction: row;
+}
+
+.starButton {
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    padding: 4px 4px 4px 5px;
+    box-sizing: border-box;
+}
+
+.starButton:hover {
+    background-color: lightgrey;
+
+}

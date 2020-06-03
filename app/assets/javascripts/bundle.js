@@ -118,6 +118,7 @@ var receiveNodes = function receiveNodes(nodes) {
     filteredParentNodeIds: nodes.filteredParentNodeIds,
     lastCreated: nodes.last_created,
     tags: nodes.tags,
+    stars: nodes.stars,
     pagesPath: nodes.path,
     search: nodes.search
   };
@@ -1370,7 +1371,28 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
             search: _this2.props.search
           });
         });
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        var createStar;
+
+        if (this.props.allNodes[this.props.currentNodeId]) {
+          var fill = this.props.allNodes[this.props.currentNodeId].starred ? "yellow" : "none";
+          createStar = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "starBar"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "starButton" // onClick={}
+
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+            width: "20",
+            height: "20",
+            viewBox: "0 0 20 20",
+            fill: fill
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+            stroke: "grey",
+            fill: fill,
+            d: "M9.278,3.513 C9.568,2.906 10.432,2.906 10.722,3.513 L12.261,6.739 C12.378,6.983 12.61,7.152 12.879,7.187 L16.422,7.654 C17.089,7.742 17.356,8.564 16.868,9.028 L14.276,11.488 C14.08,11.675 13.991,11.948 14.04,12.214 L14.691,15.728 C14.813,16.39 14.114,16.898 13.523,16.577 L10.382,14.872 C10.144,14.743 9.856,14.743 9.618,14.872 L6.477,16.577 C5.886,16.898 5.187,16.39 5.309,15.728 L5.96,12.214 C6.009,11.948 5.92,11.675 5.724,11.488 L3.132,9.028 C2.644,8.564 2.911,7.742 3.578,7.654 L7.121,7.187 C7.39,7.152 7.622,6.983 7.739,6.739 L9.278,3.513 Z"
+          }))));
+        }
+
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, createStar, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "NodeListDiv"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "NodeListUl"
@@ -2572,7 +2594,7 @@ var sessionErrorsReducer = function sessionErrorsReducer() {
       return _initialstate;
 
     default:
-      return state;
+      return _initialstate;
   }
 };
 
@@ -2672,7 +2694,8 @@ var selectAllNodes = function selectAllNodes() {
         completed = node.completed,
         ord = node.ord,
         parent_node_id = node.parent_node_id,
-        child_ids = node.child_ids;
+        child_ids = node.child_ids,
+        star = node.star;
 
     var newNode = _defineProperty({}, id, {
       id: id,
@@ -2680,7 +2703,8 @@ var selectAllNodes = function selectAllNodes() {
       completed: completed,
       ord: ord,
       parent_node_id: parent_node_id,
-      child_ids: child_ids
+      child_ids: child_ids,
+      starred: !!star
     });
 
     allNodes = Object.assign({}, allNodes, newNode);
@@ -2692,7 +2716,8 @@ var selectAllNodes = function selectAllNodes() {
         completed = node.completed,
         ord = node.ord,
         parent_node_id = node.parent_node_id,
-        child_ids = node.child_ids;
+        child_ids = node.child_ids,
+        star = node.star;
 
     var newNode = _defineProperty({}, id, {
       id: id,
@@ -2700,7 +2725,8 @@ var selectAllNodes = function selectAllNodes() {
       completed: completed,
       ord: ord,
       parent_node_id: parent_node_id,
-      child_ids: child_ids
+      child_ids: child_ids,
+      starred: !!star
     });
 
     filteredNodes = Object.assign({}, filteredNodes, newNode);
@@ -2740,6 +2766,8 @@ var selectAllNodes = function selectAllNodes() {
     search: action.search
   }, {
     tags: action.tags
+  }, {
+    stars: action.stars
   }); //return newState;
 };
 

@@ -5,6 +5,7 @@ class Api::NodesController < ApplicationController
         @node = Node.first
         @nodes = current_user.nodes.includes(:children)
         @tags = current_user.tags.map { |tag| tag.tag }.uniq
+        @stars = current_user.stars
 
         if params[:search]
 
@@ -23,6 +24,7 @@ class Api::NodesController < ApplicationController
         @node = Node.find_by(id: params[:id])
         @nodes = @node.descendants.map {|id| Node.find_by(id: id)}
         @tags = current_user.tags.map { |tag| tag.tag }.uniq
+        @stars = current_user.stars
 
         if params[:search]
             @filtered_nodes = Node.search(search_params[:tag], @nodes)
@@ -40,7 +42,8 @@ class Api::NodesController < ApplicationController
         @node = Node.new(node_params)
         @node.user_id = current_user.id
         @node.ord = Node.maximum(:ord)
-       
+
+
         if @node.save && @node.save_tags
 
             siblings = @node.sibling_nodes
@@ -59,6 +62,7 @@ class Api::NodesController < ApplicationController
                 node.save
             end
 
+            @stars = current_user.stars
             @nodes = current_user.nodes.includes(:children)
             @tags = current_user.tags.map { |tag| tag.tag }.uniq
 
@@ -83,6 +87,7 @@ class Api::NodesController < ApplicationController
         
         if @node && @node.update(new_node) && @node.save_tags
             
+            @stars = current_user.stars
             @nodes = current_user.nodes.includes(:children)
             @tags = current_user.tags.map { |tag| tag.tag }.uniq
 
@@ -106,6 +111,7 @@ class Api::NodesController < ApplicationController
         Node.destroy(params[:id])
         @node = Node.first
 
+        @stars = current_user.stars
         @nodes = current_user.nodes.includes(:children)
         @tags = current_user.tags.map { |tag| tag.tag }.uniq
 
