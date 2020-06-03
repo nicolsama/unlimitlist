@@ -649,10 +649,14 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleLogout",
     value: function handleLogout() {
+      var _this5 = this;
+
       this.setState({
         settingsExpanded: false
       });
-      this.props.logout();
+      this.props.logout().then(function () {
+        return _this5.props.history.replace('/');
+      });
     }
   }, {
     key: "handleSearchQuery",
@@ -672,7 +676,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var sbDiv = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar__WEBPACK_IMPORTED_MODULE_4__["default"], {
         key: "sidebar",
@@ -704,10 +708,10 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       }
 
       var pagination = this.props.pagesPath ? this.props.pagesPath.map(function (id) {
-        var pagename = _this5.props.allNodes[id].body.length > 20 ? _this5.props.allNodes[id].body.slice(0, 18).concat("...") : _this5.props.allNodes[id].body;
+        var pagename = _this6.props.allNodes[id].body.length > 20 ? _this6.props.allNodes[id].body.slice(0, 18).concat("...") : _this6.props.allNodes[id].body;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#/nodes/".concat(id),
-          pagesPath: _this5.props.pathsPath
+          pagesPath: _this6.props.pathsPath
         }, pagename));
       }) : null;
       var settingsDiv = null;
@@ -716,30 +720,6 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         settingsDiv = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "dd-wrapper settingsNav"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "dd-list"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Undo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Redo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Save")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "dd-list"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Print"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Export All")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "dd-list"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Show Completed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Settings"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Help"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Report a Problem")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "dd-list"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "dd-list-item"
@@ -1193,6 +1173,9 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      debugger;
+      var date = this.props.node.updated_at.split("T")[0];
+      var time = this.props.node.updated_at.split("T")[1].slice(0, this.props.node.updated_at.split("T")[1].length - 5);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tt-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1203,25 +1186,21 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
         onClick: this.handleComplete
       }, this.props.node.completed ? "Uncomplete" : "Complete")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "tt-list-item"
-      }, "Add Note"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         onClick: this.handleDuplicate
-      }, "Duplicate"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "tt-list"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
-      }, "Expand All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
-      }, "Collapse All")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "tt-list"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, "Duplicate")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "tt-list-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         onClick: this.handleDelete
-      }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "tt-list-bottom"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "userEmail"
-      }, "Last changed at "))));
+      }, "Last changed at", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "datetime"
+      }, date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "datetime"
+      }, time)))));
     }
   }]);
 
@@ -2677,99 +2656,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   !*** ./frontend/selectors/nodes_selector.js ***!
   \**********************************************/
 /*! exports provided: selectAllNodes */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectAllNodes", function() { return selectAllNodes; });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var selectAllNodes = function selectAllNodes() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-  var allNodes = {};
-  action.allNodes.forEach(function (node) {
-    var id = node.id,
-        body = node.body,
-        completed = node.completed,
-        ord = node.ord,
-        parent_node_id = node.parent_node_id,
-        child_ids = node.child_ids,
-        star = node.star;
-
-    var newNode = _defineProperty({}, id, {
-      id: id,
-      body: body,
-      completed: completed,
-      ord: ord,
-      parent_node_id: parent_node_id,
-      child_ids: child_ids,
-      starred: !!star
-    });
-
-    allNodes = Object.assign({}, allNodes, newNode);
-  });
-  var filteredNodes = {};
-  action.filteredNodes.forEach(function (node) {
-    var id = node.id,
-        body = node.body,
-        completed = node.completed,
-        ord = node.ord,
-        parent_node_id = node.parent_node_id,
-        child_ids = node.child_ids,
-        star = node.star;
-
-    var newNode = _defineProperty({}, id, {
-      id: id,
-      body: body,
-      completed: completed,
-      ord: ord,
-      parent_node_id: parent_node_id,
-      child_ids: child_ids,
-      starred: !!star
-    });
-
-    filteredNodes = Object.assign({}, filteredNodes, newNode);
-  });
-  var parentNodeIds = [];
-  action.parentNodeIds.forEach(function (item) {
-    return parentNodeIds.push(item.id);
-  });
-  parentNodeIds = parentNodeIds.sort(function (a, b) {
-    return allNodes[a].ord - allNodes[b].ord;
-  });
-  var filteredParentNodeIds = [];
-  action.filteredParentNodeIds.forEach(function (item) {
-    return filteredParentNodeIds.push(item.id);
-  });
-  filteredParentNodeIds = filteredParentNodeIds.sort(function (a, b) {
-    return allNodes[a].ord - allNodes[b].ord;
-  });
-  var lastCreated = action.lastCreated;
-  var pagesPath = [];
-  action.pagesPath.forEach(function (id) {
-    return pagesPath.push(id);
-  });
-  return Object.assign({}, state, {
-    allNodes: allNodes
-  }, {
-    parentNodeIds: parentNodeIds
-  }, {
-    filteredNodes: filteredNodes
-  }, {
-    filteredParentNodeIds: filteredParentNodeIds
-  }, {
-    lastCreated: lastCreated
-  }, {
-    pagesPath: pagesPath
-  }, {
-    search: action.search
-  }, {
-    tags: action.tags
-  }, {
-    stars: action.stars
-  }); //return newState;
-};
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/nicolesamanich/Desktop/unlimitlist/frontend/selectors/nodes_selector.js: Unexpected token (12:0)\n\n\u001b[0m \u001b[90m 10 | \u001b[39m            parent_node_id\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 | \u001b[39m            child_ids\u001b[33m,\u001b[39m \u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 12 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 13 | \u001b[39m            star\u001b[0m\n\u001b[0m \u001b[90m 14 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 15 | \u001b[39m            updated_at\u001b[0m\n    at Object._raise (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:742:17)\n    at Object.raiseWithData (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:735:17)\n    at Object.raise (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:729:17)\n    at Object.unexpected (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:8757:16)\n    at Object.parseIdentifierName (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10748:18)\n    at Object.parseIdentifier (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10726:23)\n    at Object.parseMaybePrivateName (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10079:19)\n    at Object.parsePropertyName (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10550:126)\n    at Object.parseObjectMember (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10451:10)\n    at Object.parseObj (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10374:25)\n    at Object.parseBindingAtom (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9114:21)\n    at Object.parseVarId (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11761:20)\n    at Object.parseVar (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11737:12)\n    at Object.parseVarStatement (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11549:10)\n    at Object.parseStatementContent (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11148:21)\n    at Object.parseStatement (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11081:17)\n    at Object.parseBlockOrModuleBlockBody (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11656:25)\n    at Object.parseBlockBody (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11642:10)\n    at Object.parseBlock (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11626:10)\n    at Object.parseFunctionBody (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10634:24)\n    at Object.parseArrowExpression (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10603:10)\n    at Object.parseExprAtom (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9900:18)\n    at Object.parseExprAtom (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:4614:20)\n    at Object.parseExprSubscripts (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9602:23)\n    at Object.parseMaybeUnary (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9582:21)\n    at Object.parseExprOps (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9452:23)\n    at Object.parseMaybeConditional (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9425:23)\n    at Object.parseMaybeAssign (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9380:21)\n    at Object.parseExprListItem (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10718:18)\n    at Object.parseCallExpressionArguments (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9790:22)");
 
 /***/ }),
 

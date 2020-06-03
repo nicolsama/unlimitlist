@@ -9,7 +9,8 @@ export const selectAllNodes = (state = {}, action) => {
             ord,
             parent_node_id,
             child_ids, 
-            star
+            star,
+            updated_at
         } = node;
 
         let newNode = {
@@ -20,7 +21,8 @@ export const selectAllNodes = (state = {}, action) => {
                 ord: ord, 
                 parent_node_id: parent_node_id,
                 child_ids: child_ids, 
-                starred: !!star
+                starred: !!star,
+                updated_at
             }
         }
         allNodes = Object.assign({}, allNodes, newNode);
@@ -36,7 +38,8 @@ export const selectAllNodes = (state = {}, action) => {
             ord,
             parent_node_id,
             child_ids, 
-            star
+            star,
+            updated_at
         } = node;
 
         let newNode = {
@@ -47,7 +50,8 @@ export const selectAllNodes = (state = {}, action) => {
                 ord: ord,
                 parent_node_id: parent_node_id,
                 child_ids: child_ids,
-                starred: !!star
+                starred: !!star,
+                updated_at
             }
         }
         filteredNodes = Object.assign({}, filteredNodes, newNode);

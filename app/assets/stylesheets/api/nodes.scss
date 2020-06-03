@@ -121,15 +121,20 @@ path {
 }
 
 .tt-list {
-    border-top: lightgrey 1px solid;
+    border-bottom: lightgrey 1px solid;
     padding: 10px;
     z-index: 5;
     cursor: pointer;
+    color:grey
 }
 
-.tt-list {
-    color: grey; 
+.tt-list-bottom {
+    padding: 10px;
+    z-index: 5;
+    cursor: pointer;
+    color:grey;
 }
+
 
 .tt-list a {
     color: rgb(42, 49, 53);
@@ -143,7 +148,6 @@ path {
     filter: drop-shadow(8px 8px 10px rgb(203, 206, 208));
     box-sizing: border-box;
     width: 145px;
-    height: 300px;
 }
 
 .highlight {

@@ -90,7 +90,7 @@ class Nav extends React.Component {
 
   handleLogout() {
     this.setState({ settingsExpanded: false });
-    this.props.logout();
+    this.props.logout().then(() => (this.props.history.replace('/')));
   }
 
   handleSearchQuery(e) {
@@ -158,7 +158,7 @@ class Nav extends React.Component {
     if (this.state.settingsExpanded) {
       settingsDiv = (
         <div className="dd-wrapper settingsNav">
-          <ul className="dd-list">
+          {/* <ul className="dd-list">
             <li className="dd-list-item">Undo</li>
             <li className="dd-list-item">Redo</li>
             <li className="dd-list-item">Save</li>
@@ -172,7 +172,7 @@ class Nav extends React.Component {
             <li className="dd-list-item">Settings</li>
             <li className="dd-list-item">Help</li>
             <li className="dd-list-item">Report a Problem</li>
-          </ul>
+          </ul> */}
           <ul className="dd-list">
             <li className="dd-list-item">
               <a onClick={this.handleLogout}>Log Out</a>
