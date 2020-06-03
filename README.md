@@ -28,7 +28,7 @@ Unlimitlist provides the ability to make and edit lists, mark items as complete,
 
 * One of my biggest challenges was the search function. I wanted to create seamless a interface that utilized the same list component that I was using for listing all the items. 
 
-* First I created a search function for the node model. I realized that in the search I would not only want to show the matched nodes but also the nodes that were above them in the tree. To do this I created logic to grab the search matches as the first part of the results. Then I iterated through each match, grabbed it's ancestors nodes(a helper function that recursively grabbed ancestors), and added them to the results. Finally I return the result's unique values in case any nodes had ancestor nodes that overlapped. 
+* First I created a search function for the node model. I realized that in the search I would not only want to show the matched nodes but also the nodes that were above them in the tree. To do this I created logic to grab the search matches as the first part of the results. Then I iterated through each match, grabbed it's ancestors nodes (a helper function that recursively searches up the tree until the parent_id is nil), and added them to the results. Finally I return the result's unique values in case any nodes had ancestor nodes that overlapped. 
 
 * Here is a snippet of my search function on the node model: 
 
