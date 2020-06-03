@@ -10,9 +10,12 @@ class SplashForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillUnmount() {
+        this.props.clearErrors(); 
+    }
+
     handleSubmit(e) {
         e.preventDefault();
-        const user = Object.assign({}, this.state);
         this.props.processForm(this.state)
             .then(() => this.props.history.push("/"));
     }
@@ -50,10 +53,8 @@ class SplashForm extends React.Component {
                     </button>
                     <ul className="errorUl">{errors}</ul>
                 </form>
-
             )
     }
-
 }
 
 export default SplashForm;
