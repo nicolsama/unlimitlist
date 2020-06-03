@@ -38,7 +38,7 @@ Unlimitlist provides the ability to make and edit lists, mark items as complete,
 
 * In my component I was able to use my frontend routes, and the filtered nodes passed in to conditionally use the filtered nodes in the component, rather than all the nodes if the user was on the search route.
 
-Here is a snippet of my nodes controller index action: 
+* Here is a snippet of my nodes controller index action: 
 
 ![unlimitlist-app-image](app/assets/images/nodes-controller-screenshot.png)
 
