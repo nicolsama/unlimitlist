@@ -29,8 +29,25 @@ Unlimitlist provides the ability to make and edit lists, mark items as complete,
 ## Challenges 
 
 * One of my biggest challenges was the search function. I wanted to create seamless interface that utilized the same list component that I was using for the regular index for list items. 
-![unlimitlist-app-image](app/assets/images/nodes-controller-screenshot.png)
+
+* First I created a search function for the Node model. I passed in 2 arguments, the search query string and all of the current user's nodes. 
+
+* I realized that in the search I would not only want to show the matched nodes but also the nodes that were above them in the tree. To do this I created logic to grab the search matches as the first part of the results. Then I iterated through each match, grabbed it's ancestors nodes, and added them to the results. Finally I return the result's unique values in case any nodes had ancestor nodes that overlapped. 
+
+Here is a snippet of my search function on the node model: 
+
 ![unlimitlist-app-image](app/assets/images/node-model-screenshot.png)
+
+* Next, in my index action on the nodes controller, since I was using a frontend route to differentiate when the user had searched, I checked the params to see if a search had been made. 
+
+* If the search was true, I created an instance variable, filtered nodes that would pass along to the frontend, all the results of the search. 
+
+* In my component I was able to use my frontend routes, and the filtered nodes passed in to conditionally use the filtered nodes in the component, rather than all the nodes if the user was on the search route.
+
+Here is a snippet of my nodes controller index action: 
+
+![unlimitlist-app-image](app/assets/images/nodes-controller-screenshot.png)
+
 
 ## Future Features
 
