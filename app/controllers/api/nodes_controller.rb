@@ -83,13 +83,13 @@ class Api::NodesController < ApplicationController
         
         if @node && @node.update(new_node) && @node.save_tags
             
-
             @nodes = current_user.nodes.includes(:children)
+            @tags = current_user.tags.map { |tag| tag.tag }.uniq
+
             if node_params[:search] 
                 @filtered_nodes = Node.search(node_params[:search], @nodes)
                 @search = node_params[:search]
             else
-                @tags = current_user.tags.map { |tag| tag.tag }.uniq
                 @filtered_nodes = []
                 @search = false
             end

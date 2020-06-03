@@ -22,10 +22,14 @@ class Sidebar extends React.Component {
     if (this.props.tags) {
       tagLis = this.props.tags.map((text, i) => {
         let search = { tag: text };
+        
         return (
           <li
             key={i}
-            onClick={() => this.props.fetchAllNodes(search)}
+            onClick={() => {
+              this.props.fetchAllNodes(search);
+              this.props.history.replace(`/nodes/search/${text.slice(1)}`)
+            }}
             className="sidebarItem tagItem"
           >
             {text}
@@ -54,7 +58,7 @@ class Sidebar extends React.Component {
             <li className="section-li"><a>TAGS</a></li>
                 <ul>{tagLis}</ul>
             <li className="section-li">
-                <Link to="/" onClick={() => window.location.reload()}>HOME</Link>
+                <Link to="/" >HOME</Link>
             </li>
                 <ul>{SidebarLis}</ul>
         </ul>

@@ -546,7 +546,6 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     return _this;
   } //  componentDidMount() {
-  //    debugger; 
   //     if (!this.props.search) {
   //       this.props.fetchAllNodes();
   //     } else {
@@ -675,6 +674,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         sidebarDocked: this.props.sidebarDocked,
         transformArrow: this.state.transformArrow,
         fetchAllNodes: this.props.fetchAllNodes,
+        history: this.props.history,
         tags: this.props.tags
       });
       var currentSidebar = null;
@@ -849,7 +849,6 @@ var msp = function msp(_ref, ownProps) {
     currentNodeId = parseInt(path[path.length - 1]);
   }
 
-  debugger;
   return {
     search: search,
     currentNodeId: currentNodeId,
@@ -859,7 +858,8 @@ var msp = function msp(_ref, ownProps) {
     parentNodeIds: nodes.parentNodeIds,
     lastCreated: nodes.lastCreated,
     pagesPath: nodes.pagesPath,
-    tags: nodes.tags
+    tags: nodes.tags,
+    history: ownProps.history
   };
 };
 
@@ -954,7 +954,9 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             key: i,
             onClick: function onClick() {
-              return _this.props.fetchAllNodes(search);
+              _this.props.fetchAllNodes(search);
+
+              _this.props.history.replace("/nodes/search/".concat(text.slice(1)));
             },
             className: "sidebarItem tagItem"
           }, text);
@@ -978,10 +980,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "TAGS")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, tagLis), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "section-li"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-        to: "/",
-        onClick: function onClick() {
-          return window.location.reload();
-        }
+        to: "/"
       }, "HOME")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, SidebarLis)));
     }
   }]);

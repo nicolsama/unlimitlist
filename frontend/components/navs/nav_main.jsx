@@ -31,7 +31,6 @@ class Nav extends React.Component {
   }
 
 //  componentDidMount() {
-//    debugger; 
 //     if (!this.props.search) {
 //       this.props.fetchAllNodes();
 //     } else {
@@ -116,6 +115,7 @@ class Nav extends React.Component {
         sidebarDocked={this.props.sidebarDocked}
         transformArrow={this.state.transformArrow}
         fetchAllNodes={this.props.fetchAllNodes}
+        history={this.props.history}
         tags={this.props.tags}
       />
     );
@@ -312,7 +312,7 @@ const msp = ({ session, entities: { users, nodes } }, ownProps) => {
   } else {
     currentNodeId = parseInt(path[path.length - 1]);
   }
-  debugger; 
+
   return {
 
     search,
@@ -324,6 +324,7 @@ const msp = ({ session, entities: { users, nodes } }, ownProps) => {
     lastCreated: nodes.lastCreated,
     pagesPath: nodes.pagesPath,
     tags: nodes.tags,
+    history: ownProps.history,
   };
 };
 
