@@ -30,6 +30,9 @@ Unlimitlist provides the ability to make and edit lists, mark items as complete,
 
 * One of my biggest challenges was the search function. I wanted to create seamless interface that utilized the same list component that I was using for the regular index for list items. 
 
+![unlimitlist-app-image](app/assets/images/nodes-controller-screenshot.png)
+![unlimitlist-app-image](app/assets/images/node-model-screenshot.png)
+
 ## Future Features
 
 * Toggling hide/show of completed list items.
