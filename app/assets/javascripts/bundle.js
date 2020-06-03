@@ -648,10 +648,14 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleLogout",
     value: function handleLogout() {
+      var _this5 = this;
+
       this.setState({
         settingsExpanded: false
       });
-      this.props.logout();
+      this.props.logout().then(function () {
+        return _this5.props.history.replace('/');
+      });
     }
   }, {
     key: "handleSearchQuery",
@@ -671,7 +675,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var sbDiv = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar__WEBPACK_IMPORTED_MODULE_4__["default"], {
         key: "sidebar",
@@ -703,10 +707,10 @@ var Nav = /*#__PURE__*/function (_React$Component) {
       }
 
       var pagination = this.props.pagesPath ? this.props.pagesPath.map(function (id) {
-        var pagename = _this5.props.allNodes[id].body.length > 20 ? _this5.props.allNodes[id].body.slice(0, 18).concat("...") : _this5.props.allNodes[id].body;
+        var pagename = _this6.props.allNodes[id].body.length > 20 ? _this6.props.allNodes[id].body.slice(0, 18).concat("...") : _this6.props.allNodes[id].body;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "#/nodes/".concat(id),
-          pagesPath: _this5.props.pathsPath
+          pagesPath: _this6.props.pathsPath
         }, pagename));
       }) : null;
       var settingsDiv = null;

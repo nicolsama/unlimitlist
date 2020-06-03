@@ -90,7 +90,7 @@ class Nav extends React.Component {
 
   handleLogout() {
     this.setState({ settingsExpanded: false });
-    this.props.logout();
+    this.props.logout().then(() => (this.props.history.replace('/')));
   }
 
   handleSearchQuery(e) {
