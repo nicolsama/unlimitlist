@@ -718,30 +718,6 @@ var Nav = /*#__PURE__*/function (_React$Component) {
           className: "dd-list"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "dd-list-item"
-        }, "Undo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Redo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Save")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "dd-list"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Print"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Export All")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "dd-list"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Show Completed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Settings"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Help"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
-        }, "Report a Problem")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "dd-list"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "dd-list-item"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           onClick: this.handleLogout
         }, "Log Out")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -1192,6 +1168,9 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      debugger;
+      var date = this.props.node.updated_at.split("T")[0];
+      var time = this.props.node.updated_at.split("T")[1].slice(0, this.props.node.updated_at.split("T")[1].length - 5);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tt-wrapper"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1202,25 +1181,21 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
         onClick: this.handleComplete
       }, this.props.node.completed ? "Uncomplete" : "Complete")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "tt-list-item"
-      }, "Add Note"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         onClick: this.handleDuplicate
-      }, "Duplicate"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "tt-list"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
-      }, "Expand All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "tt-list-item"
-      }, "Collapse All")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "tt-list"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, "Duplicate")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "tt-list-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         onClick: this.handleDelete
-      }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, "Delete"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "tt-list-bottom"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "userEmail"
-      }, "Last changed at "))));
+      }, "Last changed at", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "datetime"
+      }, date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "datetime"
+      }, time)))));
     }
   }]);
 
@@ -2672,7 +2647,8 @@ var selectAllNodes = function selectAllNodes() {
         completed = node.completed,
         ord = node.ord,
         parent_node_id = node.parent_node_id,
-        child_ids = node.child_ids;
+        child_ids = node.child_ids,
+        updated_at = node.updated_at;
 
     var newNode = _defineProperty({}, id, {
       id: id,
@@ -2680,7 +2656,8 @@ var selectAllNodes = function selectAllNodes() {
       completed: completed,
       ord: ord,
       parent_node_id: parent_node_id,
-      child_ids: child_ids
+      child_ids: child_ids,
+      updated_at: updated_at
     });
 
     allNodes = Object.assign({}, allNodes, newNode);
@@ -2692,7 +2669,8 @@ var selectAllNodes = function selectAllNodes() {
         completed = node.completed,
         ord = node.ord,
         parent_node_id = node.parent_node_id,
-        child_ids = node.child_ids;
+        child_ids = node.child_ids,
+        updated_at = node.updated_at;
 
     var newNode = _defineProperty({}, id, {
       id: id,
@@ -2700,7 +2678,8 @@ var selectAllNodes = function selectAllNodes() {
       completed: completed,
       ord: ord,
       parent_node_id: parent_node_id,
-      child_ids: child_ids
+      child_ids: child_ids,
+      updated_at: updated_at
     });
 
     filteredNodes = Object.assign({}, filteredNodes, newNode);

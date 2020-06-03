@@ -40,9 +40,12 @@ class Tooltip extends React.Component {
     }
 
     render() {
-
+        debugger; 
+        let date = this.props.node.updated_at.split("T")[0]; 
+        let time = this.props.node.updated_at.split("T")[1].slice(0, this.props.node.updated_at.split("T")[1].length - 5);
         return(<div>
             <div className="tt-wrapper">
+                
                 <ul className="tt-list">
                     <li className="tt-list-item">
                         <a onClick={this.handleComplete}>
@@ -50,7 +53,7 @@ class Tooltip extends React.Component {
                         </a>
                     </li>
 
-                    <li className="tt-list-item">Add Note</li>
+                    {/* <li className="tt-list-item">Add Note</li> */}
 
                     <li className="tt-list-item">
                         <a onClick={this.handleDuplicate}>
@@ -58,25 +61,28 @@ class Tooltip extends React.Component {
                         </a>
                     </li>
 
+                    <li className="tt-list-item">
+                        <a onClick={this.handleDelete}>
+                            Delete
+                        </a>
+                    </li>
                 </ul>
 
-                <ul className="tt-list">
+                {/* <ul className="tt-list">
                     
                     <li className="tt-list-item">Expand All</li>
                     
                     <li className="tt-list-item">Collapse All</li>
 
-                </ul>
-                <ul className="tt-list">
+                </ul> */}
+                {/* <ul className="tt-list">
                     
-                    <li className="tt-list-item">
-                        <a onClick={this.handleDelete}>
-                            Delete
-                        </a></li>
-                </ul>
+                </ul> */}
                 
-                <ul>
-                    <span className='userEmail'>Last changed at {}</span>
+                <ul className="tt-list-bottom">
+                    <ul className='userEmail'>Last changed at 
+                    <li className="datetime">{date}</li>
+                    <li className="datetime">{time}</li></ul>
                 </ul>
             </div>
         </div>)
