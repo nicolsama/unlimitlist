@@ -2656,9 +2656,103 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   !*** ./frontend/selectors/nodes_selector.js ***!
   \**********************************************/
 /*! exports provided: selectAllNodes */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/nicolesamanich/Desktop/unlimitlist/frontend/selectors/nodes_selector.js: Unexpected token (12:0)\n\n\u001b[0m \u001b[90m 10 | \u001b[39m            parent_node_id\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 | \u001b[39m            child_ids\u001b[33m,\u001b[39m \u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 12 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 13 | \u001b[39m            star\u001b[0m\n\u001b[0m \u001b[90m 14 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 15 | \u001b[39m            updated_at\u001b[0m\n    at Object._raise (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:742:17)\n    at Object.raiseWithData (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:735:17)\n    at Object.raise (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:729:17)\n    at Object.unexpected (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:8757:16)\n    at Object.parseIdentifierName (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10748:18)\n    at Object.parseIdentifier (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10726:23)\n    at Object.parseMaybePrivateName (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10079:19)\n    at Object.parsePropertyName (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10550:126)\n    at Object.parseObjectMember (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10451:10)\n    at Object.parseObj (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10374:25)\n    at Object.parseBindingAtom (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9114:21)\n    at Object.parseVarId (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11761:20)\n    at Object.parseVar (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11737:12)\n    at Object.parseVarStatement (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11549:10)\n    at Object.parseStatementContent (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11148:21)\n    at Object.parseStatement (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11081:17)\n    at Object.parseBlockOrModuleBlockBody (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11656:25)\n    at Object.parseBlockBody (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11642:10)\n    at Object.parseBlock (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:11626:10)\n    at Object.parseFunctionBody (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10634:24)\n    at Object.parseArrowExpression (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10603:10)\n    at Object.parseExprAtom (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9900:18)\n    at Object.parseExprAtom (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:4614:20)\n    at Object.parseExprSubscripts (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9602:23)\n    at Object.parseMaybeUnary (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9582:21)\n    at Object.parseExprOps (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9452:23)\n    at Object.parseMaybeConditional (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9425:23)\n    at Object.parseMaybeAssign (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9380:21)\n    at Object.parseExprListItem (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:10718:18)\n    at Object.parseCallExpressionArguments (/Users/nicolesamanich/Desktop/unlimitlist/node_modules/@babel/parser/lib/index.js:9790:22)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectAllNodes", function() { return selectAllNodes; });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var selectAllNodes = function selectAllNodes() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  var allNodes = {};
+  action.allNodes.forEach(function (node) {
+    var id = node.id,
+        body = node.body,
+        completed = node.completed,
+        ord = node.ord,
+        parent_node_id = node.parent_node_id,
+        child_ids = node.child_ids,
+        star = node.star,
+        updated_at = node.updated_at;
+
+    var newNode = _defineProperty({}, id, {
+      id: id,
+      body: body,
+      completed: completed,
+      ord: ord,
+      parent_node_id: parent_node_id,
+      child_ids: child_ids,
+      starred: !!star,
+      updated_at: updated_at
+    });
+
+    allNodes = Object.assign({}, allNodes, newNode);
+  });
+  var filteredNodes = {};
+  action.filteredNodes.forEach(function (node) {
+    var id = node.id,
+        body = node.body,
+        completed = node.completed,
+        ord = node.ord,
+        parent_node_id = node.parent_node_id,
+        child_ids = node.child_ids,
+        star = node.star,
+        updated_at = node.updated_at;
+
+    var newNode = _defineProperty({}, id, {
+      id: id,
+      body: body,
+      completed: completed,
+      ord: ord,
+      parent_node_id: parent_node_id,
+      child_ids: child_ids,
+      starred: !!star,
+      updated_at: updated_at
+    });
+
+    filteredNodes = Object.assign({}, filteredNodes, newNode);
+  });
+  var parentNodeIds = [];
+  action.parentNodeIds.forEach(function (item) {
+    return parentNodeIds.push(item.id);
+  });
+  parentNodeIds = parentNodeIds.sort(function (a, b) {
+    return allNodes[a].ord - allNodes[b].ord;
+  });
+  var filteredParentNodeIds = [];
+  action.filteredParentNodeIds.forEach(function (item) {
+    return filteredParentNodeIds.push(item.id);
+  });
+  filteredParentNodeIds = filteredParentNodeIds.sort(function (a, b) {
+    return allNodes[a].ord - allNodes[b].ord;
+  });
+  var lastCreated = action.lastCreated;
+  var pagesPath = [];
+  action.pagesPath.forEach(function (id) {
+    return pagesPath.push(id);
+  });
+  return Object.assign({}, state, {
+    allNodes: allNodes
+  }, {
+    parentNodeIds: parentNodeIds
+  }, {
+    filteredNodes: filteredNodes
+  }, {
+    filteredParentNodeIds: filteredParentNodeIds
+  }, {
+    lastCreated: lastCreated
+  }, {
+    pagesPath: pagesPath
+  }, {
+    search: action.search
+  }, {
+    tags: action.tags
+  }, {
+    stars: action.stars
+  }); //return newState;
+};
 
 /***/ }),
 
