@@ -30,7 +30,7 @@ class Tooltip extends React.Component {
             body: this.state.body,
             completed: !this.state.completed,
             ord: this.state.ord,
-            parent_node_id: this.stateparent_node_id
+            parent_node_id: this.state.parent_node_id
         }
         this.props.updateNode(updatedNode);
     }

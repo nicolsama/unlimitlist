@@ -1150,7 +1150,7 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
         body: this.state.body,
         completed: !this.state.completed,
         ord: this.state.ord,
-        parent_node_id: this.stateparent_node_id
+        parent_node_id: this.state.parent_node_id
       };
       this.props.updateNode(updatedNode);
     }
@@ -1584,8 +1584,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       showChildren: _this.props.search,
       show_tooltip: false,
       fillColor: false,
-      searchToggled: false,
-      showCompleted: _this.props.showCompleted
+      searchToggled: false
     };
     _this.handleKeyPress = _this.handleKeyPress.bind(_assertThisInitialized(_this));
     _this.showChildren = _this.showChildren.bind(_assertThisInitialized(_this));
@@ -1706,7 +1705,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       });
       var nestedNodes = childNodeIds.map(function (id) {
         var node = allNodes[id];
-        return _this4.state.showCompleted || !_this4.state.showCompleted && node.completed === false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, {
+        return _this4.props.showCompleted || !_this4.props.showCompleted && node.completed === false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, {
           key: id,
           node: node,
           allNodes: allNodes,
@@ -1718,6 +1717,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           lastCreated: _this4.props.lastCreated,
           currentNodeId: _this4.props.currentNodeId,
           search: _this4.props.search,
+          showCompleted: _this4.props.showCompleted,
           type: "child"
         }) : null;
       });

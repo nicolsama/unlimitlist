@@ -14,7 +14,6 @@ class NodeListItem extends React.Component {
       show_tooltip: false,
       fillColor: false,
       searchToggled: false,
-      showCompleted: this.props.showCompleted
 
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -122,7 +121,7 @@ class NodeListItem extends React.Component {
     const nestedNodes = childNodeIds.map((id) => {
       const node = allNodes[id];
 
-      return ((this.state.showCompleted) || (!this.state.showCompleted && node.completed === false))
+      return ((this.props.showCompleted) || (!this.props.showCompleted && node.completed === false))
       
       ? ( <NodeListItem
 
@@ -137,6 +136,7 @@ class NodeListItem extends React.Component {
           lastCreated={this.props.lastCreated}
           currentNodeId={this.props.currentNodeId}
           search={this.props.search}
+          showCompleted={this.props.showCompleted}
           type="child"
         /> )
         : null; 
