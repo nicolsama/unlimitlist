@@ -5,6 +5,9 @@ import { withRouter } from "react-router-dom";
 class NodeList extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showCompleted: false, 
+    }
     this.handleClick = this.handleClick.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -82,8 +85,11 @@ class NodeList extends React.Component {
     const nodeLis = parentNodeIds.map((id) => {
       let node = this.props.allNodes[id];
 
-      return (
-        <NodeListItem
+      
+      return ((this.state.showCompleted) || (!this.state.showCompleted && node.completed === false)) 
+      
+      ? ( <NodeListItem
+
           key={node.id}
           node={node}
           allNodes={this.props.allNodes}
@@ -96,8 +102,10 @@ class NodeList extends React.Component {
           fetchAllNodes={this.props.fetchAllNodes}
           currentNodeId={this.props.currentNodeId}
           search={this.props.search}
-        />
-      );
+          showCompleted={this.state.showCompleted}
+        /> )
+
+        : null;
     });
 
     let createStar;
@@ -123,7 +131,20 @@ class NodeList extends React.Component {
 
       return (
         <>
+          <div className="toggle-container">
+            <label className="show-completed-label">Show Completed</label>
+            <label className="switch">
+              <input 
+                type="checkbox" 
+                onChange={() => (
+                  this.setState({showCompleted: !this.state.showCompleted})
+                )}/>
+                <span className="slider round"></span>
+            </label>
+          </div>
+
             {createStar}
+
           <div className="NodeListDiv">
             <ul className="NodeListUl">
               {this.props.allNodes[this.props.currentNodeId] ? (

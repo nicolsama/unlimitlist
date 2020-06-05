@@ -243,15 +243,6 @@ class Nav extends React.Component {
             )}
 
             <div className="navBarLeft">
-              <div className="toggle-container">
-                <div className="show">
-                  <input type="checkbox" id="switch" className="checkbox" />
-                  <label HTMLfor="switch" className="toggle"></label>
-                  <label>
-                    <p>Show Completed</p>
-                  </label>
-                </div>
-              </div>
 
               <ReactCSSTransitionGroup
                 transitionName="search"

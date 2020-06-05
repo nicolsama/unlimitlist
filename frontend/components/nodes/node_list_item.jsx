@@ -14,6 +14,8 @@ class NodeListItem extends React.Component {
       show_tooltip: false,
       fillColor: false,
       searchToggled: false,
+      showCompleted: this.props.showCompleted
+
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.showChildren = this.showChildren.bind(this);
@@ -120,8 +122,10 @@ class NodeListItem extends React.Component {
     const nestedNodes = childNodeIds.map((id) => {
       const node = allNodes[id];
 
-      return (
-        <NodeListItem
+      return ((this.state.showCompleted) || (!this.state.showCompleted && node.completed === false))
+      
+      ? ( <NodeListItem
+
           key={id}
           node={node}
           allNodes={allNodes}
@@ -134,8 +138,8 @@ class NodeListItem extends React.Component {
           currentNodeId={this.props.currentNodeId}
           search={this.props.search}
           type="child"
-        />
-      );
+        /> )
+        : null; 
     });
 
     const tooltip = this.state.show_tooltip ? (

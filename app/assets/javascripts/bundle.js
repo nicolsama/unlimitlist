@@ -771,18 +771,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
           to: "/"
         }, "HOME")), pagination) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "navBarLeft"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "toggle-container"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "show"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "checkbox",
-          id: "switch",
-          className: "checkbox"
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-          HTMLfor: "switch",
-          className: "toggle"
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Show Completed")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_addons_css_transition_group__WEBPACK_IMPORTED_MODULE_5___default.a, {
           transitionName: "search",
           transitionEnterTimeout: 600,
           transitionLeaveTimeout: 600
@@ -1261,6 +1250,9 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, NodeList);
 
     _this = _super.call(this, props);
+    _this.state = {
+      showCompleted: false
+    };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     _this.handleBlur = _this.handleBlur.bind(_assertThisInitialized(_this));
     _this.handleKeyDown = _this.handleKeyDown.bind(_assertThisInitialized(_this));
@@ -1335,7 +1327,7 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
         var parentNodeIds = this.props.search ? this.props.filteredParentNodeIds : this.props.parentNodeIds;
         var nodeLis = parentNodeIds.map(function (id) {
           var node = _this2.props.allNodes[id];
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          return _this2.state.showCompleted || !_this2.state.showCompleted && node.completed === false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_node_list_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: node.id,
             node: node,
             allNodes: _this2.props.allNodes,
@@ -1347,8 +1339,9 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
             lastCreated: _this2.props.lastCreated,
             fetchAllNodes: _this2.props.fetchAllNodes,
             currentNodeId: _this2.props.currentNodeId,
-            search: _this2.props.search
-          });
+            search: _this2.props.search,
+            showCompleted: _this2.state.showCompleted
+          }) : null;
         });
         var createStar;
 
@@ -1371,7 +1364,22 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
           }))));
         }
 
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, createStar, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "toggle-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          className: "show-completed-label"
+        }, "Show Completed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          className: "switch"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "checkbox",
+          onChange: function onChange() {
+            return _this2.setState({
+              showCompleted: !_this2.state.showCompleted
+            });
+          }
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "slider round"
+        }))), createStar, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "NodeListDiv"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "NodeListUl"
@@ -1576,7 +1584,8 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       showChildren: _this.props.search,
       show_tooltip: false,
       fillColor: false,
-      searchToggled: false
+      searchToggled: false,
+      showCompleted: _this.props.showCompleted
     };
     _this.handleKeyPress = _this.handleKeyPress.bind(_assertThisInitialized(_this));
     _this.showChildren = _this.showChildren.bind(_assertThisInitialized(_this));
@@ -1697,7 +1706,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       });
       var nestedNodes = childNodeIds.map(function (id) {
         var node = allNodes[id];
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, {
+        return _this4.state.showCompleted || !_this4.state.showCompleted && node.completed === false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeListItem, {
           key: id,
           node: node,
           allNodes: allNodes,
@@ -1710,7 +1719,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           currentNodeId: _this4.props.currentNodeId,
           search: _this4.props.search,
           type: "child"
-        });
+        }) : null;
       });
       var tooltip = this.state.show_tooltip ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tooltip-arrow"
