@@ -47,7 +47,6 @@ export const createNode = node => dispatch => (
 ); 
 
 export const updateNode = node => dispatch => {
-    debugger; 
     return (NodeApiUtil.updateNode(node)
         .then(nodes => dispatch(receiveNodes(nodes)))
     )}; 

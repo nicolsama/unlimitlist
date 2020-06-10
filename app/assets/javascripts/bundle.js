@@ -161,7 +161,6 @@ var createNode = function createNode(node) {
 };
 var updateNode = function updateNode(node) {
   return function (dispatch) {
-    debugger;
     return _util_node_api_util__WEBPACK_IMPORTED_MODULE_0__["updateNode"](node).then(function (nodes) {
       return dispatch(receiveNodes(nodes));
     });
@@ -1162,7 +1161,6 @@ var Tooltip = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       var date = this.props.node.updated_at.split("T")[0];
       var time = this.props.node.updated_at.split("T")[1].slice(0, this.props.node.updated_at.split("T")[1].length - 5);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1343,23 +1341,21 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
             showCompleted: _this2.state.showCompleted
           }) : null;
         });
-        var createStar;
+        var createStar; // debugger;
 
         if (this.props.allNodes[this.props.currentNodeId]) {
-          var fill = this.props.allNodes[this.props.currentNodeId].starred ? "yellow" : "none";
+          var fillStatus = this.props.allNodes[this.props.currentNodeId].starred ? "filled" : null;
           createStar = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "starBar"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "starButton" // onClick={}
+            className: "starButton ".concat(fillStatus) // onClick={}
 
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
             width: "20",
             height: "20",
-            viewBox: "0 0 20 20",
-            fill: fill
+            viewBox: "0 0 20 20"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
             stroke: "grey",
-            fill: fill,
             d: "M9.278,3.513 C9.568,2.906 10.432,2.906 10.722,3.513 L12.261,6.739 C12.378,6.983 12.61,7.152 12.879,7.187 L16.422,7.654 C17.089,7.742 17.356,8.564 16.868,9.028 L14.276,11.488 C14.08,11.675 13.991,11.948 14.04,12.214 L14.691,15.728 C14.813,16.39 14.114,16.898 13.523,16.577 L10.382,14.872 C10.144,14.743 9.856,14.743 9.618,14.872 L6.477,16.577 C5.886,16.898 5.187,16.39 5.309,15.728 L5.96,12.214 C6.009,11.948 5.92,11.675 5.724,11.488 L3.132,9.028 C2.644,8.564 2.911,7.742 3.578,7.654 L7.121,7.187 C7.39,7.152 7.622,6.983 7.739,6.739 L9.278,3.513 Z"
           }))));
         }

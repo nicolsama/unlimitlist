@@ -40,7 +40,6 @@ class Tooltip extends React.Component {
     }
 
     render() {
-        debugger; 
         let date = this.props.node.updated_at.split("T")[0]; 
         let time = this.props.node.updated_at.split("T")[1].slice(0, this.props.node.updated_at.split("T")[1].length - 5);
         return(<div>
