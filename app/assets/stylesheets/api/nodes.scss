@@ -155,9 +155,10 @@ path {
 }
 
 .starBar {
+    padding-top: 20px;
+    padding-right: 20px;
     height: 30px;
-    border: 1px solid red; 
-    width: 200px; 
+    width: fit-content; 
     float: right;
     display: flex;
     flex-direction: row;
