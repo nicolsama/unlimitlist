@@ -11,6 +11,7 @@ class NodeList extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.toggleStar = this.toggleStar.bind(this);
   }
 
   componentDidMount() {
@@ -57,6 +58,17 @@ class NodeList extends React.Component {
     if (e.key === "Enter" && this.props.allNodes[this.props.currentNodeId]) {
       e.preventDefault();
       this.updateNode(e);
+    }
+  }
+
+  toggleStar() {
+    if (this.props.allNodes[this.props.currentNodeId].starred) {
+      this.props.deleteStar(this.props.currentNodeId)
+        .then(this.props.history.push(`${this.props.currentNodeId}`))
+    } else {
+      let star = {node_id: this.props.currentNodeId };
+      this.props.createStar(star)
+        .then(this.props.history.push(`${this.props.currentNodeId}`))
     }
   }
 
@@ -116,7 +128,7 @@ class NodeList extends React.Component {
       createStar = (<div className='starBar'>
         <div 
           className={`starButton ${fillStatus}`}
-          // onClick={}
+          onClick={this.toggleStar}
           >
             <svg width="20" height="20" viewBox="0 0 20 20">
               <path

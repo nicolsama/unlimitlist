@@ -7,6 +7,7 @@ import {
   updateNode,
   deleteNode,
 } from "../../actions/node_actions";
+import { createStar, deleteStar } from '../../actions/star_actions';
 
 const mapStateToProps = (state, ownProps) => {
   let currentNodeId = Number(ownProps.match.params.id);
@@ -26,6 +27,8 @@ const mapDispatchToProps = (dispatch) => ({
   createNode: (node) => dispatch(createNode(node)),
   updateNode: (node) => dispatch(updateNode(node)),
   deleteNode: (nodeId) => dispatch(deleteNode(nodeId)),
+  createStar: (star) => dispatch(createStar(star)), 
+  deleteStar: (starId) => dispatch(deleteStar(starId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NodeListFocus);

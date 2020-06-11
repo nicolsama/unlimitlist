@@ -4,7 +4,7 @@ export const RECEIVE_NODES = 'RECEIVE_NODES';
 export const RECEIVE_NODE = 'RECEIVE_NODE';
 export const REMOVE_NODE = 'REMOVE_NODE';
 
-const receiveNodes = (nodes) => {
+export const receiveNodes = (nodes) => {
 return (    
 {
     type: RECEIVE_NODES, 

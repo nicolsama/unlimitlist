@@ -90,7 +90,7 @@
 /*!******************************************!*\
   !*** ./frontend/actions/node_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_NODES, RECEIVE_NODE, REMOVE_NODE, fetchAllNodes, fetchNode, createNode, updateNode, deleteNode */
+/*! exports provided: RECEIVE_NODES, RECEIVE_NODE, REMOVE_NODE, receiveNodes, fetchAllNodes, fetchNode, createNode, updateNode, deleteNode */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98,6 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NODES", function() { return RECEIVE_NODES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NODE", function() { return RECEIVE_NODE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_NODE", function() { return REMOVE_NODE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNodes", function() { return receiveNodes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllNodes", function() { return fetchAllNodes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNode", function() { return fetchNode; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNode", function() { return createNode; });
@@ -108,7 +109,6 @@ __webpack_require__.r(__webpack_exports__);
 var RECEIVE_NODES = 'RECEIVE_NODES';
 var RECEIVE_NODE = 'RECEIVE_NODE';
 var REMOVE_NODE = 'REMOVE_NODE';
-
 var receiveNodes = function receiveNodes(nodes) {
   return {
     type: RECEIVE_NODES,
@@ -250,6 +250,38 @@ var signup = function signup(user) {
       return dispatch(receiveCurrentUser(user));
     }, function (e) {
       return dispatch(receiveErrors(e));
+    });
+  };
+};
+
+/***/ }),
+
+/***/ "./frontend/actions/star_actions.js":
+/*!******************************************!*\
+  !*** ./frontend/actions/star_actions.js ***!
+  \******************************************/
+/*! exports provided: createStar, deleteStar */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createStar", function() { return createStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteStar", function() { return deleteStar; });
+/* harmony import */ var _util_star_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/star_api_util */ "./frontend/util/star_api_util.js");
+/* harmony import */ var _actions_node_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/node_actions */ "./frontend/actions/node_actions.js");
+
+
+var createStar = function createStar(star) {
+  return function (dispatch) {
+    return _util_star_api_util__WEBPACK_IMPORTED_MODULE_0__["createStar"](star).then(function (nodes) {
+      return dispatch(Object(_actions_node_actions__WEBPACK_IMPORTED_MODULE_1__["receiveNodes"])(nodes));
+    });
+  };
+};
+var deleteStar = function deleteStar(starId) {
+  return function (dispatch) {
+    return _util_star_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteStar"](starId).then(function (nodes) {
+      return dispatch(Object(_actions_node_actions__WEBPACK_IMPORTED_MODULE_1__["receiveNodes"])(nodes));
     });
   };
 };
@@ -1254,6 +1286,7 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     _this.handleBlur = _this.handleBlur.bind(_assertThisInitialized(_this));
     _this.handleKeyDown = _this.handleKeyDown.bind(_assertThisInitialized(_this));
+    _this.toggleStar = _this.toggleStar.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1306,6 +1339,18 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "toggleStar",
+    value: function toggleStar() {
+      if (this.props.allNodes[this.props.currentNodeId].starred) {
+        this.props.deleteStar(this.props.currentNodeId).then(this.props.history.push("".concat(this.props.currentNodeId)));
+      } else {
+        var star = {
+          node_id: this.props.currentNodeId
+        };
+        this.props.createStar(star).then(this.props.history.push("".concat(this.props.currentNodeId)));
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -1348,8 +1393,8 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
           createStar = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "starBar"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "starButton ".concat(fillStatus) // onClick={}
-
+            className: "starButton ".concat(fillStatus),
+            onClick: this.toggleStar
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
             width: "20",
             height: "20",
@@ -1478,6 +1523,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _node_list_focus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_list_focus */ "./frontend/components/nodes/node_list_focus.jsx");
 /* harmony import */ var _actions_node_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/node_actions */ "./frontend/actions/node_actions.js");
+/* harmony import */ var _actions_star_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/star_actions */ "./frontend/actions/star_actions.js");
+
 
 
 
@@ -1509,6 +1556,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     deleteNode: function deleteNode(nodeId) {
       return dispatch(Object(_actions_node_actions__WEBPACK_IMPORTED_MODULE_2__["deleteNode"])(nodeId));
+    },
+    createStar: function createStar(star) {
+      return dispatch(Object(_actions_star_actions__WEBPACK_IMPORTED_MODULE_3__["createStar"])(star));
+    },
+    deleteStar: function deleteStar(starId) {
+      return dispatch(Object(_actions_star_actions__WEBPACK_IMPORTED_MODULE_3__["deleteStar"])(starId));
     }
   };
 };
@@ -3013,6 +3066,35 @@ var login = function login(user) {
 var logout = function logout() {
   return $.ajax({
     url: '/api/session',
+    method: 'DELETE'
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/star_api_util.js":
+/*!****************************************!*\
+  !*** ./frontend/util/star_api_util.js ***!
+  \****************************************/
+/*! exports provided: createStar, deleteStar */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createStar", function() { return createStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteStar", function() { return deleteStar; });
+var createStar = function createStar(star) {
+  return $.ajax({
+    url: "/api/nodes/".concat(star.node_id, "/stars"),
+    method: 'POST',
+    data: {
+      star: star
+    }
+  });
+};
+var deleteStar = function deleteStar(nodeId) {
+  return $.ajax({
+    url: "/api/stars/".concat(nodeId),
     method: 'DELETE'
   });
 };
