@@ -117,6 +117,7 @@ class Nav extends React.Component {
         fetchAllNodes={this.props.fetchAllNodes}
         history={this.props.history}
         tags={this.props.tags}
+        stars={this.props.stars}
       />
     );
 
@@ -315,6 +316,7 @@ const msp = ({ session, entities: { users, nodes } }, ownProps) => {
     lastCreated: nodes.lastCreated,
     pagesPath: nodes.pagesPath,
     tags: nodes.tags,
+    stars: nodes.stars,
     history: ownProps.history,
   };
 };

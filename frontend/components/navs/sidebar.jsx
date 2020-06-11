@@ -18,6 +18,24 @@ class Sidebar extends React.Component {
       );
     });
 
+    let starLis; 
+
+    if (this.props.stars) {
+      starLis = this.props.stars.map((star, i) => {
+        let node_id = Object.values(star)[0].node_id;
+        let node_body = this.props.allNodes[node_id].body
+        debugger;
+        return <li
+          key={i}
+          className="sidebarItem tagItem">
+            <Link to={`/nodes/${node_id}`}>
+              {node_body}
+            </Link>
+          </li>
+      })
+
+    }
+
     let tagLis;
     if (this.props.tags) {
       tagLis = this.props.tags.map((text, i) => {
@@ -54,7 +72,7 @@ class Sidebar extends React.Component {
 
         <ul className="SidebarUl">
             <li className="section-li"><a>STARRED</a></li>
-                <ul></ul>
+                <ul>{starLis}</ul>
             <li className="section-li"><a>TAGS</a></li>
                 <ul>{tagLis}</ul>
             <li className="section-li">

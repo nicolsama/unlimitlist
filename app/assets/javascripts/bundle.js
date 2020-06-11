@@ -719,7 +719,8 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         transformArrow: this.state.transformArrow,
         fetchAllNodes: this.props.fetchAllNodes,
         history: this.props.history,
-        tags: this.props.tags
+        tags: this.props.tags,
+        stars: this.props.stars
       });
       var currentSidebar = null;
       var sidebarClass = null;
@@ -868,6 +869,7 @@ var msp = function msp(_ref, ownProps) {
     lastCreated: nodes.lastCreated,
     pagesPath: nodes.pagesPath,
     tags: nodes.tags,
+    stars: nodes.stars,
     history: ownProps.history
   };
 };
@@ -953,6 +955,22 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
           allNodes: _this.props.allNodes
         });
       });
+      var starLis;
+
+      if (this.props.stars) {
+        starLis = this.props.stars.map(function (star, i) {
+          var node_id = Object.values(star)[0].node_id;
+          var node_body = _this.props.allNodes[node_id].body;
+          debugger;
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: i,
+            className: "sidebarItem tagItem"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+            to: "/nodes/".concat(node_id)
+          }, node_body));
+        });
+      }
+
       var tagLis;
 
       if (this.props.tags) {
@@ -984,7 +1002,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
         className: "SidebarUl"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "section-li"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "STARRED")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "STARRED")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, starLis), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "section-li"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "TAGS")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, tagLis), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "section-li"
@@ -2772,6 +2790,17 @@ var selectAllNodes = function selectAllNodes() {
 
     filteredNodes = Object.assign({}, filteredNodes, newNode);
   });
+  var stars = [];
+  action.stars.forEach(function (star) {
+    var id = star.id,
+        node_id = star.node_id;
+
+    var newStar = _defineProperty({}, id, {
+      node_id: node_id
+    });
+
+    stars.push(newStar);
+  });
   var parentNodeIds = [];
   action.parentNodeIds.forEach(function (item) {
     return parentNodeIds.push(item.id);
@@ -2808,7 +2837,7 @@ var selectAllNodes = function selectAllNodes() {
   }, {
     tags: action.tags
   }, {
-    stars: action.stars
+    stars: stars
   }); //return newState;
 };
 

@@ -58,6 +58,21 @@ export const selectAllNodes = (state = {}, action) => {
     });
 
 
+    let stars = []; 
+    action.stars.forEach(star => {
+        const {
+            id, 
+            node_id
+        } = star;
+
+        let newStar = {
+            [id]: {
+                node_id
+            }
+        }
+        stars.push(newStar);
+    });
+
     let parentNodeIds = [];
         action.parentNodeIds.forEach( item => parentNodeIds.push(item.id)); 
         parentNodeIds = parentNodeIds.sort((a,b) => allNodes[a].ord - allNodes[b].ord);
@@ -88,7 +103,7 @@ export const selectAllNodes = (state = {}, action) => {
     }, {
         tags: action.tags
     }, {
-        stars: action.stars
+        stars
     });
     //return newState;
 };
