@@ -122,7 +122,6 @@ class NodeList extends React.Component {
 
     let createStar;
 
-    // debugger;
     if (this.props.allNodes[this.props.currentNodeId]) {
       let fillStatus = (this.props.allNodes[this.props.currentNodeId].starred) ? "filled" : null ;
       createStar = (<div className='starBar'>

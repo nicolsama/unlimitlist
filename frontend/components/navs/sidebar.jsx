@@ -23,7 +23,6 @@ class Sidebar extends React.Component {
       starLis = this.props.stars.map((star, i) => {
         let node_id = Object.values(star)[0].node_id;
         let node_body = this.props.allNodes[node_id].body;
-        debugger;
         return (
           <li key={i} className="sidebarItem tagItem">
             <Link to={`/nodes/${node_id}`}>{node_body}</Link>

@@ -965,7 +965,6 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
         starLis = this.props.stars.map(function (star, i) {
           var node_id = Object.values(star)[0].node_id;
           var node_body = _this.props.allNodes[node_id].body;
-          debugger;
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             key: i,
             className: "sidebarItem tagItem"
@@ -1408,7 +1407,7 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
             showCompleted: _this2.state.showCompleted
           }) : null;
         });
-        var createStar; // debugger;
+        var createStar;
 
         if (this.props.allNodes[this.props.currentNodeId]) {
           var fillStatus = this.props.allNodes[this.props.currentNodeId].starred ? "filled" : null;
