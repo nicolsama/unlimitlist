@@ -6,7 +6,6 @@ import Sidebar from "./sidebar";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { Link } from "react-router-dom";
 
-
 class Nav extends React.Component {
   constructor(props) {
     super(props);
@@ -28,16 +27,17 @@ class Nav extends React.Component {
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
     this.rotateArrow = this.rotateArrow.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.searchRef = React.createRef();
   }
 
-//  componentDidMount() {
-//     if (!this.props.search) {
-//       this.props.fetchAllNodes();
-//     } else {
-//       let search = { tag: this.props.search };
-//       this.props.fetchAllNodes(search);
-//     }
-//   }
+  //  componentDidMount() {
+  //     if (!this.props.search) {
+  //       this.props.fetchAllNodes();
+  //     } else {
+  //       let search = { tag: this.props.search };
+  //       this.props.fetchAllNodes(search);
+  //     }
+  //   }
 
   handleGearClick(e) {
     this.setState({ settingsExpanded: !this.state.settingsExpanded });
@@ -80,23 +80,28 @@ class Nav extends React.Component {
 
   handleSearchClick() {
     !this.state.showSearchBar
-      ?  this.setState({ showSearchBar: !this.state.showSearchBar }): null; 
+      ? this.setState({ showSearchBar: !this.state.showSearchBar }, () =>
+          setTimeout(() => this.searchRef.current.focus(), 600)
+        )
+      : null;
 
     this.state.showSearchBar
       ? setTimeout(
           () => this.setState({ showSearchBar: !this.state.showSearchBar }),
-          500 ): null; 
+          1000
+        )
+      : null;
   }
 
   handleLogout() {
     this.setState({ settingsExpanded: false });
-    this.props.logout().then(() => (this.props.history.replace('/')));
+    this.props.logout().then(() => this.props.history.replace("/"));
   }
 
   handleSearchQuery(e) {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
-      this.props.history.push(`/nodes/search/${e.currentTarget.value}`)
+      this.props.history.push(`/nodes/search/${e.currentTarget.value}`);
     }
   }
 
@@ -154,7 +159,6 @@ class Nav extends React.Component {
         })
       : null;
 
-
     let settingsDiv = null;
     if (this.state.settingsExpanded) {
       settingsDiv = (
@@ -193,8 +197,9 @@ class Nav extends React.Component {
           type="text"
           className="searchInput"
           placeholder="Search"
-          onMouseOut={this.handleSearchClick}
+          onBlur={this.handleSearchClick}
           onKeyDown={this.handleSearchQuery}
+          ref={this.searchRef}
         ></input>
       );
     }
@@ -235,7 +240,7 @@ class Nav extends React.Component {
             {this.props.currentNodeId ? (
               <div className="pagination">
                 <span>
-                  <Link to="/" >HOME</Link>
+                  <Link to="/">HOME</Link>
                 </span>
                 {pagination}
               </div>
@@ -244,7 +249,6 @@ class Nav extends React.Component {
             )}
 
             <div className="navBarLeft">
-
               <ReactCSSTransitionGroup
                 transitionName="search"
                 transitionEnterTimeout={600}
@@ -297,16 +301,15 @@ class Nav extends React.Component {
 const msp = ({ session, entities: { users, nodes } }, ownProps) => {
   let path = ownProps.history.location.pathname.split("/");
 
-  let currentNodeId = null; 
-  let search = false; 
+  let currentNodeId = null;
+  let search = false;
   if (path[path.length - 2] === "search") {
-    search = path[path.length - 1]
+    search = path[path.length - 1];
   } else {
     currentNodeId = parseInt(path[path.length - 1]);
   }
 
   return {
-
     search,
     currentNodeId,
     currentUser: users[session.id],

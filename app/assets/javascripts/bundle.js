@@ -584,6 +584,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     _this.handleSearchQuery = _this.handleSearchQuery.bind(_assertThisInitialized(_this));
     _this.rotateArrow = _this.rotateArrow.bind(_assertThisInitialized(_this));
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
+    _this.searchRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
   } //  componentDidMount() {
   //     if (!this.props.search) {
@@ -670,12 +671,16 @@ var Nav = /*#__PURE__*/function (_React$Component) {
 
       !this.state.showSearchBar ? this.setState({
         showSearchBar: !this.state.showSearchBar
+      }, function () {
+        return setTimeout(function () {
+          return _this4.searchRef.current.focus();
+        }, 600);
       }) : null;
       this.state.showSearchBar ? setTimeout(function () {
         return _this4.setState({
           showSearchBar: !_this4.state.showSearchBar
         });
-      }, 500) : null;
+      }, 1000) : null;
     }
   }, {
     key: "handleLogout",
@@ -686,13 +691,13 @@ var Nav = /*#__PURE__*/function (_React$Component) {
         settingsExpanded: false
       });
       this.props.logout().then(function () {
-        return _this5.props.history.replace('/');
+        return _this5.props.history.replace("/");
       });
     }
   }, {
     key: "handleSearchQuery",
     value: function handleSearchQuery(e) {
-      if (e.key === 'Enter') {
+      if (e.key === "Enter") {
         e.preventDefault();
         this.props.history.push("/nodes/search/".concat(e.currentTarget.value));
       }
@@ -769,8 +774,9 @@ var Nav = /*#__PURE__*/function (_React$Component) {
           type: "text",
           className: "searchInput",
           placeholder: "Search",
-          onMouseOut: this.handleSearchClick,
-          onKeyDown: this.handleSearchQuery
+          onBlur: this.handleSearchClick,
+          onKeyDown: this.handleSearchQuery,
+          ref: this.searchRef
         });
       }
 
@@ -900,9 +906,8 @@ var mdp = function mdp(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nodes_node_list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../nodes/node_list */ "./frontend/components/nodes/node_list.jsx");
-/* harmony import */ var _sidebar_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sidebar_item */ "./frontend/components/navs/sidebar_item.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _sidebar_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar_item */ "./frontend/components/navs/sidebar_item.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -929,7 +934,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
 var Sidebar = /*#__PURE__*/function (_React$Component) {
   _inherits(Sidebar, _React$Component);
 
@@ -949,7 +953,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
       if (!this.props.parentNodeIds) return null;
       var SidebarLis = this.props.parentNodeIds.map(function (id) {
         var node = _this.props.allNodes[id];
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidebar_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: id,
           node: node,
           allNodes: _this.props.allNodes
@@ -965,7 +969,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             key: i,
             className: "sidebarItem tagItem"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
             to: "/nodes/".concat(node_id)
           }, node_body));
         });
@@ -1006,7 +1010,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
         className: "section-li"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "TAGS")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, tagLis), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "section-li"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/"
       }, "HOME")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, SidebarLis)));
     }

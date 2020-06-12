@@ -1,5 +1,4 @@
 import React from "react";
-import NodeList from "../nodes/node_list";
 import SidebarItem from "./sidebar_item";
 import { Link } from "react-router-dom";
 
@@ -18,35 +17,32 @@ class Sidebar extends React.Component {
       );
     });
 
-    let starLis; 
+    let starLis;
 
     if (this.props.stars) {
       starLis = this.props.stars.map((star, i) => {
         let node_id = Object.values(star)[0].node_id;
-        let node_body = this.props.allNodes[node_id].body
+        let node_body = this.props.allNodes[node_id].body;
         debugger;
-        return <li
-          key={i}
-          className="sidebarItem tagItem">
-            <Link to={`/nodes/${node_id}`}>
-              {node_body}
-            </Link>
+        return (
+          <li key={i} className="sidebarItem tagItem">
+            <Link to={`/nodes/${node_id}`}>{node_body}</Link>
           </li>
-      })
-
+        );
+      });
     }
 
     let tagLis;
     if (this.props.tags) {
       tagLis = this.props.tags.map((text, i) => {
         let search = { tag: text };
-        
+
         return (
           <li
             key={i}
             onClick={() => {
               this.props.fetchAllNodes(search);
-              this.props.history.replace(`/nodes/search/${text.slice(1)}`)
+              this.props.history.replace(`/nodes/search/${text.slice(1)}`);
             }}
             className="sidebarItem tagItem"
           >
@@ -71,14 +67,18 @@ class Sidebar extends React.Component {
         </svg>
 
         <ul className="SidebarUl">
-            <li className="section-li"><a>STARRED</a></li>
-                <ul>{starLis}</ul>
-            <li className="section-li"><a>TAGS</a></li>
-                <ul>{tagLis}</ul>
-            <li className="section-li">
-                <Link to="/" >HOME</Link>
-            </li>
-                <ul>{SidebarLis}</ul>
+          <li className="section-li">
+            <a>STARRED</a>
+          </li>
+          <ul>{starLis}</ul>
+          <li className="section-li">
+            <a>TAGS</a>
+          </li>
+          <ul>{tagLis}</ul>
+          <li className="section-li">
+            <Link to="/">HOME</Link>
+          </li>
+          <ul>{SidebarLis}</ul>
         </ul>
       </>
     );
