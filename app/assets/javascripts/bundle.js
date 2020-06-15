@@ -586,15 +586,7 @@ var Nav = /*#__PURE__*/function (_React$Component) {
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     _this.searchRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
-  } //  componentDidMount() {
-  //     if (!this.props.search) {
-  //       this.props.fetchAllNodes();
-  //     } else {
-  //       let search = { tag: this.props.search };
-  //       this.props.fetchAllNodes(search);
-  //     }
-  //   }
-
+  }
 
   _createClass(Nav, [{
     key: "handleGearClick",
@@ -1314,13 +1306,15 @@ var NodeList = /*#__PURE__*/function (_React$Component) {
   _createClass(NodeList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      if (!this.props.search) {
-        this.props.fetchAllNodes();
-      } else {
+      if (this.props.currentNodeId) {
+        this.props.fetchAllNodes(this.props.currentNodeId);
+      } else if (this.props.search) {
         var search = {
           tag: this.props.search
         };
         this.props.fetchAllNodes(search);
+      } else {
+        this.props.fetchAllNodes();
       }
     }
   }, {
@@ -1785,6 +1779,7 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
           createNode: _this4.props.createNode,
           deleteNode: _this4.props.deleteNode,
           lastCreated: _this4.props.lastCreated,
+          fetchAllNodes: _this4.props.fetchAllNodes,
           currentNodeId: _this4.props.currentNodeId,
           search: _this4.props.search,
           showCompleted: _this4.props.showCompleted,
@@ -1853,7 +1848,10 @@ var NodeListItem = /*#__PURE__*/function (_React$Component) {
       }, this.props.node.child_ids.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
         d: "M13.75 9.56879C14.0833 9.76124 14.0833 10.2424 13.75 10.4348L8.5 13.4659C8.16667 13.6584 7.75 13.4178 7.75 13.0329L7.75 6.97072C7.75 6.58582 8.16667 6.34525 8.5 6.5377L13.75 9.56879Z"
       }) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/nodes/".concat(this.props.node.id)
+        to: "/nodes/".concat(this.props.node.id),
+        onClick: function onClick() {
+          return _this4.props.fetchAllNodes();
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
         className: "bullet"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("circle", {
@@ -2822,6 +2820,9 @@ var selectAllNodes = function selectAllNodes() {
   var pagesPath = [];
   action.pagesPath.forEach(function (id) {
     return pagesPath.push(id);
+  });
+  pagesPath.sort(function (a, b) {
+    return allNodes[a].ord - allNodes[b].ord;
   });
   return Object.assign({}, state, {
     allNodes: allNodes

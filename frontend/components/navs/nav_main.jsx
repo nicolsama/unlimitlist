@@ -19,6 +19,7 @@ class Nav extends React.Component {
       showSearchBar: false,
       transformArrow: false,
     };
+    
     this.handleGearClick = this.handleGearClick.bind(this);
     this.handleMenuMouseEnter = this.handleMenuMouseEnter.bind(this);
     this.handleMenuMouseLeave = this.handleMenuMouseLeave.bind(this);
@@ -30,14 +31,6 @@ class Nav extends React.Component {
     this.searchRef = React.createRef();
   }
 
-  //  componentDidMount() {
-  //     if (!this.props.search) {
-  //       this.props.fetchAllNodes();
-  //     } else {
-  //       let search = { tag: this.props.search };
-  //       this.props.fetchAllNodes(search);
-  //     }
-  //   }
 
   handleGearClick(e) {
     this.setState({ settingsExpanded: !this.state.settingsExpanded });

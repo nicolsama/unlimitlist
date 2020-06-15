@@ -346,6 +346,10 @@ header {
     transition: opacity 300ms ease-in, transform 300ms ease-in;
 }
 
+.pagination { 
+    width: 100%;
+}
+
 .pagination span{
     font-size: 13px;
     padding-right: 20px;

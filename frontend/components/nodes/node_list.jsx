@@ -15,11 +15,13 @@ class NodeList extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.search) {
-      this.props.fetchAllNodes();
-    } else {
+    if (this.props.currentNodeId) {
+      this.props.fetchAllNodes(this.props.currentNodeId);
+    } else if (this.props.search) {
       let search = { tag: this.props.search };
       this.props.fetchAllNodes(search);
+    } else {
+      this.props.fetchAllNodes();
     }
   }
 

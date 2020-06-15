@@ -121,10 +121,9 @@ class NodeListItem extends React.Component {
     const nestedNodes = childNodeIds.map((id) => {
       const node = allNodes[id];
 
-      return ((this.props.showCompleted) || (!this.props.showCompleted && node.completed === false))
-      
-      ? ( <NodeListItem
-
+      return this.props.showCompleted ||
+        (!this.props.showCompleted && node.completed === false) ? (
+        <NodeListItem
           key={id}
           node={node}
           allNodes={allNodes}
@@ -134,12 +133,13 @@ class NodeListItem extends React.Component {
           createNode={this.props.createNode}
           deleteNode={this.props.deleteNode}
           lastCreated={this.props.lastCreated}
+          fetchAllNodes={this.props.fetchAllNodes}
           currentNodeId={this.props.currentNodeId}
           search={this.props.search}
           showCompleted={this.props.showCompleted}
           type="child"
-        /> )
-        : null; 
+        />
+      ) : null; 
     });
 
     const tooltip = this.state.show_tooltip ? (
@@ -223,7 +223,7 @@ class NodeListItem extends React.Component {
               </svg>
             </a>
 
-            <Link to={`/nodes/${this.props.node.id}`}>
+            <Link to={`/nodes/${this.props.node.id}`} onClick={() => (this.props.fetchAllNodes())}>
               <div>
                 <svg className="bullet">
                   <circle cx="9" cy="9" r="3.5" />

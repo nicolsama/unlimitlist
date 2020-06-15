@@ -85,7 +85,9 @@ export const selectAllNodes = (state = {}, action) => {
 
     let pagesPath = [];
         action.pagesPath.forEach(id => pagesPath.push(id));
+        pagesPath.sort((a,b) => ( allNodes[a].ord - allNodes[b].ord ))
 
+        
     return Object.assign({}, state, {
         allNodes
     }, {

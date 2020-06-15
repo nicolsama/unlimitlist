@@ -2,21 +2,26 @@ class Api::NodesController < ApplicationController
 
     def index
 
-        @node = Node.first
         @nodes = current_user.nodes.includes(:children)
         @tags = current_user.tags.map { |tag| tag.tag }.uniq
         @stars = current_user.stars
 
         if params[:search]
-
-            @filtered_nodes = Node.search(search_params[:tag], @nodes)
-            @search = search_params[:tag]
-        else            
-
+            if Node.find_by(id: params[:id])
+                @node = Node.find_by(id: params[:id])
+                @filtered_nodes = []
+                @search = false
+            else 
+                @filtered_nodes = Node.search(search_params[:tag], @nodes)
+                @search = search_params[:tag]
+                @node = @filtered_nodes[0]
+            end
+        else      
+            @node = current_user.nodes[0]    
             @filtered_nodes = []
             @search = false
         end
-        
+
         render :index
     end
 
