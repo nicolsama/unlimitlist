@@ -43,9 +43,8 @@ Unlimitlist provides the ability to make and edit lists, mark items as complete,
 ![unlimitlist-app-image](app/assets/images/nodes-controller-screenshot.png)
 
 ## Future Features
-
 * Toggling hide/show of completed list items.
-* Sharing lists with other users. 
-* Drag and drop ordering of list items. 
-* Exporting of lists in a printable format. 
+* Sharing lists with other users.
+* Drag and drop ordering of list items.
+* Exporting of records in a printable format.
 
